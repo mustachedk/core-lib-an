@@ -1,14 +1,29 @@
-# core-lib-an
-Mustache Core Library for Android
+# Mustache Core Library for Android
 
-Currently Contains:
-Utilities
-- LocationUtil
-- NetworkUtil
-- PermissionUtil
-- PixelUtil
-- ScreenUtil
-- ValidateUtil
+###### Add this to your root build.gradle
+```bash
+allprojects {
+  repositories {
+    maven { url 'https://jitpack.io' }
+  }
+}
+```
 
-Base Classes:
-- DataBindingAdapter (DataBindingViewHolder)
+###### Add this to your root build.gradle
+```bash
+dependencies {
+  implementation 'com.github.mustachedk:core-lib-an:0.1.2'
+}
+```
+
+#### Currently Contains:
+##### Utilities
+* LocationUtil
+* NetworkUtil
+* PermissionUtil
+* PixelUtil
+* ScreenUtil
+* ValidateUtil
+
+##### Base Classes:
+* DataBindingAdapter (DataBindingViewHolder)
