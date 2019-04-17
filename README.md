@@ -1,5 +1,7 @@
 # Mustache Core Library for Android
 
+[![](https://jitpack.io/v/mustachedk/core-lib-an.svg)](https://jitpack.io/#mustachedk/core-lib-an)
+
 ###### Add this to your root build.gradle
 ```bash
 allprojects {
