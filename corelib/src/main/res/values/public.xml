@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Strings -->
     <public name="core_lib_app_name" type="string"/>
+    <public name="core_lib_app_name" type="string"/>
+
+    <!-- Dimens -->
+    <public name="horizontal_margin" type="dimen"/>
+    <public name="vertical_margin" type="dimen"/>
+    <public name="horizontal_text_margin" type="dimen"/>
+    <public name="vertical_text_margin" type="dimen"/>
+
+    <!-- Colors -->
+    <public name="white" type="color"/>
+    <public name="black" type="color"/>
+    <public name="transparent" type="color"/>
 </resources>
