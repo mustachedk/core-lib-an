@@ -14,4 +14,13 @@
     <public name="white" type="color"/>
     <public name="black" type="color"/>
     <public name="transparent" type="color"/>
+
+    <!-- Anim -->
+    <public name="enter_bottom" type="anim"/>
+    <public name="enter_left" type="anim"/>
+    <public name="enter_right" type="anim"/>
+    <public name="exit_bottom" type="anim"/>
+    <public name="exit_left" type="anim"/>
+    <public name="exit_right" type="anim"/>
+    <public name="hold_anim" type="anim"/>
 </resources>
