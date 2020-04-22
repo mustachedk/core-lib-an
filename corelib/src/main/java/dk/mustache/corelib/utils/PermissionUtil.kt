@@ -55,11 +55,11 @@ fun hasPermission(context: Context, permission: String): Boolean { return Activi
  * @param requestCode Application specific request code to match with a result - reported to onRequestPermissionsResult(int, String[], int[]). Should be >= 0.
  */
 fun requestPermission(activity: Activity, permission: String, requestCode: Int): Boolean {
-    if(!hasPermission(activity, permission)) {
+    return if(!hasPermission(activity, permission)) {
         ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
-        return false
+        false
     } else {
-        return true
+        true
     }
 }
 

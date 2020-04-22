@@ -3,4 +3,7 @@
 
     <string name="rationale_title">Permission Request</string>
     <string name="rationale_message">We kindly request your permission to access this.</string>
+    <string name="dialog_interface_missing_error">Caller must implement dk.mustache.corelib.utils.DialogUtils.AlertDialogCallBack</string>
+    <string name="snackbar_interface_missing_error">Caller must implement dk.mustache.corelib.utils.DialogUtils.SnackbarCallBack</string>
+    <string name="notification_channel_not_set">No notification channel has been registered with the system. Please call dk.mustache.corelib.utils.registerNotificationChannel before requesting a notification.</string>
 </resources>
