@@ -7,6 +7,7 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.databinding.ObservableField
+import dk.mustache.corelib.MustacheCoreLib.getContextCheckInit
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -24,15 +25,15 @@ object InternetConnection {
     private lateinit var connectionCallback : ConnectivityManager.NetworkCallback
     var isRegistered = false
 
-    fun registerConnectionChangedListener(context: Context) {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    fun registerConnectionChangedListener() {
+        val connectivityManager = getContextCheckInit().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         connectivityManager.let {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 if (!isRegistered) {
                     connectionCallback = object : ConnectivityManager.NetworkCallback() {
                         override fun onAvailable(network: Network) {
                             TaskHandler.doTaskOnMainThread {
-                                hasInternetConnection(context) {
+                                hasInternetConnection {
                                     if (it) {
                                         connectionStatus.set(ConnectionStatus.HAS_INTERNET)
                                     } else {
@@ -57,11 +58,11 @@ object InternetConnection {
         }
     }
 
-    fun unregisterConnectionChangedListener(context: Context) {
+    fun unregisterConnectionChangedListener() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (isRegistered) {
                 val connectivityManager =
-                    context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                    getContextCheckInit().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
                 connectivityManager.let {
                     it.unregisterNetworkCallback(connectionCallback)
                 }
@@ -70,10 +71,10 @@ object InternetConnection {
         }
     }
 
-    fun isNetworkConnected(context: Context): Boolean {
+    fun isNetworkConnected(): Boolean {
         var result = false
         val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            getContextCheckInit().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val networkCapabilities = connectivityManager.activeNetwork ?: return false
             val actNw =
@@ -101,11 +102,11 @@ object InternetConnection {
     }
 
     @SuppressLint("CheckResult")
-    fun hasInternetConnection(context: Context, onCallback: (hasInternet: Boolean) -> Unit) {
+    fun hasInternetConnection(onCallback: (hasInternet: Boolean) -> Unit) {
 
         val observable = Observable.fromCallable {
             return@fromCallable try {
-                if (isNetworkConnected(context)) {
+                if (isNetworkConnected()) {
                     val ipAddr: InetAddress = InetAddress.getByName("google.com")
                     !ipAddr.equals("")
                 } else {

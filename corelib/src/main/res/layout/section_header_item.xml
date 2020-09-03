@@ -3,11 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="viewModel"
-            type="dk.mustache.menyspar.viewmodels.ShoppingListItemViewModel"/>
-        <variable
             name="receipt"
-            type="dk.mustache.menyspar.datamodels.ShoppingListItem" />
+            type="dk.mustache.corelib.section_header_list.SectionItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +23,7 @@
             android:layout_marginStart="10dp"
             android:alpha="0.7"
             android:textAllCaps="true"
-            android:textColor="@color/item_receipt_text_color"
+            android:textColor="@color/section_item_text"
             tools:text="JUNI 2020"
             android:fontFamily="@font/roboto_medium"
             android:textSize="13sp"
