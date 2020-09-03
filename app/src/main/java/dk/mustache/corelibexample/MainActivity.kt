@@ -4,6 +4,7 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import dk.mustache.corelib.utils.LocationUtil
 import dk.mustache.corelib.utils.RC_ACCESS_FINE_LOCATION
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.e("test", "test: ")
 
         locationUtil = LocationUtil(this)
         locationUtil?.registerLocationListener(this)
