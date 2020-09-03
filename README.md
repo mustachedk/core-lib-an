@@ -14,12 +14,15 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.1.4'
+  implementation 'com.github.mustachedk:core-lib-an:0.1.7'
 }
 ```
 
 #### Currently Contains:
 ##### Utilities
+* TaskHandler
+* NavigationBar
+* InternetConnection
 * LocationUtil
 * NetworkUtil
 * PermissionUtil
@@ -29,3 +32,4 @@ dependencies {
 
 ##### Base Classes:
 * DataBindingAdapter (DataBindingViewHolder)
+* SectionHeaderListAdapter
