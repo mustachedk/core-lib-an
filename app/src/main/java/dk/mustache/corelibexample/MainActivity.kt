@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.e("test", "test: ")
-
         locationUtil = LocationUtil(this)
         locationUtil?.registerLocationListener(this)
 
