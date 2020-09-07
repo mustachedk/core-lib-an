@@ -29,6 +29,10 @@ dependencies {
 * PixelUtil
 * ScreenUtil
 * ValidateUtil
+* ViewUtil
+
+##### Views
+* OneClickButton
 
 ##### Base Classes:
 * DataBindingAdapter (DataBindingViewHolder)
