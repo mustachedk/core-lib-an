@@ -3,8 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    dataBinding {
+        enabled = true
+    }
 
+    compileSdkVersion 29
     defaultConfig {
         applicationId "dk.mustache.corelibexample"
         minSdkVersion 19
@@ -40,4 +43,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.activity:activity-ktx:1.2.0-alpha08'
 }

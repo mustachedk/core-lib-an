@@ -6,10 +6,12 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import dk.mustache.corelib.utils.LocationUtil
 import dk.mustache.corelib.utils.RC_ACCESS_FINE_LOCATION
 import dk.mustache.corelib.utils.hasPermission
 import dk.mustache.corelib.utils.requestPermissionWithRationale
+import dk.mustache.corelibexample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
 
@@ -18,11 +20,19 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         locationUtil = LocationUtil(this)
         locationUtil?.registerLocationListener(this)
+        requestPermissionWithRationale(
+            this,
+            ACCESS_FINE_LOCATION,
+            RC_ACCESS_FINE_LOCATION,
+            "Test Title",
+            "Test Message",
+            "Test Button"
+        )
 
-        requestPermissionWithRationale(this, ACCESS_FINE_LOCATION, RC_ACCESS_FINE_LOCATION, "Test Title", "Test Message", "Test Button")
+        var binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding.del = this
     }
 
     override fun onResume() {
