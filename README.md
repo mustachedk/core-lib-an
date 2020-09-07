@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.1.8'
+  implementation 'com.github.mustachedk:core-lib-an:0.1.9'
 }
 ```
 
@@ -29,6 +29,10 @@ dependencies {
 * PixelUtil
 * ScreenUtil
 * ValidateUtil
+* ViewUtil
+
+##### Views
+* OneClickButton
 
 ##### Base Classes:
 * DataBindingAdapter (DataBindingViewHolder)
