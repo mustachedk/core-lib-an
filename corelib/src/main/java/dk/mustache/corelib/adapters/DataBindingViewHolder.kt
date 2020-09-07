@@ -4,7 +4,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import dk.mustache.corelib.BR
 
-class DataBindingViewHolder<T, U>(private val binding: ViewDataBinding) :
+class DataBindingViewHolder<T, U>(val binding: ViewDataBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: T, viewModel: U) {
