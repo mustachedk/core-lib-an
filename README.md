@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.2.1'
+  implementation 'com.github.mustachedk:core-lib-an:0.2.2'
 }
 ```
 
@@ -37,3 +37,4 @@ dependencies {
 ##### Base Classes:
 * DataBindingAdapter (DataBindingViewHolder)
 * SectionHeaderListAdapter
+* HeaderListViewPagerFragment

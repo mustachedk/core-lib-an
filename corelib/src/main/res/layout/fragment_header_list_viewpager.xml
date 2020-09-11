@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context="dk.foodservicedanmark.sengrosapp.fragments.MainOfferListFragment">
+        tools:context="dk.mustache.corelib.HeaderListViewpagerFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/offer_type_list"
@@ -15,13 +15,14 @@
             android:paddingTop="10dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:paddingEnd="50dp"
             app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/offer_type_item"
+            tools:listitem="@layout/top_list_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/main_background_transparent" />
+            android:background="@color/main_background_transparent"
+            android:paddingBottom="10dp"/>
+
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/offer_list_pager"
@@ -33,7 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/offer_type_list"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

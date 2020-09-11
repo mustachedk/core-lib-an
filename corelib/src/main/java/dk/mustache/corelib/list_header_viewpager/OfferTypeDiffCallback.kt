@@ -2,18 +2,18 @@ package dk.mustache.corelib.list_header_viewpager
 
 import androidx.recyclerview.widget.DiffUtil
 
-class OfferTypeDiffCallback : DiffUtil.ItemCallback<ProductGroup>() {
+class OfferTypeDiffCallback : DiffUtil.ItemCallback<PageData>() {
 
     override fun areItemsTheSame(
-        oldItem: ProductGroup,
-        newItem: ProductGroup
+        oldItem: PageData,
+        newItem: PageData
     ): Boolean {
         return oldItem == newItem
     }
 
     override fun areContentsTheSame(
-        oldItem: ProductGroup,
-        newItem: ProductGroup
+        oldItem: PageData,
+        newItem: PageData
     ): Boolean {
         return oldItem == newItem
     }
