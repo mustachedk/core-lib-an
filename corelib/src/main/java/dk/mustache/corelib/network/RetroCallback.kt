@@ -1,4 +1,4 @@
-package dk.mustache.corelib.retrofit
+package dk.mustache.corelib.network
 
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
