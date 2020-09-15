@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetroClient {
     fun getRetrofitInstance(
         baseUrl: String,
-        authorizationRepository: AuthorizationRepository
+        authorizationRepository: AuthorizationRepository,
     ): Retrofit {
         val retroFitInstance by lazy {
             Retrofit.Builder().baseUrl(baseUrl)

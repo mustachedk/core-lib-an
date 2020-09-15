@@ -63,23 +63,23 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
         t8.topListItemText = "13746"
 
         viewModel.updatePageDataList(listOf(t1, t2, t3, t4, t5))
+        //SCROLL TYPE
         viewModel.settings.set(HeaderListViewPagerSettings(
             10.toPx(),
             HeaderListViewPagerTypeEnum.SCROLL,
             R.layout.top_list_scroll_item
         ))
 
-        //SCROLL TYPE
+        //STRETCH type
+//        viewModel.settings.set(HeaderListViewPagerSettings(
+//            10.toPx(),
+//            HeaderListViewPagerTypeEnum.STRETCH,
+//            R.layout.top_list_scroll_item
+//        ))
         val fragment = HeaderListViewPagerFragment.newInstance()
 
-        //STRETCH type
-//        val fragment = HeaderListViewPagerFragment.newInstance(PageList(
-//            listOf(t1,t2,t3/*,t4,t5*/)),
-//            PagerFragment::class.java,
-//            HeaderListViewPagerSettings(10.toPx(), HeaderListViewPagerTypeEnum.SCROLL, R.layout.top_list_scroll_item)
-//        )
-
         setFragment(fragment)
+
         Handler(Looper.getMainLooper()).postDelayed({
             //test of data update
             val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
