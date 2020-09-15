@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.2.6'
+  implementation 'com.github.mustachedk:core-lib-an:0.2.8'
 }
 ```
 
