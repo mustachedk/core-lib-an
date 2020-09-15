@@ -87,31 +87,7 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
         }, 5000)
 
         //endRegion
-
-//        testRetrofitMockService()
     }
-
-//    private fun testRetrofitMockService() {
-//        RetroClient.getRetrofitInstance(
-//            "https://jsonplaceholder.typicode.com",
-//            object : AuthorizationRepository {
-//                override fun fetchFreshAccessToken(): AccessToken {
-//                    //todo synchronous get of existing valid or new access token, e.g. using RetroFit execute method
-//                    return AccessToken("")
-//                }
-//            }).create(WebAPI.MockService::class.java).getMockDB(AuthorizationType.ACCESS_TOKEN)
-//            .enqueue(object :
-//                RetroCallback<MockResponse>() {
-//                override fun onSuccess(response: MockResponse?, code: Int) {
-//                    Log.d("RetroFit", "onSuccess: " + response.toString())
-//                }
-//
-//                override fun onError(body: ResponseBody?, code: Int) {
-//                    //Service specific errors can be handled in each service callback. Broader (e.g. HTTP) errors can be centralized and handled in RetroCallback".
-//                    Log.d("RetroFit", "onError: $body")
-//                }
-//            })
-//    }
 
 
     override fun onResume() {
