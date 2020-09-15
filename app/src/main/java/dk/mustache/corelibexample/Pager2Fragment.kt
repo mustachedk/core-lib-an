@@ -8,7 +8,7 @@ import dk.mustache.corelib.list_header_viewpager.GenericPagerFragment
 import dk.mustache.corelib.list_header_viewpager.PageData
 import dk.mustache.corelibexample.databinding.FragmentListHeaderPagerBinding
 
-open class PagerFragment : GenericPagerFragment() {
+open class Pager2Fragment : GenericPagerFragment() {
 
     lateinit var binding: FragmentListHeaderPagerBinding
 

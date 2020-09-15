@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-open class PageData (var topListItemText: String = "") : Parcelable
+open class PageData <T: GenericPagerFragment> (val clazz: Class<T>, var topListItemText: String = "") : Parcelable

@@ -5,18 +5,15 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import dk.mustache.corelib.list_header_viewpager.*
-import dk.mustache.corelib.network.*
 import dk.mustache.corelib.utils.*
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
-import dk.mustache.corelibexample.model.MockResponse
-import okhttp3.ResponseBody
 
 
 class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
@@ -44,36 +41,36 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
         binding.del = this
 
         //region HeaderListViewPager testdata
-        val t1 = SpecialData("t1")
+
+        val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
+
+        val t1 = SpecialData( "t1", PagerFragment::class.java)
         t1.topListItemText = "test1 testtkhjgsklfgh;k "
-        val t2 = SpecialData("t2")
+        val t2 = SpecialData("t2", Pager2Fragment::class.java)
         t2.topListItemText = "test2 lkjlkjoitmkgj f"
-        val t3 = SpecialData("t3")
+        val t3 = SpecialData("t3", PagerFragment::class.java)
         t3.topListItemText = "test3"
-        val t4 = SpecialData("1234567890")
+        val t4 = SpecialData("1234567890", Pager2Fragment::class.java)
         t4.topListItemText = "test4 testtttt"
-        val t5 = SpecialData("2345678901")
+        val t5 = SpecialData("2345678901", PagerFragment::class.java)
         t5.topListItemText = "testerkjhksdfgkj figkj"
 
-        val t6 = SpecialData("6825643")
+        val t6 = SpecialData("6825643", Pager2Fragment::class.java)
         t6.topListItemText = "983465"
-        val t7 = SpecialData("89302")
+        val t7 = SpecialData("89302", PagerFragment::class.java)
         t7.topListItemText = "3435iji54793457345958678954"
-        val t8 = SpecialData("89892345")
+        val t8 = SpecialData("89892345", Pager2Fragment::class.java)
         t8.topListItemText = "13746"
 
+        viewModel.updatePageDataList(listOf(t1, t2, t3, t4, t5))
+        viewModel.settings.set(HeaderListViewPagerSettings(
+            10.toPx(),
+            HeaderListViewPagerTypeEnum.SCROLL,
+            R.layout.top_list_scroll_item
+        ))
+
         //SCROLL TYPE
-        val fragment = HeaderListViewPagerFragment.newInstance(
-            PageList(
-                listOf(t1, t2, t3/*,t4,t5*/)
-            ),
-            PagerFragment::class.java,
-            HeaderListViewPagerSettings(
-                10.toPx(),
-                HeaderListViewPagerTypeEnum.SCROLL,
-                R.layout.top_list_scroll_item
-            )
-        )
+        val fragment = HeaderListViewPagerFragment.newInstance()
 
         //STRETCH type
 //        val fragment = HeaderListViewPagerFragment.newInstance(PageList(
@@ -83,38 +80,38 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
 //        )
 
         setFragment(fragment)
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             //test of data update
             val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
-            viewModel.pageDataListObservable.set(listOf(t6, t7, t8, t4, t5))
+            viewModel.updatePageDataList(listOf(t6, t7, t8, t4, t5))
         }, 5000)
 
         //endRegion
 
-        testRetrofitMockService()
+//        testRetrofitMockService()
     }
 
-    private fun testRetrofitMockService() {
-        RetroClient.getRetrofitInstance(
-            "https://jsonplaceholder.typicode.com",
-            object : AuthorizationRepository {
-                override fun fetchFreshAccessToken(): AccessToken {
-                    //todo synchronous get of existing valid or new access token, e.g. using RetroFit execute method
-                    return AccessToken("")
-                }
-            }).create(WebAPI.MockService::class.java).getMockDB(AuthorizationType.ACCESS_TOKEN)
-            .enqueue(object :
-                RetroCallback<MockResponse>() {
-                override fun onSuccess(response: MockResponse?, code: Int) {
-                    Log.d("RetroFit", "onSuccess: " + response.toString())
-                }
-
-                override fun onError(body: ResponseBody?, code: Int) {
-                    //Service specific errors can be handled in each service callback. Broader (e.g. HTTP) errors can be centralized and handled in RetroCallback".
-                    Log.d("RetroFit", "onError: $body")
-                }
-            })
-    }
+//    private fun testRetrofitMockService() {
+//        RetroClient.getRetrofitInstance(
+//            "https://jsonplaceholder.typicode.com",
+//            object : AuthorizationRepository {
+//                override fun fetchFreshAccessToken(): AccessToken {
+//                    //todo synchronous get of existing valid or new access token, e.g. using RetroFit execute method
+//                    return AccessToken("")
+//                }
+//            }).create(WebAPI.MockService::class.java).getMockDB(AuthorizationType.ACCESS_TOKEN)
+//            .enqueue(object :
+//                RetroCallback<MockResponse>() {
+//                override fun onSuccess(response: MockResponse?, code: Int) {
+//                    Log.d("RetroFit", "onSuccess: " + response.toString())
+//                }
+//
+//                override fun onError(body: ResponseBody?, code: Int) {
+//                    //Service specific errors can be handled in each service callback. Broader (e.g. HTTP) errors can be centralized and handled in RetroCallback".
+//                    Log.d("RetroFit", "onError: $body")
+//                }
+//            })
+//    }
 
 
     override fun onResume() {

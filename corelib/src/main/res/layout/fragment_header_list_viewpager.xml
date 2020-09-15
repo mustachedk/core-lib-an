@@ -30,7 +30,6 @@
             android:layout_height="0dp"
             android:clipToPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
-            android:translationY="40dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/offer_type_list"
             app:layout_constraintBottom_toBottomOf="parent"

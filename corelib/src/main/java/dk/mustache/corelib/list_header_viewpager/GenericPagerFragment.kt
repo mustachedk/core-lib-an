@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import java.lang.Exception
 
-open class GenericPagerFragment<T : PageData>() : Fragment() {
+open class GenericPagerFragment() : Fragment() {
 
-    lateinit var pageData: T
+    lateinit var pageData: PageData<GenericPagerFragment>
 
     open fun update() {
 
@@ -18,7 +18,7 @@ open class GenericPagerFragment<T : PageData>() : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val pageDataFromArgs = arguments?.getParcelable<T?>(PAGE_DATA)
+        val pageDataFromArgs = arguments?.getParcelable<PageData<GenericPagerFragment>?>(PAGE_DATA)
         pageData = pageDataFromArgs ?: throw Exception("PageData must be set")
     }
 

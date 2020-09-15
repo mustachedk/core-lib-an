@@ -14,16 +14,18 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.FragmentHeaderListViewpagerBinding
 import dk.mustache.corelib.utils.getScreenWidth
+import java.lang.Exception
 
-class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> () : Fragment() {
+class HeaderListViewPagerFragment : Fragment() {
 
     private lateinit var binding: FragmentHeaderListViewpagerBinding
     private lateinit var horizontalListAdapter: HorizontalListAdapter
     private lateinit var snapHelper: LinearSnapHelper
     private lateinit var layoutManager: CenterLayoutManager
-    private lateinit var offerListPagerAdapter: BottomPagerAdapter<T, U>
+    private lateinit var offerListPagerAdapter: BottomPagerAdapter
     private var currentTypeListScroll = 0
     private var first = true
     private lateinit var viewModel: HeaderListViewPagerViewModel
@@ -31,9 +33,6 @@ class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> ()
     private val scrollingLeft = -1
     private var scrollDirection = scrollingLeft
     private var isScrollingToStart = false
-    private lateinit var pageList: PageList<PageData>
-    private lateinit var settings: HeaderListViewPagerSettings
-    private lateinit var clazz: Class<T>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +42,13 @@ class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> ()
     }
 
     fun setupViewPager() {
-        horizontalListAdapter.submitList(pageList.pageList)
-        offerListPagerAdapter = BottomPagerAdapter(this, ArrayList(pageList.pageList))
+        val pageList = viewModel.pageDataListObservable.get()
+        horizontalListAdapter.submitList(pageList)
+        offerListPagerAdapter = BottomPagerAdapter(this, ArrayList(pageList?:ArrayList()))
         binding.offerListPager.offscreenPageLimit = 1
         binding.offerListPager.adapter = offerListPagerAdapter
 
-        if (pageList.pageList.isNotEmpty()) {
+        if (!pageList.isNullOrEmpty()) {
             Handler().postDelayed({
                 binding.offerListPager.currentItem =
                     viewModel.selectedIndex
@@ -85,7 +85,8 @@ class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> ()
     }
 
     val selectionListener = object: ProductGroupSelectionListener {
-        override fun typeSelected(type: PageData, index: Int) {
+
+        override fun typeSelected(pageData: PageData<GenericPagerFragment>, index: Int) {
             if (binding.offerListPager.currentItem==index) {
                 offerListPagerAdapter.scrollAllToTop()
             }
@@ -116,11 +117,9 @@ class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> ()
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        pageList = arguments?.getParcelable<PageList<PageData>?>(PAGE_LIST)?:PageList(ArrayList())
-        settings = arguments?.getParcelable(SETTINGS)?:HeaderListViewPagerSettings()
-        clazz = arguments?.getSerializable(FRAGMENT_TYPE) as Class<T>
+        val settings = viewModel.settings.get()
 
-        horizontalListAdapter = HorizontalListAdapter(requireActivity(), selectionListener, viewModel.selectedIndex, settings, getScreenWidth(requireActivity()), settings.topListLayoutId)
+        horizontalListAdapter = HorizontalListAdapter(requireActivity(), selectionListener, viewModel.selectedIndex, settings?: HeaderListViewPagerSettings() , getScreenWidth(requireActivity()), settings?.topListLayoutId?: R.layout.top_list_item)
         layoutManager = CenterLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.offerTypeList.layoutManager = layoutManager
         binding.offerTypeList.adapter = horizontalListAdapter
@@ -201,9 +200,11 @@ class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> ()
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             val pageDataList = viewModel.pageDataListObservable.get()
             if (!pageDataList.isNullOrEmpty()) {
-                horizontalListAdapter.submitList(pageDataList)
+                horizontalListAdapter.submitList(pageDataList.map { it as PageData<GenericPagerFragment> })
                 horizontalListAdapter.notifyDataSetChanged()
-                offerListPagerAdapter.updateData(pageDataList)
+                if (!pageDataList.isNullOrEmpty()) {
+                    offerListPagerAdapter.replaceData(pageDataList)
+                }
             } else {
 
             }
@@ -225,9 +226,9 @@ class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> ()
     }
 
     @SuppressLint("UseRequireInsteadOfGet")
-    inner class BottomPagerAdapter<T : GenericPagerFragment<U>, U : PageData>(val fragment: Fragment, var pagerDataList: ArrayList<PageData>) : FragmentStateAdapter(fragment.childFragmentManager!!, fragment.lifecycle!!) {
+    inner class BottomPagerAdapter(val fragment: Fragment, var pagerDataList: ArrayList<PageData<GenericPagerFragment>>) : FragmentStateAdapter(fragment.childFragmentManager!!, fragment.lifecycle!!) {
 
-        private var fragmentList = ArrayList<T>()
+        private var fragmentList = ArrayList<GenericPagerFragment>()
         private val handler = Handler()
 
         fun clearAdapter() {
@@ -242,18 +243,17 @@ class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> ()
             }
         }
 
-        fun updateData(newPagerDataList: List<PageData>) {
+        fun removeAllData(dataChangedCallback: () -> Unit) {
             pagerDataList.clear()
             fragmentList.clear()
             notifyDataSetChanged()
-            //TODO investigate if a better solution exists
-            //If fragment destruction takes too long, the data will not be updated
-            handler.postDelayed({
-                if(isAdded) {
-                    pagerDataList.addAll(newPagerDataList)
-                    notifyItemRangeChanged(0, newPagerDataList.lastIndex)
-                }
-            },1000)
+        }
+
+        fun replaceData(newPagerDataList: List<PageData<GenericPagerFragment>>) {
+            pagerDataList.clear()
+            fragmentList.clear()
+            pagerDataList.addAll(newPagerDataList)
+            notifyDataSetChanged()
         }
 
         fun updateAll() {
@@ -262,13 +262,13 @@ class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> ()
             }
         }
 
-        fun addPageData(pog: PageData) {
+        fun addPageData(pog: PageData<GenericPagerFragment>) {
             pagerDataList.add(pog)
             notifyDataSetChanged()
         }
 
-        override fun createFragment(position: Int): Fragment {
-            val newFragment = clazz.newInstance() as T
+        override fun  createFragment (position: Int): Fragment {
+            val newFragment = pagerDataList[position].clazz.newInstance()
             val args = Bundle().apply {
                 putParcelable(GenericPagerFragment.PAGE_DATA, pagerDataList[position])
             }
@@ -276,6 +276,10 @@ class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> ()
             newFragment.arguments = args
             fragmentList.add(newFragment)
             return newFragment
+        }
+
+        override fun getItemId(position: Int): Long {
+            return pagerDataList[position].topListItemText.hashCode().toLong()
         }
 
         override fun getItemCount(): Int {
@@ -289,13 +293,10 @@ class HeaderListViewPagerFragment <T : GenericPagerFragment<U>, U : PageData> ()
         const val SETTINGS = "header_list_viewpager_settings"
         const val FRAGMENT_TYPE = "fragment_type"
 
-        fun <T:GenericPagerFragment<U>, U: PageData> newInstance(pageList: PageList<U>, clazz: Class<T>, settings: HeaderListViewPagerSettings = HeaderListViewPagerSettings()): HeaderListViewPagerFragment<T, U> {
+        fun newInstance(): HeaderListViewPagerFragment {
             val args = Bundle()
-            args.putParcelable(PAGE_LIST, pageList)
-            args.putParcelable(SETTINGS, settings)
-            args.putSerializable(FRAGMENT_TYPE, clazz)
 
-            val fragment = HeaderListViewPagerFragment<T, U>()
+            val fragment = HeaderListViewPagerFragment()
             fragment.arguments = args
             return fragment
         }

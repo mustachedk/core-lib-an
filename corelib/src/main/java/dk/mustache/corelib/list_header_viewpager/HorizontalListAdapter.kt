@@ -11,6 +11,7 @@ import dk.mustache.corelib.BR
 import dk.mustache.corelib.R
 import dk.mustache.corelib.utils.getScreenWidth
 import dk.mustache.corelib.utils.toPx
+import kotlinx.android.synthetic.*
 
 
 class HorizontalListAdapter(
@@ -22,7 +23,7 @@ class HorizontalListAdapter(
     val listItemLayout: Int = R.layout.top_list_item,
     private val isShoppingList: Boolean = false,
     var hasScrolled: Boolean = false
-) : ListAdapter<PageData, HorizontalListAdapter.HorizontalViewHolder>(OfferTypeDiffCallback()) {
+) : ListAdapter<PageData<GenericPagerFragment>, HorizontalListAdapter.HorizontalViewHolder>(OfferTypeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalViewHolder {
 
@@ -59,7 +60,9 @@ class HorizontalListAdapter(
     override fun onBindViewHolder(holder: HorizontalViewHolder, position: Int) {
         getItem(position).let { pageData ->
             with(holder) {
+
                 bind(pageData, productGroupSelectionListener, position, selectedIndex)
+
                 if(position==0 && !isShoppingList && hasScrolled) {
                     holder.itemView.setPadding(10.toPx(), 0, 0, 0)
                     holder.viewModel.paddingEnd.set(0)
@@ -97,7 +100,7 @@ class HorizontalListAdapter(
         lateinit var viewModel: HorizontalListItemViewModel
 
         fun bind(
-            pageData: PageData,
+            pageData: PageData<GenericPagerFragment>,
             selectionListener: ProductGroupSelectionListener?,
             index: Int,
             selectedIndex: Int
@@ -116,7 +119,7 @@ class HorizontalListAdapter(
 }
 
 interface ProductGroupSelectionListener {
-    fun typeSelected(pageData: PageData, index: Int)
+    fun typeSelected(pageData: PageData<GenericPagerFragment>, index: Int)
 }
 
 interface ViewUpdater {
