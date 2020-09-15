@@ -10,7 +10,7 @@ import dk.mustache.corelib.R
 import dk.mustache.corelib.adapters.DataBindingViewHolder
 import dk.mustache.corelib.databinding.SectionHeaderItemBinding
 
-abstract class SectionHeaderListAdapter <T : SectionItem, U: ViewModel>  (private val sectionList: ArrayList<T>, val rowItemType: Int, val placeholderItemType: Int, val onItemClicked: ((item: T) -> Unit)?, val headerItemType: Int = R.layout.section_header_item) : RecyclerView.Adapter<DataBindingViewHolder<T, U>>() {
+abstract class SectionHeaderListAdapter <T : SectionItem, U: ViewModel>  (val sectionList: ArrayList<T>, val rowItemType: Int, val placeholderItemType: Int, val onItemClicked: ((item: T) -> Unit)?, val headerItemType: Int = R.layout.section_header_item) : RecyclerView.Adapter<DataBindingViewHolder<T, U>>() {
     private var layoutInflater: LayoutInflater? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder<T, U> {
