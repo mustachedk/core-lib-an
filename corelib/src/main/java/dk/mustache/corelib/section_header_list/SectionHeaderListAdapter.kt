@@ -10,7 +10,7 @@ import dk.mustache.corelib.R
 import dk.mustache.corelib.adapters.DataBindingViewHolder
 import dk.mustache.corelib.databinding.SectionHeaderItemBinding
 
-abstract class SectionHeaderListAdapter <T : SectionItem, U: ViewModel>  (val sectionList: ArrayList<T>, val rowItemType: Int, val placeholderItemType: Int, val onItemClicked: ((item: T) -> Unit)?, val headerItemType: Int = R.layout.section_header_item) : RecyclerView.Adapter<DataBindingViewHolder<T, U>>() {
+abstract class SectionHeaderListAdapter <T : SectionItem, U: ViewModel>  (val itemListWithHeaders: ArrayList<T>, val rowItemType: Int, val placeholderItemType: Int, val onItemClicked: ((item: T) -> Unit)?, val headerItemType: Int = R.layout.section_header_item) : RecyclerView.Adapter<DataBindingViewHolder<T, U>>() {
     private var layoutInflater: LayoutInflater? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder<T, U> {
@@ -33,7 +33,7 @@ abstract class SectionHeaderListAdapter <T : SectionItem, U: ViewModel>  (val se
     }
 
     override fun onBindViewHolder(holder: DataBindingViewHolder<T, U>, position: Int) {
-        val item = sectionList[position]
+        val item = itemListWithHeaders[position]
 
         when (holder.binding) {
             is SectionHeaderItemBinding -> {
@@ -46,11 +46,11 @@ abstract class SectionHeaderListAdapter <T : SectionItem, U: ViewModel>  (val se
     }
 
     override fun getItemCount(): Int {
-        return sectionList.size
+        return itemListWithHeaders.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = sectionList[position]
+        val item = itemListWithHeaders[position]
         return if (item.isHeader!=true) {
             if (item.isPlaceholder==true) {
                 placeholderItemType
@@ -63,7 +63,7 @@ abstract class SectionHeaderListAdapter <T : SectionItem, U: ViewModel>  (val se
     }
 
     fun updateData(newList: List<T>) {
-        sectionList.clear()
-        sectionList.addAll(newList)
+        itemListWithHeaders.clear()
+        itemListWithHeaders.addAll(newList)
     }
 }
