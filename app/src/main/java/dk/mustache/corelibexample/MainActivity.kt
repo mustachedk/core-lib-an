@@ -6,18 +6,32 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import dk.mustache.corelib.list_header_viewpager.*
+import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerFragment
+import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
+import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
+import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
+import dk.mustache.corelib.network.AccessToken
+import dk.mustache.corelib.network.AuthorizationRepository
+import dk.mustache.corelib.network.AuthorizationType
+import dk.mustache.corelib.network.RetroClient
 import dk.mustache.corelib.utils.*
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
-
+import dk.mustache.corelibexample.model.MockResponse
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
 
+    private val disposables: CompositeDisposable = CompositeDisposable()
     private var locationUtil: LocationUtil? = null
     private var currentLocation: Location? = null
 
@@ -44,7 +58,7 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
 
         val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
 
-        val t1 = SpecialData( "t1", PagerFragment::class.java)
+        val t1 = SpecialData("t1", PagerFragment::class.java)
         t1.topListItemText = "test1 testtkhjgsklfgh;k "
         val t2 = SpecialData("t2", Pager2Fragment::class.java)
         t2.topListItemText = "test2 lkjlkjoitmkgj f"
@@ -64,11 +78,13 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
 
         viewModel.updatePageDataList(listOf(t1, t2, t3, t4, t5))
         //SCROLL TYPE
-        viewModel.settings.set(HeaderListViewPagerSettings(
-            10.toPx(),
-            HeaderListViewPagerTypeEnum.SCROLL,
-            R.layout.top_list_scroll_item
-        ))
+        viewModel.settings.set(
+            HeaderListViewPagerSettings(
+                10.toPx(),
+                HeaderListViewPagerTypeEnum.SCROLL,
+                R.layout.top_list_scroll_item
+            )
+        )
 
         //STRETCH type
 //        viewModel.settings.set(HeaderListViewPagerSettings(
@@ -86,9 +102,65 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
             viewModel.updatePageDataList(listOf(t6, t7, t8, t4, t5))
         }, 5000)
 
+        testRetroFit()
         //endRegion
     }
 
+    private fun testRetroFit() {
+        //configure Retrofit client once on app startup
+        RetroClient.buildRetrofitInstance(
+            "https://jsonplaceholder.typicode.com/",
+            WebAPI.MockService::class.java,
+            object :
+                AuthorizationRepository {
+                override fun fetchFreshAccessToken(): AccessToken {
+                    return AccessToken("")
+                }
+            })
+
+        //retrofitInstance can now be used to create web api, call a service within and return an Observable result
+        val observable = RetroClient.retrofitInstance?.create(WebAPI.MockService::class.java)
+            ?.getMockDB(AuthorizationType.ACCESS_TOKEN)
+
+        //subscribe to observable and await results
+        observable?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribe(object : Observer<MockResponse> {
+                override fun onSubscribe(d: Disposable) {
+                    Log.d("RXJava", "onSubscribe: ${Thread.currentThread().name}")
+                    disposables.add(d)
+                }
+
+                override fun onNext(t: MockResponse) {
+                    Log.d("RXJava", "onNext: ${Thread.currentThread().name}")
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d("RXJava", "onError: ${e}")
+                }
+
+                override fun onComplete() {
+                    Log.d("RXJava", "onComplete: ${Thread.currentThread().name}")
+                }
+            })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
+    }
+
+    /*enqueue(
+    object :
+        RetroCallback<MockResponse>() {
+        override fun onSuccess(response: MockResponse?, code: Int) {
+            Log.d("RetroFit", "onSuccess: $response")
+        }
+
+        override fun onError(body: ResponseBody?, code: Int) {
+            Log.d("RetroFit", "onFailed: $body")
+        }
+    })*/
 
     override fun onResume() {
         super.onResume()
