@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
 
     private fun testRetroFit() {
         //configure Retrofit client once on app startup
-        RetroClient.buildRetrofitInstance(
+        val api = RetroClient.buildWebApi(
             "https://jsonplaceholder.typicode.com/",
             WebAPI.MockService::class.java,
             object :
@@ -119,8 +119,7 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
             })
 
         //retrofitInstance can now be used to create web api, call a service within and return an Observable result
-        val observable = RetroClient.retrofitInstance?.create(WebAPI.MockService::class.java)
-            ?.getMockDB(AuthorizationType.ACCESS_TOKEN)
+        val observable = api.getMockDB(AuthorizationType.ACCESS_TOKEN)
 
         //subscribe to observable and await results
         observable?.subscribeOn(Schedulers.io())

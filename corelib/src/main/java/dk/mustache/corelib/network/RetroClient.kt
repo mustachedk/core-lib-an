@@ -11,20 +11,21 @@ import retrofit2.converter.gson.GsonConverterFactory
  * - OkHttpAuthorizationInterceptor which automatically retries services failed with missing auth/401
  * **/
 
-object RetroClient {
-    var retrofitInstance : Retrofit? = null
-
-    fun <T> buildRetrofitInstance(
+object RetroClient  {
+    lateinit var webApi : Any
+    fun <T> buildWebApi(
         baseUrl: String,
         apiClass: Class<T>,
         authorizationRepository: AuthorizationRepository
-    ) {
-        retrofitInstance  = Retrofit.Builder().baseUrl(baseUrl)
+    ) : T {
+        webApi = Retrofit.Builder().baseUrl(baseUrl)
             .client(getOkHttpClient(authorizationRepository))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(
                 GsonConverterFactory.create()
-            ).build()
+            ).build().create(apiClass) as Any
+
+        return webApi as T
     }
 
     private fun getOkHttpClient(authorizationRepository: AuthorizationRepository): OkHttpClient =
@@ -32,17 +33,4 @@ object RetroClient {
             .addInterceptor(OkHttpAuthorizationInterceptor(authorizationRepository))
             .authenticator(OkHttpTokenRefreshAuthenticator(authorizationRepository))
             .build()
-
-    fun <T> getRetrofitInstance(
-        baseUrl: String,
-        apiClass: Class<T>,
-        authorizationRepository: AuthorizationRepository
-    ) {
-        retrofitInstance  = Retrofit.Builder().baseUrl(baseUrl)
-            .client(getOkHttpClient(authorizationRepository))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(
-                GsonConverterFactory.create()
-            ).build()
-    }
 }
