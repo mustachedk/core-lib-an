@@ -58,7 +58,7 @@ abstract class SectionHeaderListAdapter <T : SectionItem, U: ViewModel>  (val it
                 rowItemType
             }
         } else {
-            R.layout.section_header_item
+            headerItemType
         }
     }
 
