@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +24,6 @@ class BottomSheetMenu : BottomSheetDialogFragment() {
 
     private var mListener: BottomSheetMenuListener? = null
     private lateinit var settings: BottomSheetDialogSettings
-    private lateinit var menuType: MenuDialogType
     private lateinit var binding: FragmentBottomsheetMenuBinding
 
     interface BottomSheetMenuListener {
@@ -60,6 +61,7 @@ class BottomSheetMenu : BottomSheetDialogFragment() {
 
         if (arguments!=null) {
             settings = arguments?.getParcelable(DIALOG_SETTINGS)?:BottomSheetDialogSettings("Menu Header", listOf("Menu Option 1", "Menu Option 2"), MenuDialogType.CUSTOM)
+
         }
 
         binding.menuHeader.text = settings.title
@@ -68,10 +70,12 @@ class BottomSheetMenu : BottomSheetDialogFragment() {
             val optionItem = ItemMenuOptionBinding.inflate(inflater)
             optionItem.menuOption1.text = itemText
             optionItem.root.setOnClickListener {
-                if (isAdded) {
-                    dismiss()
-                }
-                mListener?.itemSelected(itemText, index, menuType)
+                Handler(Looper.getMainLooper()).postDelayed({
+//                    if (isAdded) {
+//                        dismiss()
+//                    }
+                    mListener?.itemSelected(itemText, index, settings.type)
+                },100)
             }
             binding.menuOptions.addView(optionItem.root)
         }

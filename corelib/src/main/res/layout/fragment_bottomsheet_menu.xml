@@ -6,10 +6,7 @@
     android:id="@+id/dialog_string_picker_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
     android:layout_gravity="bottom"
-    android:clickable="true"
-    android:focusable="true"
     android:background="@drawable/bottom_sheet_menu_rounded"
     android:paddingTop="5dp"
     android:elevation="20dp">

@@ -2,7 +2,7 @@ package dk.mustache.corelibexample
 
 import dk.mustache.corelib.network.AuthorizationType
 import dk.mustache.corelibexample.model.MockResponse
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.GET
 import retrofit2.http.Tag
 
