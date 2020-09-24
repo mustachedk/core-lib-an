@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.2.12'
+  implementation 'com.github.mustachedk:core-lib-an:0.2.13'
 }
 ```
 
@@ -33,6 +33,9 @@ dependencies {
 
 ##### Views
 * OneClickButton
+
+##### Dialogs
+* BottomSheetMenu
 
 ##### Base Classes:
 * DataBindingAdapter (DataBindingViewHolder)

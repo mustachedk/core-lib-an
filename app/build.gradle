@@ -11,7 +11,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "dk.mustache.corelibexample"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 17
         versionName "1.0"

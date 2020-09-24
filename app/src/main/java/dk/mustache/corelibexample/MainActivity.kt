@@ -16,6 +16,8 @@ import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
+import dk.mustache.corelib.menu_bottom_sheet.BottomSheetDialogSettings
+import dk.mustache.corelib.menu_bottom_sheet.MenuDialogType
 import dk.mustache.corelib.network.AccessToken
 import dk.mustache.corelib.network.AuthorizationRepository
 import dk.mustache.corelib.network.AuthorizationType
@@ -23,13 +25,14 @@ import dk.mustache.corelib.network.RetroClient
 import dk.mustache.corelib.utils.*
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
+import dk.mustache.mapdiet.fragments.bottomsheets.BottomSheetMenu
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
+class MainActivity : BottomSheetMenu.BottomSheetMenuListener, AppCompatActivity(), LocationUtil.LocationChangedCallback {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private var locationUtil: LocationUtil? = null
@@ -101,6 +104,9 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
             val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
             viewModel.updatePageDataList(listOf(t6, t7, t8, t4, t5))
         }, 5000)
+
+        val menu = BottomSheetMenu.newInstance(BottomSheetDialogSettings("Menu Header", listOf("Menu Option 1", "Menu Option 2", "Menu Option 3", "Menu Option 4"), MenuDialogType.CUSTOM))
+        menu.show(supportFragmentManager, "MenuDialog")
 
         testRetroFit()
         //endRegion
@@ -200,5 +206,13 @@ class MainActivity : AppCompatActivity(), LocationUtil.LocationChangedCallback {
 
     override fun locationChanged(location: Location) {
         currentLocation = location
+    }
+
+    override fun itemSelected(text: String, index: Int, menuType: MenuDialogType) {
+
+    }
+
+    override fun nothingSelected() {
+
     }
 }

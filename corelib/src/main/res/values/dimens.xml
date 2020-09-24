@@ -3,4 +3,6 @@
     <dimen name="vertical_margin">16dp</dimen>
     <dimen name="horizontal_text_margin">10dp</dimen>
     <dimen name="vertical_text_margin">10dp</dimen>
+    <dimen name="cell_height_small">48dp</dimen>
+    <dimen name="cell_height">54dp</dimen>
 </resources>

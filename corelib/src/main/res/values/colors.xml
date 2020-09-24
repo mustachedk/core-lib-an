@@ -8,4 +8,5 @@
     <color name="offer_category_selected">#E3A935</color>
     <color name="offer_category_border">#50A09F9F</color>
     <color name="main_background_transparent">#DDE5E9EE</color>
+    <color name="main_background">#E5E9EE</color>
 </resources>

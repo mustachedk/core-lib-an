@@ -7,4 +7,6 @@
     <string name="snackbar_interface_missing_error">Caller must implement dk.mustache.corelib.utils.DialogUtils.SnackbarCallBack</string>
     <string name="notification_channel_not_set">No notification channel has been registered with the system. Please call dk.mustache.corelib.utils.registerNotificationChannel before requesting a notification.</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="menu_header">Menu Header</string>
+    <string name="menu_menu_item">Menu item text</string>
 </resources>
