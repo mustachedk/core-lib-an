@@ -70,12 +70,10 @@ class BottomSheetMenu : BottomSheetDialogFragment() {
             val optionItem = ItemMenuOptionBinding.inflate(inflater)
             optionItem.menuOption1.text = itemText
             optionItem.root.setOnClickListener {
-                Handler(Looper.getMainLooper()).postDelayed({
-//                    if (isAdded) {
-//                        dismiss()
-//                    }
-                    mListener?.itemSelected(itemText, index, settings.type)
-                },100)
+                if (isAdded) {
+                    dismiss()
+                }
+                mListener?.itemSelected(itemText, index, settings.type)
             }
             binding.menuOptions.addView(optionItem.root)
         }

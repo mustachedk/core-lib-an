@@ -18,7 +18,9 @@ class OkHttpTokenRefreshAuthenticator(
 
     private fun Response.createSignedRequest(): Request? = try {
         val accessToken = authorizationRepository.fetchFreshAccessToken()
-        request.signWithToken(accessToken)
+        //TODO reintroduce okhttp:4.9.0 later - breaks meny/spar
+        request()
+        //request.signWithToken(accessToken)
     } catch (error: Throwable) {
         Log.e("OkHttp", "createSignedRequest: failed")
         null
@@ -31,12 +33,12 @@ class OkHttpTokenRefreshAuthenticator(
 
     private val Response.retryCount: Int
         get() {
-            var currentResponse = priorResponse
+//            var currentResponse = priorResponse
             var result = 0
-            while (currentResponse != null) {
-                result++
-                currentResponse = currentResponse.priorResponse
-            }
+//            while (currentResponse != null) {
+//                result++
+//                currentResponse = currentResponse.priorResponse
+//            }
             return result
         }
 }
