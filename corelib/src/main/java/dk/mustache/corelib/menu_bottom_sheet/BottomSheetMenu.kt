@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.FragmentBottomsheetMenuBinding
@@ -18,6 +19,7 @@ import dk.mustache.corelib.databinding.ItemMenuOptionBinding
 import dk.mustache.corelib.databinding.ItemMenuOptionDividerBinding
 import dk.mustache.corelib.menu_bottom_sheet.BottomSheetDialogSettings
 import dk.mustache.corelib.menu_bottom_sheet.MenuDialogType
+import java.lang.Appendable
 import java.util.ArrayList
 
 class BottomSheetMenu : BottomSheetDialogFragment() {
@@ -25,6 +27,7 @@ class BottomSheetMenu : BottomSheetDialogFragment() {
     private var mListener: BottomSheetMenuListener? = null
     private lateinit var settings: BottomSheetDialogSettings
     private lateinit var binding: FragmentBottomsheetMenuBinding
+    private val handler = Handler(Looper.getMainLooper())
 
     interface BottomSheetMenuListener {
         fun itemSelected(
@@ -70,10 +73,14 @@ class BottomSheetMenu : BottomSheetDialogFragment() {
             val optionItem = ItemMenuOptionBinding.inflate(inflater)
             optionItem.menuOption1.text = itemText
             optionItem.root.setOnClickListener {
-                if (isAdded) {
-                    dismiss()
-                }
-                mListener?.itemSelected(itemText, index, settings.type)
+                optionItem.menuItemBackground.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transBlack))
+                handler.postDelayed({
+                    if (isAdded) {
+                        optionItem.menuItemBackground.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+                        dismiss()
+                    }
+                    mListener?.itemSelected(itemText, index, settings.type)
+                },200)
             }
             binding.menuOptions.addView(optionItem.root)
         }
