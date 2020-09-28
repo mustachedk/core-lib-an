@@ -61,23 +61,14 @@ class MainActivity : BottomSheetMenu.BottomSheetMenuListener, AppCompatActivity(
 
         val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
 
-        val t1 = SpecialData("t1", PagerFragment::class.java)
-        t1.topListItemText = "test1 testtkhjgsklfgh;k "
-        val t2 = SpecialData("t2", Pager2Fragment::class.java)
-        t2.topListItemText = "test2 lkjlkjoitmkgj f"
-        val t3 = SpecialData("t3", PagerFragment::class.java)
-        t3.topListItemText = "test3"
-        val t4 = SpecialData("1234567890", Pager2Fragment::class.java)
-        t4.topListItemText = "test4 testtttt"
-        val t5 = SpecialData("2345678901", PagerFragment::class.java)
-        t5.topListItemText = "testerkjhksdfgkj figkj"
-
-        val t6 = SpecialData("6825643", Pager2Fragment::class.java)
-        t6.topListItemText = "983465"
-        val t7 = SpecialData("89302", PagerFragment::class.java)
-        t7.topListItemText = "3435iji54793457345958678954"
-        val t8 = SpecialData("89892345", Pager2Fragment::class.java)
-        t8.topListItemText = "13746"
+        val t1 = SpecialData("t1", Pager2Fragment::class.java,"test1 testtkhjgsklfgh;k ")
+        val t2 = SpecialData("t2", PagerFragment::class.java,"test2 lkjlkjoitmkgj f")
+        val t3 = SpecialData("t3", PagerFragment::class.java, "test3")
+        val t4 = SpecialData("1234567890", Pager2Fragment::class.java, "test4 testtttt")
+        val t5 = SpecialData("2345678901", PagerFragment::class.java, "testerkjhksdfgkj figkj")
+        val t6 = SpecialData("6825643", PagerFragment::class.java, "983465")
+        val t7 = SpecialData("89302", Pager2Fragment::class.java, "3435iji54793457345958678954")
+        val t8 = SpecialData("89892345", Pager2Fragment::class.java, "13746")
 
         viewModel.updatePageDataList(listOf(t1, t2, t3, t4, t5))
         //SCROLL TYPE
@@ -98,6 +89,7 @@ class MainActivity : BottomSheetMenu.BottomSheetMenuListener, AppCompatActivity(
         val fragment = HeaderListViewPagerFragment.newInstance()
 
         setFragment(fragment)
+
 
         Handler(Looper.getMainLooper()).postDelayed({
             //test of data update

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="item"
+            type="dk.mustache.corelib.section_header_list.SectionItem" />
+        <variable
+            name="viewModel"
+            type="dk.mustache.corelibexample.section_header_example.SectionHeaderItemExampleViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:alpha="0.82"
+        android:background="@{viewModel.selected ? @color/black : @color/colorAccent}"
+        >
+
+        <TextView
+            android:id="@+id/section_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:alpha="0.7"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:text="@{item.headerText}"
+            tools:text="JUNI 2020"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="13sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <View
+            android:id="@+id/notification_divider"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="@color/black"
+            android:alpha="0.17"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
