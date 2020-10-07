@@ -76,7 +76,9 @@ class MainActivity : BottomSheetMenu.BottomSheetMenuListener, AppCompatActivity(
             HeaderListViewPagerSettings(
                 10.toPx(),
                 HeaderListViewPagerTypeEnum.SCROLL,
-                R.layout.top_list_scroll_item
+                R.layout.top_list_scroll_item,
+                100.toPx(),
+                400.toPx()
             )
         )
 

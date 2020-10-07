@@ -17,7 +17,6 @@ import androidx.viewpager2.widget.ViewPager2
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.FragmentHeaderListViewpagerBinding
 import dk.mustache.corelib.utils.getScreenWidth
-import java.lang.Exception
 
 class HeaderListViewPagerFragment : Fragment() {
 
@@ -36,9 +35,7 @@ class HeaderListViewPagerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel = ViewModelProvider(requireActivity()).get(HeaderListViewPagerViewModel::class.java)
-
     }
 
     fun setupViewPager() {
@@ -109,14 +106,12 @@ class HeaderListViewPagerFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = FragmentHeaderListViewpagerBinding.inflate(inflater, container, false)
-
+        binding.viewModel = viewModel
         return binding.root
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         val settings = viewModel.settings.get()
 
         horizontalListAdapter = HorizontalListAdapter(requireActivity(), selectionListener, viewModel.selectedIndex, settings?: HeaderListViewPagerSettings() , getScreenWidth(requireActivity()), settings?.topListLayoutId?: R.layout.top_list_item)
