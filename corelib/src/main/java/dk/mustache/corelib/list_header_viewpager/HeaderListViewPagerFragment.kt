@@ -114,7 +114,7 @@ class HeaderListViewPagerFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val settings = viewModel.settings.get()
 
-        horizontalListAdapter = HorizontalListAdapter(requireActivity(), selectionListener, viewModel.selectedIndex, settings?: HeaderListViewPagerSettings() , getScreenWidth(requireActivity()), settings?.topListLayoutId?: R.layout.top_list_item)
+        horizontalListAdapter = HorizontalListAdapter(requireActivity(), selectionListener, viewModel.selectedIndex, settings?: HeaderListViewPagerSettings() , getScreenWidth(requireActivity()), settings?.topListLayoutId?: R.layout.top_list_item, false, false, viewModel.settings.get()?.paddingBetween?:10)
         layoutManager = CenterLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.offerTypeList.layoutManager = layoutManager
         binding.offerTypeList.adapter = horizontalListAdapter

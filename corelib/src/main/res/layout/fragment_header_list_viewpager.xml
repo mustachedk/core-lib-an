@@ -30,7 +30,6 @@
             android:orientation="horizontal"
             app:layoutManager="LinearLayoutManager"
             tools:listitem="@layout/top_list_item"
-            android:background="@color/main_background_transparent"
             android:paddingBottom="10dp"/>
         </FrameLayout>
 </layout>

@@ -22,7 +22,8 @@ class HorizontalListAdapter(
     val screenWidth: Int,
     val listItemLayout: Int = R.layout.top_list_item,
     private val isShoppingList: Boolean = false,
-    var hasScrolled: Boolean = false
+    var hasScrolled: Boolean = false,
+    val padding: Int = 10
 ) : ListAdapter<PageData<GenericPagerFragment>, HorizontalListAdapter.HorizontalViewHolder>(OfferTypeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalViewHolder {
@@ -64,18 +65,18 @@ class HorizontalListAdapter(
                 bind(pageData, productGroupSelectionListener, position, selectedIndex)
 
                 if(position==0 && !isShoppingList && hasScrolled) {
-                    holder.itemView.setPadding(10.toPx(), 0, 0, 0)
+                    holder.itemView.setPadding(padding.toPx(), 0, 0, 0)
                     holder.viewModel.paddingEnd.set(0)
                 } else {
                     if (position==itemCount-1) {
-                        holder.itemView.setPadding(10.toPx(), 0, 0, 0)
+                        holder.itemView.setPadding(padding.toPx(), 0, 0, 0)
                         if (settings.type== dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum.STRETCH) {
                             holder.viewModel.paddingEnd.set(0.toPx())
                         } else {
                             holder.viewModel.paddingEnd.set(100.toPx())
                         }
                     } else {
-                        holder.itemView.setPadding(10.toPx(), 0, 0, 0)
+                        holder.itemView.setPadding(padding.toPx(), 0, 0, 0)
                         holder.viewModel.paddingEnd.set(0)
                     }
                 }
@@ -120,8 +121,4 @@ class HorizontalListAdapter(
 
 interface ProductGroupSelectionListener {
     fun typeSelected(pageData: PageData<GenericPagerFragment>, index: Int)
-}
-
-interface ViewUpdater {
-    fun updateView()
 }
