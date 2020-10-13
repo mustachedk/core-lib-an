@@ -14,6 +14,7 @@ class HeaderListViewPagerSettings(
     val paddingBetween: Int = 10.toPx(),
     val type: HeaderListViewPagerTypeEnum = HeaderListViewPagerTypeEnum.STRETCH,
     val topListLayoutId: Int = R.layout.top_list_item,
+    val topListBackgroundColor: Int = R.color.transparent,
     private val topListAnchorY: Int = 0,
     private val topListTranslationYStart: Int = 0,
     private val topListTranslationYCurrent: ObservableField<Int> = ObservableField(
@@ -34,10 +35,6 @@ class HeaderListViewPagerSettings(
     private fun maxScrollRange() = topListTranslationYStart.minus(topListAnchorY)
 
     fun getTopListTranslationY() = topListTranslationYCurrent
-
-    fun animateTranslationYReset(duration: Long, interpolator: TimeInterpolator) {
-        animateTranslationY(topListTranslationYStart, duration, interpolator, false)
-    }
 
     fun animateTranslationY(to: Int, duration: Long, interpolator: TimeInterpolator, fillAfter:Boolean) {
         val valueAnimator: ValueAnimator = ValueAnimator.ofInt(topListTranslationYCurrent.get()?:0, to)
