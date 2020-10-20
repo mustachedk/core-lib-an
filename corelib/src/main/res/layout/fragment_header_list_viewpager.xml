@@ -11,12 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context="dk.mustache.corelib.HeaderListViewpagerFragment">
+        tools:context="dk.mustache.corelib.Header
+        ListViewpagerFragment">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/offer_list_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:clipToPadding="false"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 

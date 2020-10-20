@@ -71,14 +71,14 @@ class MainActivity : BottomSheetMenu.BottomSheetMenuListener, AppCompatActivity(
         val t8 = SpecialData("89892345", Pager2Fragment::class.java, "13746")
 
         viewModel.updatePageDataList(listOf(t1, t2, t3, t4, t5))
+
+        viewModel.selectedIndexObservable.set(3)
         //SCROLL TYPE
         viewModel.settings.set(
             HeaderListViewPagerSettings(
-                10.toPx(),
-                HeaderListViewPagerTypeEnum.SCROLL,
-                R.layout.top_list_scroll_item,
-                100.toPx(),
-                400.toPx()
+                paddingBetween = 10.toPx(),
+                type = HeaderListViewPagerTypeEnum.SCROLL,
+                topListLayoutId = R.layout.top_list_scroll_item
             )
         )
 

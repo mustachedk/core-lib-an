@@ -1,10 +1,12 @@
 package dk.mustache.corelib.list_header_viewpager
 
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import dk.mustache.corelib.viewmodels.ObservableBaseViewModel
 
 open class HeaderListViewPagerViewModel : ObservableBaseViewModel() {
-    var selectedIndex: Int = 0
+    var currentShownPage: Int = 0
+    var selectedIndexObservable = ObservableInt(-1)
     val pageDataListObservable = ObservableField<List<PageData<GenericPagerFragment>>>()
     val settings = ObservableField<HeaderListViewPagerSettings>(HeaderListViewPagerSettings())
     fun <T : PageData<*>> updatePageDataList(pageList: List<T>) {

@@ -50,10 +50,11 @@ class HeaderListViewPagerFragment : Fragment() {
         if (!pageList.isNullOrEmpty()) {
             Handler().postDelayed({
                 binding.offerListPager.currentItem =
-                    viewModel.selectedIndex
+                    viewModel.selectedIndexObservable.get()
             }, 100)
             binding.offerListPager.visibility = View.VISIBLE
-            binding.offerTypeList.smoothScrollToPosition(viewModel.selectedIndex)
+            viewModel.currentShownPage = viewModel.selectedIndexObservable.get()
+            binding.offerTypeList.smoothScrollToPosition(viewModel.currentShownPage)
         } else {
             binding.offerListPager.visibility = View.GONE
         }
@@ -73,9 +74,9 @@ class HeaderListViewPagerFragment : Fragment() {
     }
 
     fun selectProductGroupByIndex(index: Int) {
-        viewModel.selectedIndex = index
+        viewModel.currentShownPage = index
         if (index < horizontalListAdapter.currentList.size) {
-            horizontalListAdapter.selectedIndex = viewModel.selectedIndex
+            horizontalListAdapter.selectedIndex = viewModel.currentShownPage
 
             horizontalListAdapter.notifyDataSetChanged()
 
@@ -120,7 +121,7 @@ class HeaderListViewPagerFragment : Fragment() {
 
         horizontalListAdapter = HorizontalListAdapter(requireActivity(),
             selectionListener,
-            viewModel.selectedIndex,
+            viewModel.currentShownPage,
             settings ?: HeaderListViewPagerSettings(),
             getScreenWidth(requireActivity()),
             settings?.topListLayoutId ?: R.layout.top_list_item,
@@ -147,7 +148,7 @@ class HeaderListViewPagerFragment : Fragment() {
                 } else {
                     Handler().postDelayed({
                         if (isAdded) {
-                            binding.offerTypeList.smoothScrollToPosition(viewModel.selectedIndex)
+                            binding.offerTypeList.smoothScrollToPosition(viewModel.currentShownPage)
                         }
                     }, 500)
                     first = false
@@ -206,12 +207,25 @@ class HeaderListViewPagerFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        viewModel.selectedIndexObservable.addOnPropertyChangedCallback(selectedPageCallback)
         viewModel.pageDataListObservable.addOnPropertyChangedCallback(callBack)
     }
 
     override fun onStop() {
         super.onStop()
+        viewModel.selectedIndexObservable.removeOnPropertyChangedCallback(selectedPageCallback)
         viewModel.pageDataListObservable.removeOnPropertyChangedCallback(callBack)
+    }
+
+
+    val selectedPageCallback = object : androidx.databinding.Observable.OnPropertyChangedCallback() {
+        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+            val selectedPage = viewModel.selectedIndexObservable.get()
+//            if (selectedPage>-1) {
+                binding.offerListPager.currentItem = selectedPage
+//                viewModel.selectedIndexObservable.set(-1)
+//            }
+        }
     }
 
     val callBack = object : androidx.databinding.Observable.OnPropertyChangedCallback() {
