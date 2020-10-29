@@ -48,10 +48,10 @@ class HeaderListViewPagerFragment : Fragment() {
         binding.offerListPager.adapter = offerListPagerAdapter
 
         if (!pageList.isNullOrEmpty()) {
-            Handler().postDelayed({
+            Handler().post {
                 binding.offerListPager.currentItem =
                     viewModel.selectedIndexObservable.get()
-            }, 100)
+            }
             binding.offerListPager.visibility = View.VISIBLE
             viewModel.currentShownPage = viewModel.selectedIndexObservable.get()
             binding.offerTypeList.smoothScrollToPosition(viewModel.currentShownPage)
@@ -142,8 +142,14 @@ class HeaderListViewPagerFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 if (!first) {
                     selectProductGroupByIndex(position)
-                    if (position != 0)
+                    if (position != 0) {
                         horizontalListAdapter.hasScrolled = true
+                    } else {
+                        binding.offerTypeList.scrollToPosition(0)
+                    }
+
+
+
                     horizontalListAdapter.notifyItemChanged(0)
                 } else {
                     Handler().postDelayed({
