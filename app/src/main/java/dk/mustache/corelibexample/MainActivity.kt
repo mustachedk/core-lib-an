@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
+import dk.mustache.corelib.fragment_dialog.FragmentDialogSetup
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
@@ -25,14 +28,19 @@ import dk.mustache.corelib.network.RetroClient
 import dk.mustache.corelib.utils.*
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
-import dk.mustache.mapdiet.fragments.bottomsheets.BottomSheetMenu
+import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment
+import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment.Companion.BUTTON_CANCEL
+import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment.Companion.BUTTON_OK
+import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment.Companion.TEXT_CLICKED
+import dk.mustache.mapdiet.fragments.bottomsheets.BottomSheetMenuFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MainActivity : BottomSheetMenu.BottomSheetMenuListener, AppCompatActivity(), LocationUtil.LocationChangedCallback {
+class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
+    BaseDialogFragment.BaseDialogFragmentListener, AppCompatActivity(), LocationUtil.LocationChangedCallback {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private var locationUtil: LocationUtil? = null
@@ -99,8 +107,13 @@ class MainActivity : BottomSheetMenu.BottomSheetMenuListener, AppCompatActivity(
             viewModel.updatePageDataList(listOf(t6, t7, t8, t4, t5))
         }, 5000)
 
-        val menu = BottomSheetMenu.newInstance(BottomSheetDialogSettings("Menu Header", listOf("Menu Option 1", "Menu Option 2", "Menu Option 3", "Menu Option 4"), MenuDialogType.CUSTOM))
-        menu.show(supportFragmentManager, "MenuDialog")
+        //BottomSheetMenuFragment uncomment to see usage
+//        val menu = BottomSheetMenuFragment.newInstance(BottomSheetDialogSettings("Menu Header", listOf("Menu Option 1", "Menu Option 2", "Menu Option 3", "Menu Option 4"), MenuDialogType.CUSTOM))
+//        menu.show(supportFragmentManager, "MenuDialog")
+
+        //BaseDialogFragment
+        val dialog = BaseDialogFragment.newInstance(FragmentDialogSetup(header = "Header", text = "Text", dialogType = DialogTypeEnum.ALERT, alternativeStyle = R.style.FragmentDialogStyle))
+        dialog.show(supportFragmentManager, "FragmentDialog")
 
         testRetroFit()
         //endRegion
@@ -204,6 +217,23 @@ class MainActivity : BottomSheetMenu.BottomSheetMenuListener, AppCompatActivity(
 
     override fun itemSelected(text: String, index: Int, menuType: MenuDialogType) {
 
+    }
+
+    override fun dialogButtonClicked(index: Int, dialogType: DialogTypeEnum) {
+        when(index) {
+            BUTTON_OK -> {
+                Toast.makeText(this, "BUTTON_OK", Toast.LENGTH_LONG).show()
+            }
+            BUTTON_CANCEL -> {
+                Toast.makeText(this, "BUTTON_CANCEL", Toast.LENGTH_LONG).show()
+            }
+            TEXT_CLICKED -> {
+                Toast.makeText(this, "TEXT_CLICKED", Toast.LENGTH_LONG).show()
+            }
+            else -> {
+
+            }
+        }
     }
 
     override fun nothingSelected() {

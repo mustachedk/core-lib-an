@@ -16,13 +16,10 @@ import androidx.fragment.app.DialogFragment
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.FragmentBottomsheetMenuBinding
 import dk.mustache.corelib.databinding.ItemMenuOptionBinding
-import dk.mustache.corelib.databinding.ItemMenuOptionDividerBinding
 import dk.mustache.corelib.menu_bottom_sheet.BottomSheetDialogSettings
 import dk.mustache.corelib.menu_bottom_sheet.MenuDialogType
-import java.lang.Appendable
-import java.util.ArrayList
 
-class BottomSheetMenu : BottomSheetDialogFragment() {
+class BottomSheetMenuFragment : BottomSheetDialogFragment() {
 
     private var mListener: BottomSheetMenuListener? = null
     private lateinit var settings: BottomSheetDialogSettings
@@ -41,8 +38,8 @@ class BottomSheetMenu : BottomSheetDialogFragment() {
     companion object {
         private const val DIALOG_SETTINGS = "dialog_settings"
 
-        fun newInstance(dialogSettings: BottomSheetDialogSettings): BottomSheetMenu {
-            val fragment = BottomSheetMenu()
+        fun newInstance(dialogSettings: BottomSheetDialogSettings): BottomSheetMenuFragment {
+            val fragment = BottomSheetMenuFragment()
 
             val args = Bundle()
             args.putParcelable(DIALOG_SETTINGS, dialogSettings)
