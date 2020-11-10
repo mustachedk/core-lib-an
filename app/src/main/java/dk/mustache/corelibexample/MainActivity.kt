@@ -26,13 +26,13 @@ import dk.mustache.corelib.network.AuthorizationRepository
 import dk.mustache.corelib.network.AuthorizationType
 import dk.mustache.corelib.network.RetroClient
 import dk.mustache.corelib.utils.*
+import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
 import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment
 import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment.Companion.BUTTON_CANCEL
 import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment.Companion.BUTTON_OK
 import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment.Companion.TEXT_CLICKED
-import dk.mustache.mapdiet.fragments.bottomsheets.BottomSheetMenuFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -112,8 +112,8 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
 //        menu.show(supportFragmentManager, "MenuDialog")
 
         //BaseDialogFragment
-        val dialog = BaseDialogFragment.newInstance(FragmentDialogSetup(header = "Header", text = "Text", dialogType = DialogTypeEnum.ALERT, alternativeStyle = R.style.FragmentDialogStyle))
-        dialog.show(supportFragmentManager, "FragmentDialog")
+//        val dialog = BaseDialogFragment.newInstance(FragmentDialogSetup(header = "Header", text = "Text", dialogType = DialogTypeEnum.ALERT, alternativeStyle = R.style.FragmentDialogStyle))
+//        dialog.show(supportFragmentManager, "FragmentDialog")
 
         testRetroFit()
         //endRegion

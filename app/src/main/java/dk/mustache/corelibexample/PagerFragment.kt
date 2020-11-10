@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import dk.mustache.corelib.list_header_viewpager.GenericPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
+import dk.mustache.corelib.sticky_header_decoration.StickyHeaderItemDecoration
 import dk.mustache.corelibexample.databinding.FragmentListHeaderPagerBinding
 import dk.mustache.corelibexample.section_header_example.SectionHeaderExampleAdapter
 import dk.mustache.corelibexample.section_header_example.SectionExampleItem
@@ -84,6 +85,10 @@ open class PagerFragment : GenericPagerFragment() {
         val adapter = SectionHeaderExampleAdapter(viewModel) {
 
         }
+
+        val stickyDecoration = StickyHeaderItemDecoration(binding.offerTypeList, R.layout.section_header_item, adapter)
+        binding.offerTypeList.addItemDecoration(stickyDecoration)
+
         binding.offerTypeList.adapter = adapter
 
         adapter.updateDataAndAddHeaders(ArrayList(viewModel.listWithSectionHeaders?: listOf()))

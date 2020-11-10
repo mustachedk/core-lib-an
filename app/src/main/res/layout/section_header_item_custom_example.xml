@@ -15,7 +15,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="30dp"
         android:layout_width="match_parent"
-        android:alpha="0.82"
         android:background="@{viewModel.selected ? @color/black : @color/colorAccent}"
         >
 

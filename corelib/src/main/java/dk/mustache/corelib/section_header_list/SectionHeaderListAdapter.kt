@@ -11,7 +11,7 @@ import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.SectionHeaderItemBinding
 
 abstract class SectionHeaderListAdapter <T : SectionItem, U: ViewModel>  (val itemListWithHeaders: ArrayList<SectionItem>, val rowItemType: Int, val placeholderItemType: Int, val headerItemType: Int = R.layout.section_header_item, val onItemClicked: ((item: SectionItem) -> Unit)? = {}) : RecyclerView.Adapter<SectionHeaderListAdapter.SectionHeaderViewHolder<U>>() {
-    private var layoutInflater: LayoutInflater? = null
+    var layoutInflater: LayoutInflater? = null
 
     class SectionHeaderViewHolder<V>(val binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
