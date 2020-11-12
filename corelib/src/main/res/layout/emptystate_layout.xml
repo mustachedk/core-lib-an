@@ -5,12 +5,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/emptystate_background"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="false"
-        android:focusable="false">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/emptystate_layout"
+            android:id="@+id/gen_emptystate_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"

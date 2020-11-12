@@ -78,7 +78,7 @@ class EmptyStateView : ConstraintLayout {
         val hideClickEffect = a.getString(R.styleable.EmptystateLayout_hideClickEffect)
 
         if (hideClickEffect=="true") {
-            binding.emptystateLayout.foreground = null
+            binding.genEmptystateLayout.foreground = null
         }
 
         if (!titleText.isNullOrBlank()) {
@@ -140,7 +140,7 @@ class EmptyStateView : ConstraintLayout {
             )
         }
 
-        binding.emptystateLayout.setOnClickListener {
+        binding.genEmptystateLayout.setOnClickListener {
             clickListener?.onEmptystateClicked()
         }
 
