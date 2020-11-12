@@ -38,27 +38,6 @@ class EmptyStateView : ConstraintLayout {
         onClickListener = l
     }
 
-    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.getAction() === KeyEvent.ACTION_UP &&
-            (event.getKeyCode() === KeyEvent.KEYCODE_DPAD_CENTER || event.getKeyCode() === KeyEvent.KEYCODE_ENTER)
-        ) {
-            if (onClickListener != null) onClickListener?.onClick(this)
-        }
-        return super.dispatchKeyEvent(event)
-    }
-
-    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        isPressed = if (event.action == MotionEvent.ACTION_DOWN) {
-            true
-        } else if (event.action == MotionEvent.ACTION_UP) {
-            if (onClickListener != null) onClickListener?.onClick(this)
-            false
-        } else {
-            false
-        }
-        return super.dispatchTouchEvent(event)
-    }
-
     private fun init(context: Context?, attrs: AttributeSet?) {
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = DataBindingUtil.inflate(
@@ -165,14 +144,13 @@ class EmptyStateView : ConstraintLayout {
         }
         setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                clickListener?.onEmptystateClicked()
             }
 
         })
 
-//        binding.genEmptystateLayout.setOnClickListener {
-//
-//        }
+        binding.genEmptystateLayout.setOnClickListener {
+            clickListener?.onEmptystateClicked()
+        }
 
         a.recycle()
 
