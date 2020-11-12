@@ -3,12 +3,9 @@ package dk.mustache.corelib.views
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.DataBindingUtil
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import dk.mustache.corelib.R
@@ -35,6 +32,33 @@ class EmptyStateView : ConstraintLayout {
         defStyleAttr
     ) { init(context, attrs) }
 
+    private var onClickListener: OnClickListener? = null
+
+    fun setOnClickListener(l: OnClickListener) {
+        onClickListener = l
+    }
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (event.getAction() === KeyEvent.ACTION_UP &&
+            (event.getKeyCode() === KeyEvent.KEYCODE_DPAD_CENTER || event.getKeyCode() === KeyEvent.KEYCODE_ENTER)
+        ) {
+            if (onClickListener != null) onClickListener?.onClick(this)
+        }
+        return super.dispatchKeyEvent(event)
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        isPressed = if (event.action == MotionEvent.ACTION_DOWN) {
+            true
+        } else if (event.action == MotionEvent.ACTION_UP) {
+            if (onClickListener != null) onClickListener?.onClick(this)
+            false
+        } else {
+            false
+        }
+        return super.dispatchTouchEvent(event)
+    }
+
     private fun init(context: Context?, attrs: AttributeSet?) {
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = DataBindingUtil.inflate(
@@ -50,13 +74,13 @@ class EmptyStateView : ConstraintLayout {
         val buttonText = a.getString(R.styleable.EmptystateLayout_buttonText)
 
 
-        val titleSize = a.getInteger(R.styleable.EmptystateLayout_titleSize,14)
-        val subtitleSize = a.getInteger(R.styleable.EmptystateLayout_subtitleSize,14)
-        val buttonTextSize = a.getInteger(R.styleable.EmptystateLayout_buttonTextSize,14)
+        val titleSize = a.getInteger(R.styleable.EmptystateLayout_titleSize, 14)
+        val subtitleSize = a.getInteger(R.styleable.EmptystateLayout_subtitleSize, 14)
+        val buttonTextSize = a.getInteger(R.styleable.EmptystateLayout_buttonTextSize, 14)
 
-        val titleColor = a.getColor(R.styleable.EmptystateLayout_titleColor,0)
-        val subtitleColor = a.getColor(R.styleable.EmptystateLayout_subtitleColor,0)
-        val buttonTextColor = a.getColor(R.styleable.EmptystateLayout_buttonTextColor,0)
+        val titleColor = a.getColor(R.styleable.EmptystateLayout_titleColor, 0)
+        val subtitleColor = a.getColor(R.styleable.EmptystateLayout_subtitleColor, 0)
+        val buttonTextColor = a.getColor(R.styleable.EmptystateLayout_buttonTextColor, 0)
 
         binding.emptystateTitle.setTextColor(titleColor)
         binding.emptystateSubtitle.setTextColor(subtitleColor)
@@ -139,10 +163,16 @@ class EmptyStateView : ConstraintLayout {
                 )
             )
         }
+        setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                clickListener?.onEmptystateClicked()
+            }
 
-        binding.genEmptystateLayout.setOnClickListener {
-            clickListener?.onEmptystateClicked()
-        }
+        })
+
+//        binding.genEmptystateLayout.setOnClickListener {
+//
+//        }
 
         a.recycle()
 
