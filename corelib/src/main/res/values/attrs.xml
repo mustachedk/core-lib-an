@@ -6,4 +6,23 @@
             <flag name="right" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="EmptystateLayout">
+        <attr name="buttonTextColor" format="string" />
+        <attr name="titleText" format="string" />
+        <attr name="subtitleText" format="string" />
+        <attr name="titleSize" format="integer" />
+        <attr name="buttonTextSize" format="integer" />
+        <attr name="subtitleSize" format="integer" />
+        <attr name="imageDrawable" format="string" />
+        <attr name="buttonBackground" format="string" />
+        <attr name="titleFont" format="string" />
+        <attr name="titleColor" format="reference" />
+        <attr name="subtitleColor" format="reference" />
+        <attr name="subtitleFont" format="reference" />
+        <attr name="buttonTextFont" format="string" />
+        <attr name="showButton" format="string" />
+        <attr name="buttonText" format="string" />
+        <attr name="hideClickEffect" format="string" />
+    </declare-styleable>
 </resources>

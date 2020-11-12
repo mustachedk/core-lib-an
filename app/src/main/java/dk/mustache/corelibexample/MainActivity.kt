@@ -14,18 +14,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
-import dk.mustache.corelib.fragment_dialog.FragmentDialogSetup
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
-import dk.mustache.corelib.menu_bottom_sheet.BottomSheetDialogSettings
 import dk.mustache.corelib.menu_bottom_sheet.MenuDialogType
 import dk.mustache.corelib.network.AccessToken
 import dk.mustache.corelib.network.AuthorizationRepository
 import dk.mustache.corelib.network.AuthorizationType
 import dk.mustache.corelib.network.RetroClient
 import dk.mustache.corelib.utils.*
+import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
@@ -40,7 +39,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
-    BaseDialogFragment.BaseDialogFragmentListener, AppCompatActivity(), LocationUtil.LocationChangedCallback {
+    BaseDialogFragment.BaseDialogFragmentListener, AppCompatActivity(), LocationUtil.LocationChangedCallback, EmptyStateView.OnEmptystateActionListener {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private var locationUtil: LocationUtil? = null
@@ -63,7 +62,8 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
             this,
             R.layout.activity_main
         )
-        binding.del = this
+
+        binding.mainEmptystate.clickListener = this
 
         //region HeaderListViewPager testdata
 
@@ -238,5 +238,9 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
 
     override fun nothingSelected() {
 
+    }
+
+    override fun onEmptystateClicked() {
+        Toast.makeText(this, "Emptystate clicked", Toast.LENGTH_LONG).show()
     }
 }

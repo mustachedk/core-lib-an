@@ -37,4 +37,29 @@
         <item name="android:windowEnterAnimation">@anim/hold_anim</item>
         <item name="android:windowExitAnimation">@anim/hold_anim</item>
     </style>
+
+    <style name="Toolbar.Base" parent="TextAppearance.AppCompat">
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="Toolbar.Title" parent="Toolbar.Base">
+        <item name="android:textColor">@color/emptystate_header</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Toolbar.Subtitle" parent="Toolbar.Base">
+        <item name="android:textColor">@color/emptystate_subheader</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:alpha">0.5</item>
+    </style>
+
+    <style name="Toolbar.End.Action.Base" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Toolbar.End.Action.Regular.Black" parent="Toolbar.End.Action.Base">
+
+    </style>
 </resources>
