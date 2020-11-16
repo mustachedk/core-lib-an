@@ -44,7 +44,7 @@ class HeaderListViewPagerFragment : Fragment() {
         val pageList = viewModel.pageDataListObservable.get()
         horizontalListAdapter.submitList(pageList)
         offerListPagerAdapter = BottomPagerAdapter(this, ArrayList(pageList ?: ArrayList()))
-        binding.offerListPager.offscreenPageLimit = 1
+        binding.offerListPager.offscreenPageLimit = viewModel.settings.get()?.offscreenPageLimit?:1
         binding.offerListPager.adapter = offerListPagerAdapter
 
         if (!pageList.isNullOrEmpty()) {
