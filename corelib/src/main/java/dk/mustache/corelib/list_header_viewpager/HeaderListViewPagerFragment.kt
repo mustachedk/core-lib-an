@@ -231,10 +231,7 @@ class HeaderListViewPagerFragment : Fragment() {
     val selectedPageCallback = object : androidx.databinding.Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             val selectedPage = viewModel.selectedIndexObservable.get()
-//            if (selectedPage>-1) {
-                binding.offerListPager.currentItem = selectedPage
-//                viewModel.selectedIndexObservable.set(-1)
-//            }
+            binding.offerListPager.currentItem = selectedPage
         }
     }
 
