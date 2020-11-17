@@ -182,23 +182,25 @@ class HeaderListViewPagerFragment : Fragment() {
 
                 currentTypeListScroll += dx
 
+                val dataList = viewModel.pageDataListObservable.get()?:ArrayList()
+
                 //Scrolling right
                 if (dx > 0) {
+                    if(layoutManager.findLastCompletelyVisibleItemPosition()==dataList.lastIndex){
+                            Handler().postDelayed({
+                                binding.offerTypeList.scrollToPosition(dataList.lastIndex)
+                            }, 200)
+                        }
                     scrollDirection = scrollingRight
                 }
                 //Scrolling left
                 if (dx < 0) {
                     scrollDirection = scrollingLeft
-                    if (currentTypeListScroll < 100) {
-                        if (!isScrollingToStart) {
-                            isScrollingToStart = true
-                            Handler().postDelayed({
-                                if (isAdded)
-                                    binding.offerTypeList.scrollToPosition(0)
-                                currentTypeListScroll = 0
-                                isScrollingToStart = false
-                            }, 500)
-                        }
+
+                    if(layoutManager.findFirstCompletelyVisibleItemPosition()==0){
+                        Handler().postDelayed({
+                            binding.offerTypeList.scrollToPosition(0)
+                        }, 200)
                     }
                 }
             }
