@@ -188,11 +188,17 @@ class HeaderListViewPagerFragment : Fragment() {
                 //Scrolling right
                 if (dx > 0) {
                     val dataList = viewModel.pageDataListObservable.get()?:ArrayList()
-                    if(layoutManager.findLastCompletelyVisibleItemPosition()==dataList.lastIndex){
+                    if(layoutManager.findLastCompletelyVisibleItemPosition()==dataList.lastIndex) {
+
+                    if (!isScrollingToStart) {
+                        isScrollingToStart = true
                             Handler().postDelayed({
                                 binding.offerTypeList.scrollToPosition(dataList.lastIndex)
+                                isScrollingToStart = false
+                                currentTypeListScroll = 0
                             }, 200)
                         }
+                    }
                     scrollDirection = scrollingRight
                 }
                 //Scrolling left
@@ -200,9 +206,14 @@ class HeaderListViewPagerFragment : Fragment() {
                     scrollDirection = scrollingLeft
 
                     if(layoutManager.findFirstCompletelyVisibleItemPosition()==0){
-                        Handler().postDelayed({
-                            binding.offerTypeList.scrollToPosition(0)
-                        }, 200)
+                        if (!isScrollingToStart) {
+                            isScrollingToStart = true
+                            Handler().postDelayed({
+                                binding.offerTypeList.scrollToPosition(0)
+                                isScrollingToStart = false
+                                currentTypeListScroll = 0
+                            }, 200)
+                        }
                     }
                 }
             }
