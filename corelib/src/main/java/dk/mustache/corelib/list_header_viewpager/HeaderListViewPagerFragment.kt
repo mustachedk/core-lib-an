@@ -24,7 +24,7 @@ class HeaderListViewPagerFragment : Fragment() {
     private lateinit var binding: FragmentHeaderListViewpagerBinding
     private lateinit var horizontalListAdapter: HorizontalListAdapter
     private lateinit var snapHelper: LinearSnapHelper
-    private lateinit var layoutManager: CenterLayoutManager
+    private lateinit var layoutManager: LinearLayoutManager
     private lateinit var offerListPagerAdapter: BottomPagerAdapter
     private var currentTypeListScroll = 0
     private var first = true
@@ -36,8 +36,7 @@ class HeaderListViewPagerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel =
-            ViewModelProvider(requireActivity()).get(HeaderListViewPagerViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(HeaderListViewPagerViewModel::class.java)
     }
 
     fun setupViewPager() {
@@ -127,8 +126,14 @@ class HeaderListViewPagerFragment : Fragment() {
             settings?.topListLayoutId ?: R.layout.top_list_item,
             false,
             false,
-            viewModel.settings.get()?.paddingBetween ?: 10)
-        layoutManager = CenterLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            settings?.paddingBetween ?: 10,
+            settings?.lastItemPaddingEnd ?: 100
+            )
+        if (settings?.snapCenter==true) {
+            layoutManager = CenterLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        } else {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
         binding.offerTypeList.layoutManager = layoutManager
         binding.offerTypeList.adapter = horizontalListAdapter
 
@@ -143,6 +148,14 @@ class HeaderListViewPagerFragment : Fragment() {
                 if (!first) {
                     selectProductGroupByIndex(position)
                     if (position != 0) {
+                        val dataList = viewModel.pageDataListObservable.get()?:ArrayList()
+                        if (position>=dataList.lastIndex) {
+                            Handler().postDelayed({
+                                if (isAdded) {
+                                    binding.offerTypeList.scrollToPosition(dataList.lastIndex)
+                                }
+                            },300)
+                        }
                         horizontalListAdapter.hasScrolled = true
                     } else {
                         binding.offerTypeList.scrollToPosition(0)
@@ -182,20 +195,32 @@ class HeaderListViewPagerFragment : Fragment() {
 
                 //Scrolling right
                 if (dx > 0) {
+                    val dataList = viewModel.pageDataListObservable.get()?:ArrayList()
+                    if(layoutManager.findLastCompletelyVisibleItemPosition()==dataList.lastIndex) {
+
+                    if (!isScrollingToStart) {
+                        isScrollingToStart = true
+                            Handler().postDelayed({
+                                binding.offerTypeList.scrollToPosition(dataList.lastIndex)
+                                isScrollingToStart = false
+                                currentTypeListScroll = 0
+                            }, 200)
+                        }
+                    }
                     scrollDirection = scrollingRight
                 }
                 //Scrolling left
                 if (dx < 0) {
                     scrollDirection = scrollingLeft
-                    if (currentTypeListScroll < 100) {
+
+                    if(layoutManager.findFirstCompletelyVisibleItemPosition()==0){
                         if (!isScrollingToStart) {
                             isScrollingToStart = true
                             Handler().postDelayed({
-                                if (isAdded)
-                                    binding.offerTypeList.scrollToPosition(0)
-                                currentTypeListScroll = 0
+                                binding.offerTypeList.scrollToPosition(0)
                                 isScrollingToStart = false
-                            }, 500)
+                                currentTypeListScroll = 0
+                            }, 200)
                         }
                     }
                 }
@@ -227,10 +252,7 @@ class HeaderListViewPagerFragment : Fragment() {
     val selectedPageCallback = object : androidx.databinding.Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             val selectedPage = viewModel.selectedIndexObservable.get()
-//            if (selectedPage>-1) {
-                binding.offerListPager.currentItem = selectedPage
-//                viewModel.selectedIndexObservable.set(-1)
-//            }
+            binding.offerListPager.currentItem = selectedPage
         }
     }
 
