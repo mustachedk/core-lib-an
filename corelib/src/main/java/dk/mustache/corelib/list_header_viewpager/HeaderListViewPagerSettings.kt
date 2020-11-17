@@ -16,6 +16,7 @@ class HeaderListViewPagerSettings(
     val topListLayoutId: Int = R.layout.top_list_item,
     val topListBackgroundColor: Int = R.color.transparent,
     val offscreenPageLimit: Int = 1,
+    val lastItemPaddingEnd: Int = 100,
     private val topListAnchorY: Int = 0,
     private val topListTranslationYStart: Int = 0,
     private val topListTranslationYCurrent: ObservableField<Int> = ObservableField(

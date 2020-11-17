@@ -127,7 +127,9 @@ class HeaderListViewPagerFragment : Fragment() {
             settings?.topListLayoutId ?: R.layout.top_list_item,
             false,
             false,
-            viewModel.settings.get()?.paddingBetween ?: 10)
+            settings?.paddingBetween ?: 10,
+            settings?.lastItemPaddingEnd ?: 100
+            )
         layoutManager = CenterLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.offerTypeList.layoutManager = layoutManager
         binding.offerTypeList.adapter = horizontalListAdapter

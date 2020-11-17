@@ -23,7 +23,8 @@ class HorizontalListAdapter(
     val listItemLayout: Int = R.layout.top_list_item,
     private val isShoppingList: Boolean = false,
     var hasScrolled: Boolean = false,
-    val padding: Int = 10
+    val padding: Int = 10,
+    val lastItemPaddingEnd: Int = 100
 ) : ListAdapter<PageData<GenericPagerFragment>, HorizontalListAdapter.HorizontalViewHolder>(OfferTypeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalViewHolder {
@@ -62,7 +63,7 @@ class HorizontalListAdapter(
         getItem(position).let { pageData ->
             with(holder) {
 
-                bind(pageData, productGroupSelectionListener, position, selectedIndex)
+                bind(pageData, productGroupSelectionListener, position, selectedIndex, lastItemPaddingEnd)
 
                 if(position==0 && !isShoppingList && hasScrolled) {
                     holder.itemView.setPadding(padding.toPx(), 0, 0, 0)
@@ -73,7 +74,7 @@ class HorizontalListAdapter(
                         if (settings.type== dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum.STRETCH) {
                             holder.viewModel.paddingEnd.set(0.toPx())
                         } else {
-                            holder.viewModel.paddingEnd.set(100.toPx())
+                            holder.viewModel.paddingEnd.set(viewModel.lastItemPaddingEnd)
                         }
                     } else {
                         holder.itemView.setPadding(padding.toPx(), 0, 0, 0)
@@ -104,11 +105,12 @@ class HorizontalListAdapter(
             pageData: PageData<GenericPagerFragment>,
             selectionListener: ProductGroupSelectionListener?,
             index: Int,
-            selectedIndex: Int
+            selectedIndex: Int,
+            lastItemPaddingEnd: Int
         ) {
 
             viewModel = HorizontalListItemViewModel(
-                pageData, selectionListener, index, selectedIndex
+                pageData, selectionListener, index, selectedIndex, lastItemPaddingEnd
             )
             binding.setVariable(BR.viewModel, viewModel)
             binding.executePendingBindings()
