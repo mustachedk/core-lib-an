@@ -182,10 +182,9 @@ class HeaderListViewPagerFragment : Fragment() {
 
                 currentTypeListScroll += dx
 
-                val dataList = viewModel.pageDataListObservable.get()?:ArrayList()
-
                 //Scrolling right
                 if (dx > 0) {
+                    val dataList = viewModel.pageDataListObservable.get()?:ArrayList()
                     if(layoutManager.findLastCompletelyVisibleItemPosition()==dataList.lastIndex){
                             Handler().postDelayed({
                                 binding.offerTypeList.scrollToPosition(dataList.lastIndex)
