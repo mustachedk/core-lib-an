@@ -78,8 +78,8 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
         val t7 = SpecialData("89302", Pager2Fragment::class.java, "3435iji54793457345958678954")
         val t8 = SpecialData("89892345", Pager2Fragment::class.java, "13746")
 
-//        viewModel.updatePageDataList(listOf(t1, t2, t3, t4, t5))
-        viewModel.updatePageDataList(listOf(t6, t4, t5))
+        viewModel.updatePageDataList(listOf(t1, t2, t3, t4, t5, t6, t7, t8))
+//        viewModel.updatePageDataList(listOf(t6, t4, t5))
 
         viewModel.selectedIndexObservable.set(3)
         //SCROLL TYPE
@@ -89,7 +89,8 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
                 type = HeaderListViewPagerTypeEnum.SCROLL,
                 topListLayoutId = R.layout.top_list_scroll_item,
                 lastItemPaddingEnd = 10.toPx(),
-                snapCenter = false
+                snapCenter = false,
+                swipeSensitivity = 1
             )
         )
 

@@ -19,6 +19,8 @@ class HeaderListViewPagerSettings(
     val offscreenPageLimit: Int = 1,
     val lastItemPaddingEnd: Int = 100,
     val snapCenter: Boolean = true,
+    //Swipe sensitivity: The lower the value the more sensitive for horizontal swipe. Should be > 0
+    val swipeSensitivity: Int = 6,
     private val topListAnchorY: Int = 0,
     private val topListTranslationYStart: Int = 0,
     private val topListTranslationYCurrent: ObservableField<Int> = ObservableField(

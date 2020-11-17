@@ -131,14 +131,13 @@ class HeaderListViewPagerFragment : Fragment() {
             )
         if (settings?.snapCenter==true) {
             layoutManager = CenterLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            snapHelper = LinearSnapHelper()
+            snapHelper.attachToRecyclerView(binding.offerTypeList)
         } else {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
         binding.offerTypeList.layoutManager = layoutManager
         binding.offerTypeList.adapter = horizontalListAdapter
-
-        snapHelper = LinearSnapHelper()
-        snapHelper.attachToRecyclerView(binding.offerTypeList)
 
         binding.offerListPager.isSaveEnabled = false
         binding.offerListPager.reduceDragSensitivity()
@@ -282,7 +281,7 @@ class HeaderListViewPagerFragment : Fragment() {
         val touchSlopField = RecyclerView::class.java.getDeclaredField("mTouchSlop")
         touchSlopField.isAccessible = true
         val touchSlop = touchSlopField.get(recyclerView) as Int
-        touchSlopField.set(recyclerView, touchSlop * 6)
+        touchSlopField.set(recyclerView, touchSlop * Math.abs(viewModel.settings.get()?.swipeSensitivity?:6))
     }
 
     @SuppressLint("UseRequireInsteadOfGet")
