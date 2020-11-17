@@ -24,7 +24,7 @@ class HeaderListViewPagerFragment : Fragment() {
     private lateinit var binding: FragmentHeaderListViewpagerBinding
     private lateinit var horizontalListAdapter: HorizontalListAdapter
     private lateinit var snapHelper: LinearSnapHelper
-    private lateinit var layoutManager: CenterLayoutManager
+    private lateinit var layoutManager: LinearLayoutManager
     private lateinit var offerListPagerAdapter: BottomPagerAdapter
     private var currentTypeListScroll = 0
     private var first = true
@@ -36,8 +36,7 @@ class HeaderListViewPagerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel =
-            ViewModelProvider(requireActivity()).get(HeaderListViewPagerViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(HeaderListViewPagerViewModel::class.java)
     }
 
     fun setupViewPager() {
@@ -130,7 +129,11 @@ class HeaderListViewPagerFragment : Fragment() {
             settings?.paddingBetween ?: 10,
             settings?.lastItemPaddingEnd ?: 100
             )
-        layoutManager = CenterLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        if (settings?.snapCenter==true) {
+            layoutManager = CenterLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        } else {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
         binding.offerTypeList.layoutManager = layoutManager
         binding.offerTypeList.adapter = horizontalListAdapter
 

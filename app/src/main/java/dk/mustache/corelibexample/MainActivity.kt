@@ -87,7 +87,8 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
                 paddingBetween = 10.toPx(),
                 type = HeaderListViewPagerTypeEnum.SCROLL,
                 topListLayoutId = R.layout.top_list_scroll_item,
-                lastItemPaddingEnd = 10.toPx()
+                lastItemPaddingEnd = 10.toPx(),
+                snapCenter = false
             )
         )
 

@@ -5,6 +5,7 @@ import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
 import android.os.Parcelable
 import androidx.databinding.ObservableField
+import androidx.recyclerview.widget.LinearSnapHelper
 import dk.mustache.corelib.R
 import dk.mustache.corelib.utils.toPx
 import kotlinx.android.parcel.Parcelize
@@ -17,6 +18,7 @@ class HeaderListViewPagerSettings(
     val topListBackgroundColor: Int = R.color.transparent,
     val offscreenPageLimit: Int = 1,
     val lastItemPaddingEnd: Int = 100,
+    val snapCenter: Boolean = true,
     private val topListAnchorY: Int = 0,
     private val topListTranslationYStart: Int = 0,
     private val topListTranslationYCurrent: ObservableField<Int> = ObservableField(
