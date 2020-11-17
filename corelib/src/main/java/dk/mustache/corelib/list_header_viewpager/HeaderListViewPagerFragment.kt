@@ -148,6 +148,14 @@ class HeaderListViewPagerFragment : Fragment() {
                 if (!first) {
                     selectProductGroupByIndex(position)
                     if (position != 0) {
+                        val dataList = viewModel.pageDataListObservable.get()?:ArrayList()
+                        if (position>=dataList.lastIndex) {
+                            Handler().postDelayed({
+                                if (isAdded) {
+                                    binding.offerTypeList.scrollToPosition(dataList.lastIndex)
+                                }
+                            },300)
+                        }
                         horizontalListAdapter.hasScrolled = true
                     } else {
                         binding.offerTypeList.scrollToPosition(0)
