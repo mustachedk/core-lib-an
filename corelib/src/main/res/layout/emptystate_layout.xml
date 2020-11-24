@@ -23,7 +23,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="15dp"
-                android:src="@drawable/ic_alert"
                 />
 
             <TextView

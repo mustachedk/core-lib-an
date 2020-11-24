@@ -2,12 +2,16 @@ package dk.mustache.corelib.views
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.VectorDrawable
 import android.util.AttributeSet
 import android.view.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.EmptystateLayoutBinding
 
@@ -95,23 +99,15 @@ class EmptyStateView : ConstraintLayout {
         val drawableId = a.getResourceId(R.styleable.EmptystateLayout_imageDrawable, 0)
 
         if (drawableId != 0) {
-            val drawable: Drawable? = VectorDrawableCompat.create(resources, drawableId, null)
-            if (drawable!=null) {
-                binding.emptystateImage.setImageDrawable(drawable)
-            } else {
-
-            }
+            val drawable = ContextCompat.getDrawable(binding.emptystateImage.context, drawableId)
+            binding.emptystateImage.setImageDrawable(drawable)
         }
 
         val buttonDrawableId = a.getResourceId(R.styleable.EmptystateLayout_buttonBackground, 0)
 
         if (buttonDrawableId != 0) {
-            val drawable: Drawable? = VectorDrawableCompat.create(resources, buttonDrawableId, null)
-            if (drawable!=null) {
-                binding.emptystateButton.background = drawable
-            } else {
-
-            }
+            val drawable = ContextCompat.getDrawable(binding.emptystateButton.context, buttonDrawableId)
+            binding.emptystateButton.background = drawable
         }
 
         val headerFontId: Int = a.getResourceId(R.styleable.EmptystateLayout_titleFont, 0)

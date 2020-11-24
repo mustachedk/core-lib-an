@@ -38,7 +38,7 @@ open class StickyHeaderListAdapter <T : SectionItem, U: ViewModel> (itemListWith
         else false
     }
 
-    //Call this to bind to custom layout
+    //override this to bind to custom layout
     open fun bindHeaderView(headerBinding: ViewDataBinding, position: Int) {
         headerBinding.executePendingBindings()
     }
