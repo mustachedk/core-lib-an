@@ -9,9 +9,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.EmptystateLayoutBinding
 
