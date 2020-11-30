@@ -10,11 +10,12 @@
             android:id="@+id/test_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
+        <!-- TODO set android:visibility="visible" to test EmptyStateView -->
         <dk.mustache.corelib.views.EmptyStateView
             android:id="@+id/main_emptystate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             app:titleFont="@font/roboto_bold"
             app:titleText="adglkjsdfkgjhlhre hksdhgkjhfdg"
             app:titleSize="18"

@@ -15,4 +15,5 @@
     <color name="emptystate_subheader">#292929</color>
     <color name="button_gradient_start">#B7082A</color>
     <color name="button_gradient_end">#E10933</color>
+    <color name="ticket_shadow_gray">#B3B3B3</color>
 </resources>

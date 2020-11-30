@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <declare-styleable name="TicketMaterialDrawable">
+        <attr name="color" format="color"/>
+        <attr name="archSize" format="float"/>
+        <attr name="centerArchSize" format="float"/>
+        <attr name="shadowElevation" format="integer"/>
+        <attr name="shadowRadius" format="integer"/>
+        <attr name="shadowColor" format="integer"/>
+        <attr name="maskChildren" format="string"/>
+        <attr name="cornersRadiusd" format="integer"/>
+
+        <attr name="arches">
+            <flag name="none" value="0" />
+            <flag name="left" value="1" />
+            <flag name="top" value="2" />
+            <flag name="right" value="4" />
+            <flag name="bottom" value="8" />
+            <flag name="all" value="15" />
+        </attr>
+
+        <attr name="centerArch">
+            <flag name="none" value="0" />
+            <flag name="left" value="1" />
+            <flag name="top" value="2" />
+            <flag name="right" value="4" />
+            <flag name="bottom" value="8" />
+            <flag name="all" value="15" />
+        </attr>
+    </declare-styleable>
+
     <style name="BottomSheetDialogStyle" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimaryDark">@color/transparent</item>

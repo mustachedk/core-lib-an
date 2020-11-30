@@ -10,13 +10,51 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
-        <TextView
+        android:background="@color/white"
+        android:paddingTop="50dp">
+
+        <dk.mustache.corelib.custom_material_drawable.TicketConstraintLayoutMasked
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@{pageData.specialHeader}"
-            android:gravity="center"
-            />
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            app:color="@color/black"
+            app:shadowColor="@color/button_gradient_start"
+            app:arches="top|bottom"
+            app:centerArch="top|bottom|left|right"
+            app:archSize="10"
+            app:centerArchSize="25"
+            app:shadowElevation="5"
+            app:shadowRadius="10"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/colorAccent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <TextView
+                android:layout_width="210dp"
+                android:layout_height="match_parent"
+                android:background="#0000FF"
+                android:text="@{pageData.specialHeader}"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </dk.mustache.corelib.custom_material_drawable.TicketConstraintLayoutMasked>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/offer_type_list"

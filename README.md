@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.4.5'
+  implementation 'com.github.mustachedk:core-lib-an:0.4.6'
 }
 ```
 
@@ -35,6 +35,10 @@ dependencies {
 ##### Views
 * OneClickButton
 * EmptyStateView
+* TicketMaterialView
+
+##### Layouts
+* TicketConstraintLayoutMasked
 
 ##### Dialogs
 * BottomSheetMenu

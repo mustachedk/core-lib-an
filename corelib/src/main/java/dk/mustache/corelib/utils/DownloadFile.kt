@@ -12,7 +12,6 @@ object DownloadFile {
 
     @SuppressLint("CheckResult")
     fun withCallback(link: String, callback: (read: String) -> Unit) {
-        var json = ""
         val observable = Observable.fromCallable {
             return@fromCallable try {
                 val content = StringBuilder()
