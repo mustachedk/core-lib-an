@@ -14,16 +14,16 @@
         android:paddingTop="50dp">
 
         <dk.mustache.corelib.custom_material_drawable.TicketConstraintLayoutMasked
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            app:color="@color/black"
+            app:color="@color/white"
             app:shadowColor="@color/button_gradient_start"
-            app:arches="top|bottom"
-            app:centerArch="top|bottom|left|right"
+            app:arches="bottom"
+            app:centerArch="top|bottom"
             app:archSize="10"
             app:centerArchSize="25"
             app:shadowElevation="5"

@@ -129,8 +129,7 @@ class TicketMaterialView @JvmOverloads constructor(
             }
         } else {
             MaterialShapeDrawable(backgroundShapeAppearanceModel).apply {
-//                setTint(color)
-                setTint(ContextCompat.getColor(context, R.color.black))
+                setTint(color)
                 this.paintStyle = Paint.Style.FILL
                 this.shadowCompatibilityMode = SHADOW_COMPAT_MODE_NEVER
             }
