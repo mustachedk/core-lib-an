@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.4.8'
+  implementation 'com.github.mustachedk:core-lib-an:0.4.9'
 }
 ```
 
@@ -42,7 +42,8 @@ dependencies {
 
 ##### Dialogs
 * BottomSheetMenu
-* BaseDialogFragment
+* StandardDialogFragment
+* BasicBaseDialogFragment
 
 ##### Base Classes:
 * DataBindingAdapter (DataBindingViewHolder)

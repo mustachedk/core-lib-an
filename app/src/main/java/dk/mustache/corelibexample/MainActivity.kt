@@ -4,8 +4,6 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -28,10 +26,10 @@ import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
-import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment
-import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment.Companion.BUTTON_CANCEL
-import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment.Companion.BUTTON_OK
-import dk.mustache.mapdiet.fragments.bottomsheets.BaseDialogFragment.Companion.TEXT_CLICKED
+import dk.mustache.mapdiet.fragments.bottomsheets.StandardDialogFragment
+import dk.mustache.mapdiet.fragments.bottomsheets.StandardDialogFragment.Companion.BUTTON_CANCEL
+import dk.mustache.mapdiet.fragments.bottomsheets.StandardDialogFragment.Companion.BUTTON_OK
+import dk.mustache.mapdiet.fragments.bottomsheets.StandardDialogFragment.Companion.TEXT_CLICKED
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -39,7 +37,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
-    BaseDialogFragment.BaseDialogFragmentListener, AppCompatActivity(), LocationUtil.LocationChangedCallback, EmptyStateView.OnEmptystateActionListener {
+    StandardDialogFragment.BaseDialogFragmentListener, AppCompatActivity(), LocationUtil.LocationChangedCallback, EmptyStateView.OnEmptystateActionListener {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private var locationUtil: LocationUtil? = null

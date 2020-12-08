@@ -17,7 +17,7 @@ import dk.mustache.corelib.databinding.FragmentAlertDialogBinding
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
 import dk.mustache.corelib.fragment_dialog.FragmentDialogSetup
 
-open class BaseDialogFragment : DialogFragment() {
+open class StandardDialogFragment : DialogFragment() {
 
     private var mListener: BaseDialogFragmentListener? = null
     private lateinit var dialogSetup: FragmentDialogSetup
@@ -37,8 +37,8 @@ open class BaseDialogFragment : DialogFragment() {
         const val BUTTON_CANCEL = 2
         const val TEXT_CLICKED = 3
 
-        fun newInstance(dialogSetup: FragmentDialogSetup): BaseDialogFragment {
-            val fragment = BaseDialogFragment()
+        fun newInstance(dialogSetup: FragmentDialogSetup): StandardDialogFragment {
+            val fragment = StandardDialogFragment()
 
             val args = Bundle()
             args.putParcelable(DIALOG_SETUP, dialogSetup)

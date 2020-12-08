@@ -25,4 +25,24 @@
         <attr name="buttonText" format="string" />
         <attr name="hideClickEffect" format="string" />
     </declare-styleable>
+
+    <style name="BasicBaseDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="colorPrimary">#6C6974</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
+
+        <!-- Set this to true if you want Full Screen without status bar -->
+        <item name="android:windowFullscreen">false</item>
+
+        <item name="android:windowIsFloating">false</item>
+
+        <!-- This is important! Don't forget to set window background -->
+        <item name="android:windowBackground">@color/white</item>
+
+        <!-- Additionally if you want animations when dialog opening -->
+        <item name="android:windowEnterAnimation">@anim/enter_left</item>
+        <item name="android:windowExitAnimation">@anim/exit_left</item>
+    </style>
 </resources>
