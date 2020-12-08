@@ -8,16 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import dk.mustache.corelib.R
 
 open class BasicBaseDialogFragment : DialogFragment(){
 
+    val TRANSITION_DIRECTION = "transition_direction"
+    lateinit var transitionDirection: DialogTransitionDirectionEnum
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setStyle(STYLE_NORMAL, R.style.BasicBaseDialogStyle)
+
+        transitionDirection = arguments?.getParcelable(TRANSITION_DIRECTION)
+                ?: DialogTransitionDirectionEnum.ENTER_BOTTOM
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            dialog?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
 
         isCancelable = false
     }
@@ -47,6 +56,16 @@ open class BasicBaseDialogFragment : DialogFragment(){
 
     override fun onActivityCreated(arg0: Bundle?) {
         super.onActivityCreated(arg0)
-        dialog?.window?.attributes?.windowAnimations = R.style.BasicBaseDialogStyle
+        when (transitionDirection) {
+            DialogTransitionDirectionEnum.ENTER_BOTTOM -> {
+                dialog?.window?.attributes?.windowAnimations = R.style.BasicBaseBottomDialogStyle
+            }
+            DialogTransitionDirectionEnum.ENTER_RIGHT -> {
+                dialog?.window?.attributes?.windowAnimations = R.style.BasicBaseRightDialogStyle
+            }
+            else -> {
+                dialog?.window?.attributes?.windowAnimations = R.style.BasicBaseDialogStyle
+            }
+        }
     }
 }

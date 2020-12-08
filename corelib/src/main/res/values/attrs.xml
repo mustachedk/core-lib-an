@@ -45,4 +45,18 @@
         <item name="android:windowEnterAnimation">@anim/enter_left</item>
         <item name="android:windowExitAnimation">@anim/exit_left</item>
     </style>
+
+    <style name="BasicBaseRightDialogStyle" parent="Theme.AppCompat.Dialog">
+
+        <!-- Additionally if you want animations when dialog opening -->
+        <item name="android:windowEnterAnimation">@anim/enter_right</item>
+        <item name="android:windowExitAnimation">@anim/exit_right</item>
+    </style>
+
+    <style name="BasicBaseBottomDialogStyle" parent="Theme.AppCompat.Dialog">
+
+        <!-- Additionally if you want animations when dialog opening -->
+        <item name="android:windowEnterAnimation">@anim/enter_bottom</item>
+        <item name="android:windowExitAnimation">@anim/exit_bottom</item>
+    </style>
 </resources>
