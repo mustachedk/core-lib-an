@@ -11,6 +11,7 @@ import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import dk.mustache.corelib.R
+import java.io.Serializable
 
 open class BasicBaseDialogFragment : DialogFragment(){
 
@@ -22,8 +23,9 @@ open class BasicBaseDialogFragment : DialogFragment(){
 
         setStyle(STYLE_NORMAL, R.style.BasicBaseDialogStyle)
 
-        transitionDirection = arguments?.getParcelable(TRANSITION_DIRECTION)
+        transitionDirection = (arguments?.getSerializable(TRANSITION_DIRECTION) as DialogTransitionDirectionEnum?)
                 ?: DialogTransitionDirectionEnum.ENTER_BOTTOM
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             dialog?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
