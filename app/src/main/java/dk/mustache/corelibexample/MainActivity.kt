@@ -1,6 +1,7 @@
 package dk.mustache.corelibexample
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.app.Application
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -11,7 +12,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import dk.mustache.corelib.MustacheCoreLib
+import dk.mustache.corelib.bottomsheet_picker.BottomSheetPicker
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
+import dk.mustache.corelib.fragment_dialog.StandardDialogFragment
+import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_CANCEL
+import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_OK
+import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.TEXT_CLICKED
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
@@ -26,10 +33,6 @@ import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
-import dk.mustache.mapdiet.fragments.bottomsheets.StandardDialogFragment
-import dk.mustache.mapdiet.fragments.bottomsheets.StandardDialogFragment.Companion.BUTTON_CANCEL
-import dk.mustache.mapdiet.fragments.bottomsheets.StandardDialogFragment.Companion.BUTTON_OK
-import dk.mustache.mapdiet.fragments.bottomsheets.StandardDialogFragment.Companion.TEXT_CLICKED
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -37,7 +40,11 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
-    StandardDialogFragment.BaseDialogFragmentListener, AppCompatActivity(), LocationUtil.LocationChangedCallback, EmptyStateView.OnEmptystateActionListener {
+    StandardDialogFragment.BaseDialogFragmentListener,
+    AppCompatActivity(),
+    LocationUtil.LocationChangedCallback,
+    EmptyStateView.OnEmptystateActionListener,
+    BottomSheetPicker.BottomSheetPickerListener<PickerTypeEnum> {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private var locationUtil: LocationUtil? = null
@@ -45,6 +52,9 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        MustacheCoreLib.init(applicationContext as Application)
+
         locationUtil = LocationUtil(this)
         locationUtil?.registerLocationListener(this)
         requestPermissionWithRationale(
@@ -112,6 +122,11 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
         //BottomSheetMenuFragment uncomment to see usage
 //        val menu = BottomSheetMenuFragment.newInstance(BottomSheetDialogSettings("Menu Header", listOf("Menu Option 1", "Menu Option 2", "Menu Option 3", "Menu Option 4"), MenuDialogType.CUSTOM))
 //        menu.show(supportFragmentManager, "MenuDialog")
+
+
+        //BottomSheetPicker test - usage remember to implement BottomSheetPicker.BottomSheetPickerListener in Activity or parentFragement
+        val picker = BottomSheetPicker.newInstance(PickerTypeEnum.TEXT_PICKER, listOf("test1","test2","test3"), 1, "CUSTOM OK", "HEADER TEST")
+        picker.show(supportFragmentManager, picker.tag)
 
         //BaseDialogFragment
 //        val dialog = BaseDialogFragment.newInstance(FragmentDialogSetup(header = "Header", text = "Text", dialogType = DialogTypeEnum.ALERT, alternativeStyle = R.style.FragmentDialogStyle))
@@ -231,6 +246,22 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
             }
             TEXT_CLICKED -> {
                 Toast.makeText(this, "TEXT_CLICKED", Toast.LENGTH_LONG).show()
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    override fun pickerItemSelected(paramType: PickerTypeEnum?, value: String, selectedIndex: Int) {
+        when(paramType) {
+            PickerTypeEnum.TEXT_PICKER -> {
+                //Do something
+                Toast.makeText(this, paramType.toString() + " " + value + " " + selectedIndex, Toast.LENGTH_LONG).show()
+            }
+            PickerTypeEnum.NUMBER_PICKER -> {
+                //Do something else
+                Toast.makeText(this, paramType.toString(), Toast.LENGTH_LONG).show()
             }
             else -> {
 

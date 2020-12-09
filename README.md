@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.4.11'
+  implementation 'com.github.mustachedk:core-lib-an:0.5.0'
 }
 ```
 
@@ -42,6 +42,7 @@ dependencies {
 
 ##### Dialogs
 * BottomSheetMenu
+* BottomSheetPicker
 * StandardDialogFragment
 * BasicBaseDialogFragment
 

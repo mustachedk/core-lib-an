@@ -91,4 +91,8 @@
     <style name="EmptyState.End.Action.Regular.Black" parent="EmptyState.End.Action.Base">
 
     </style>
+
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorControlNormal">@color/light_gray_background</item>
+    </style>
 </resources>

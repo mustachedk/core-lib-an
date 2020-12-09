@@ -1,4 +1,4 @@
-package dk.mustache.mapdiet.fragments.bottomsheets
+package dk.mustache.corelib.fragment_dialog
 
 import android.content.Context
 import android.graphics.Color
