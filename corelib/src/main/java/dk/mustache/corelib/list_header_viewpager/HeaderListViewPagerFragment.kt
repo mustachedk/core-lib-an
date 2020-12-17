@@ -95,7 +95,7 @@ class HeaderListViewPagerFragment : Fragment() {
                 horizontalListAdapter.notifyDataSetChanged()
             }
 
-            if (index < 2) {
+            if (index < 1) {
                 Handler().postDelayed({
                     if (isAdded)
                         binding.offerTypeList.scrollToPosition(0)

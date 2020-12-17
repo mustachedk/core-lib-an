@@ -78,7 +78,7 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
         val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
 
         val t1 = SpecialData("t1", Pager2Fragment::class.java,"test1 testtkhjgsklfgh;k ")
-        val t2 = SpecialData("t2", PagerFragment::class.java,"test2 lkjlkjoitmkgj f")
+        val t2 = SpecialData("t2", PagerFragment::class.java,"test2 lkjlkjoitmkgj fjdgkfhjkdjfgh hkjfhgkjdhfgkjh ")
         val t3 = SpecialData("t3", PagerFragment::class.java, "test3")
         val t4 = SpecialData("1234567890", Pager2Fragment::class.java, "test4 testtttt")
         val t5 = SpecialData("2345678901", PagerFragment::class.java, "testerkjhksdfgkj figkj")
@@ -97,7 +97,7 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
                 type = HeaderListViewPagerTypeEnum.SCROLL,
                 topListLayoutId = R.layout.top_list_scroll_item,
                 lastItemPaddingEnd = 10.toPx(),
-                snapCenter = false,
+                snapCenter = true,
                 swipeSensitivity = 1
             )
         )
@@ -125,7 +125,12 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
 
 
         //BottomSheetPicker test - usage remember to implement BottomSheetPicker.BottomSheetPickerListener in Activity or parentFragement
-        val picker = BottomSheetPicker.newInstance(PickerTypeEnum.TEXT_PICKER, listOf("test1","test2","test3"), 1, "CUSTOM OK", "HEADER TEST")
+        val picker = BottomSheetPicker.newInstance(PickerTypeEnum.TEXT_PICKER,
+                                                   listOf("test1","test2","test3"),
+                                    1,
+                                         "CUSTOM OK",
+                                         "HEADER TEST",
+                                                   R.color.light_gray_background)
         picker.show(supportFragmentManager, picker.tag)
 
         //BaseDialogFragment
@@ -253,21 +258,21 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
         }
     }
 
-    override fun pickerItemSelected(paramType: PickerTypeEnum?, value: String, selectedIndex: Int) {
-        when(paramType) {
-            PickerTypeEnum.TEXT_PICKER -> {
-                //Do something
-                Toast.makeText(this, paramType.toString() + " " + value + " " + selectedIndex, Toast.LENGTH_LONG).show()
-            }
-            PickerTypeEnum.NUMBER_PICKER -> {
-                //Do something else
-                Toast.makeText(this, paramType.toString(), Toast.LENGTH_LONG).show()
-            }
-            else -> {
-
-            }
-        }
-    }
+//    override fun pickerItemSelected(paramType: PickerTypeEnum?, value: String, selectedIndex: Int) {
+//        when(paramType) {
+//            PickerTypeEnum.TEXT_PICKER -> {
+//                //Do something
+//                Toast.makeText(this, paramType.toString() + " " + value + " " + selectedIndex, Toast.LENGTH_LONG).show()
+//            }
+//            PickerTypeEnum.NUMBER_PICKER -> {
+//                //Do something else
+//                Toast.makeText(this, paramType.toString(), Toast.LENGTH_LONG).show()
+//            }
+//            else -> {
+//
+//            }
+//        }
+//    }
 
     override fun nothingSelected() {
 
@@ -275,5 +280,10 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
 
     override fun onEmptystateClicked() {
         Toast.makeText(this, "Emptystate clicked", Toast.LENGTH_LONG).show()
+    }
+
+    override fun pickerItemSelected(paramType: PickerTypeEnum?, value: String, selectedIndex: Int) {
+
+        Toast.makeText(this, value, Toast.LENGTH_LONG).show()
     }
 }
