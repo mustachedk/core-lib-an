@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import dk.mustache.corelib.MustacheCoreLib
+import dk.mustache.corelib.bottomsheet_picker.BottomSheetDoublePicker
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetPicker
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment
@@ -44,7 +45,8 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
     AppCompatActivity(),
     LocationUtil.LocationChangedCallback,
     EmptyStateView.OnEmptystateActionListener,
-    BottomSheetPicker.BottomSheetPickerListener<PickerTypeEnum> {
+    BottomSheetPicker.BottomSheetPickerListener<PickerTypeEnum>,
+    BottomSheetDoublePicker.BottomSheetPickerListener<PickerTypeEnum>{
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private var locationUtil: LocationUtil? = null
@@ -125,12 +127,23 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
 
 
         //BottomSheetPicker test - usage remember to implement BottomSheetPicker.BottomSheetPickerListener in Activity or parentFragement
-        val picker = BottomSheetPicker.newInstance(PickerTypeEnum.TEXT_PICKER,
-                                                   listOf("test1","test2","test3"),
-                                    1,
-                                         "CUSTOM OK",
-                                         "HEADER TEST",
-                                                   R.color.light_gray_background)
+//        val picker = BottomSheetPicker.newInstance(PickerTypeEnum.TEXT_PICKER,
+//                                                   listOf("test1","test2","test3"),
+//                                    1,
+//                                         "CUSTOM OK",
+//                                         "HEADER TEST",
+//                                                   R.color.light_gray_background)
+//        picker.show(supportFragmentManager, picker.tag)
+
+        //BottomSheetDoublePicker test - usage remember to implement BottomSheetDoublePicker.BottomSheetPickerListener in Activity or parentFragement
+        val picker = BottomSheetDoublePicker.newInstance(PickerTypeEnum.TEXT_PICKER,
+            listOf("d1test1","d1test2","d1test3"),
+            listOf("d2test1","d2test2","d2test3"),
+            0,
+            2,
+            "CUSTOM OK",
+            "HEADER TEST",
+            R.color.light_gray_background)
         picker.show(supportFragmentManager, picker.tag)
 
         //BaseDialogFragment
@@ -285,5 +298,10 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
     override fun pickerItemSelected(paramType: PickerTypeEnum?, value: String, selectedIndex: Int) {
 
         Toast.makeText(this, value, Toast.LENGTH_LONG).show()
+    }
+
+    override fun pickerItemSelected(paramType: PickerTypeEnum?, values: List<String>) {
+        val str = values.get(0) + " " + values.get(1)
+        Toast.makeText(this, str, Toast.LENGTH_LONG).show()
     }
 }
