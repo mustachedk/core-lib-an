@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -338,7 +339,6 @@ class TicketConstraintLayoutMasked @JvmOverloads constructor(
         return shapePath
     }
 
-    @SuppressLint("NewApi")
     override fun dispatchDraw(canvas: Canvas){
 
         if (maskChildren) {
@@ -386,7 +386,9 @@ class TicketConstraintLayoutMasked @JvmOverloads constructor(
                 path.lineTo(leftEdge, topEdge)
             }
 
-            canvas.clipOutPath(path)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                canvas.clipOutPath(path)
+            }
         }
 
         super.dispatchDraw(canvas);
