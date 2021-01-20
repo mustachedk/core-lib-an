@@ -136,7 +136,7 @@ class TicketMaterialView @JvmOverloads constructor(
         }
 
         this.background = backgroundDrawable
-        this.setPadding(5.toPx(), 5.toPx(),5.toPx(),5.toPx())
+//        this.setPadding(5.toPx(), 5.toPx(),5.toPx(),5.toPx())
         clipToOutline = false
 
     }
