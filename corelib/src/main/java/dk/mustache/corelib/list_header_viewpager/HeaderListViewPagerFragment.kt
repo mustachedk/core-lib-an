@@ -123,7 +123,7 @@ class HeaderListViewPagerFragment : Fragment() {
             viewModel.currentShownPage,
             settings ?: HeaderListViewPagerSettings(),
             getScreenWidth(requireActivity()),
-            settings?.topListLayoutId ?: R.layout.top_list_item,
+            settings?.filterLayoutId ?: R.layout.top_list_item,
             false,
             false,
             settings?.paddingBetween ?: 10,
@@ -226,7 +226,7 @@ class HeaderListViewPagerFragment : Fragment() {
             }
         })
         context?.let {
-            viewModel.settings.get()?.topListBackgroundColor?.let { it1 ->
+            viewModel.settings.get()?.filterBackgroundColor?.let { it1 ->
                 ContextCompat.getColor(it,
                     it1)
             }

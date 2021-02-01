@@ -1,11 +1,7 @@
 package dk.mustache.corelib.list_header_viewpager
 
-import android.animation.Animator
-import android.animation.TimeInterpolator
-import android.animation.ValueAnimator
 import android.os.Parcelable
 import androidx.databinding.ObservableField
-import androidx.recyclerview.widget.LinearSnapHelper
 import dk.mustache.corelib.R
 import dk.mustache.corelib.utils.toPx
 import kotlinx.android.parcel.Parcelize
@@ -14,60 +10,28 @@ import kotlinx.android.parcel.Parcelize
 class HeaderListViewPagerSettings(
     val paddingBetween: Int = 10.toPx(),
     val type: HeaderListViewPagerTypeEnum = HeaderListViewPagerTypeEnum.STRETCH,
-    val topListLayoutId: Int = R.layout.top_list_item,
-    val topListBackgroundColor: Int = R.color.transparent,
+    val filterLayoutId: Int = R.layout.top_list_item,
+    val filterBackgroundColor: Int = R.color.transparent,
     val offscreenPageLimit: Int = 1,
     val lastItemPaddingEnd: Int = 100,
     val snapCenter: Boolean = true,
     //Swipe sensitivity: The lower the value the more sensitive for horizontal swipe. Should be > 0
     val swipeSensitivity: Int = 6,
-    private val topListAnchorY: Int = 0,
-    private val topListTranslationYStart: Int = 0,
-    private val topListTranslationYCurrent: ObservableField<Int> = ObservableField(
-        topListTranslationYStart)
+    private val filterAnchorY: Int = 0,
+    private val filterTranslationYStart: Int = 0,
 ) : Parcelable {
-    var lockPosition: Boolean = false
+    private val filterTranslationYCurrent: ObservableField<Int> = ObservableField(
+        filterTranslationYStart)
 
     fun setTopListTranslationY(scrollY: Int) {
-        if (!lockPosition) {
-            if (scrollY > maxScrollRange()) {
-                topListTranslationYCurrent.set(topListAnchorY)
-            } else {
-                topListTranslationYCurrent.set(topListTranslationYStart.plus(-scrollY))
-            }
+        if (scrollY > maxScrollRange()) {
+            filterTranslationYCurrent.set(filterAnchorY)
+        } else {
+            filterTranslationYCurrent.set(filterTranslationYStart.plus(-scrollY))
         }
     }
 
-    private fun maxScrollRange() = topListTranslationYStart.minus(topListAnchorY)
+    private fun maxScrollRange() = filterTranslationYStart.minus(filterAnchorY)
 
-    fun getTopListTranslationY() = topListTranslationYCurrent
-
-    fun animateTranslationY(to: Int, duration: Long, interpolator: TimeInterpolator, fillAfter:Boolean) {
-        val valueAnimator: ValueAnimator = ValueAnimator.ofInt(topListTranslationYCurrent.get()?:0, to)
-        valueAnimator.duration = duration
-        valueAnimator.interpolator = interpolator
-        valueAnimator.addListener(object :
-            Animator.AnimatorListener {
-
-            override fun onAnimationStart(p0: Animator?) {
-                lockPosition = true
-            }
-
-            override fun onAnimationEnd(p0: Animator?) {
-                lockPosition = fillAfter
-            }
-
-            override fun onAnimationCancel(p0: Animator?) {
-                lockPosition = fillAfter
-            }
-
-            override fun onAnimationRepeat(p0: Animator?) {
-            }
-        })
-        valueAnimator.addUpdateListener {
-            val value = it.animatedValue as Int
-            topListTranslationYCurrent.set(value)
-        }
-        valueAnimator.start()
-    }
+    fun getTopListTranslationY() = filterTranslationYCurrent
 }
