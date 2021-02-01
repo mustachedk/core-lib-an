@@ -70,6 +70,13 @@ class HeaderListViewPagerFragment : Fragment() {
                 }
             }
         })
+
+        binding.offerListPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                viewModel.pageScrollState.set(state)
+            }
+        })
     }
 
     fun selectProductGroupByIndex(index: Int) {
