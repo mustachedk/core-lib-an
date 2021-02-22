@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import dk.mustache.corelib.list_header_viewpager.GenericPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
+import dk.mustache.corelib.selectable_list.SelectableItem
 import dk.mustache.corelib.sticky_header_decoration.StickyHeaderItemDecoration
 import dk.mustache.corelibexample.databinding.FragmentListHeaderPagerBinding
 import dk.mustache.corelibexample.section_header_example.SectionHeaderExampleAdapter
 import dk.mustache.corelibexample.section_header_example.SectionExampleItem
 import dk.mustache.corelibexample.section_header_example.SectionHeaderExampleViewModel
+import dk.mustache.corelibexample.selectable_list_example.SelectableExampleAdapter
 
 open class PagerFragment : GenericPagerFragment() {
 
@@ -33,65 +35,105 @@ open class PagerFragment : GenericPagerFragment() {
         binding = FragmentListHeaderPagerBinding.inflate(inflater, container, false)
         binding.pageData = pageData as SpecialData
 
-        val item1 = SectionExampleItem("test7", 0)
-        val item2 = SectionExampleItem("test1", 1)
-        val item3 = SectionExampleItem("test1",1)
-        val item4 = SectionExampleItem("test2", 2)
-        val item11 = SectionExampleItem( "test4",3)
-        val item12 = SectionExampleItem("test4",3)
-        val item13 = SectionExampleItem("test4", 3)
-        val item14 = SectionExampleItem("test5", 4)
-        val item15 = SectionExampleItem("test7", 0)
-        val item16 = SectionExampleItem("test1", 1)
-        val item17 = SectionExampleItem("test1",1)
-        val item18 = SectionExampleItem("test2", 2)
-        val item19 = SectionExampleItem( "test4",3)
-        val item20 = SectionExampleItem("test4",3)
-        val item21 = SectionExampleItem("test4", 3)
-        val item22 = SectionExampleItem("test5", 4)
-        val item23 = SectionExampleItem("test1", 1)
-        val item24 = SectionExampleItem("test1",1)
-        val item25 = SectionExampleItem("test2", 2)
-        val item26 = SectionExampleItem( "test4",3)
-        val item27 = SectionExampleItem("test4",3)
-        val item28 = SectionExampleItem("test4", 3)
-        val item29 = SectionExampleItem("test5", 4)
-        val item30 = SectionExampleItem("test7", 0)
-        val item31 = SectionExampleItem("test1", 1)
-        val item32 = SectionExampleItem("test1",1)
-        val item33 = SectionExampleItem("test2", 2)
-        val item34 = SectionExampleItem( "test4",3)
-        val item35 = SectionExampleItem("test4",3)
-        val item36 = SectionExampleItem("test4", 3)
-        val item37 = SectionExampleItem("test5", 4)
+        //TODO uncomment to test headerlistviewpager
+//        val item1 = SectionExampleItem("test7", 0)
+//        val item2 = SectionExampleItem("test1", 1)
+//        val item3 = SectionExampleItem("test1",1)
+//        val item4 = SectionExampleItem("test2", 2)
+//        val item11 = SectionExampleItem( "test4",3)
+//        val item12 = SectionExampleItem("test4",3)
+//        val item13 = SectionExampleItem("test4", 3)
+//        val item14 = SectionExampleItem("test5", 4)
+//        val item15 = SectionExampleItem("test7", 0)
+//        val item16 = SectionExampleItem("test1", 1)
+//        val item17 = SectionExampleItem("test1",1)
+//        val item18 = SectionExampleItem("test2", 2)
+//        val item19 = SectionExampleItem( "test4",3)
+//        val item20 = SectionExampleItem("test4",3)
+//        val item21 = SectionExampleItem("test4", 3)
+//        val item22 = SectionExampleItem("test5", 4)
+//        val item23 = SectionExampleItem("test1", 1)
+//        val item24 = SectionExampleItem("test1",1)
+//        val item25 = SectionExampleItem("test2", 2)
+//        val item26 = SectionExampleItem( "test4",3)
+//        val item27 = SectionExampleItem("test4",3)
+//        val item28 = SectionExampleItem("test4", 3)
+//        val item29 = SectionExampleItem("test5", 4)
+//        val item30 = SectionExampleItem("test7", 0)
+//        val item31 = SectionExampleItem("test1", 1)
+//        val item32 = SectionExampleItem("test1",1)
+//        val item33 = SectionExampleItem("test2", 2)
+//        val item34 = SectionExampleItem( "test4",3)
+//        val item35 = SectionExampleItem("test4",3)
+//        val item36 = SectionExampleItem("test4", 3)
+//        val item37 = SectionExampleItem("test5", 4)
+//        val list = ArrayList(listOf(item1, item2, item3, item4, item11, item12, item13, item14, item15, item16, item17, item18, item19, item20, item21, item22, item23, item24, item25, item26, item27, item28, item29, item30, item31, item32, item33, item34, item35, item36, item37))
+//
+//        viewModel = ViewModelProvider(this).get(SectionHeaderExampleViewModel::class.java)
+//        viewModel.listWithSectionHeaders = list
+//
+//        headerListViewPagerViewModel = ViewModelProvider(requireActivity()).get(
+//            HeaderListViewPagerViewModel::class.java)
+//        binding.offerTypeList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+//
+//
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//                totalScroll += dy
+//                headerListViewPagerViewModel.settings.get()?.setTopListTranslationY(totalScroll)
+//            }
+//        })
+//
+//
+//        val adapter = SectionHeaderExampleAdapter(viewModel) {
+//
+//        }
+//
+//        val stickyDecoration = StickyHeaderItemDecoration(binding.offerTypeList, R.layout.section_header_item, adapter)
+//        binding.offerTypeList.addItemDecoration(stickyDecoration)
+//
+//        binding.offerTypeList.adapter = adapter
+//
+//        adapter.updateDataAndAddHeaders(ArrayList(viewModel.listWithSectionHeaders?: listOf()))
+
+        val item1 = SelectableItem("test7", "test7")
+        val item2 = SelectableItem("test1", "test17")
+        val item3 = SelectableItem("test1","test72")
+        val item4 = SelectableItem("test2", "test76")
+        val item11 = SelectableItem( "test4","test73")
+        val item12 = SelectableItem("test4","test75")
+        val item13 = SelectableItem("test4", "test76")
+        val item14 = SelectableItem("test5", "test79")
+        val item15 = SelectableItem("test7", "test77")
+        val item16 = SelectableItem("test1", "test7")
+        val item17 = SelectableItem("test1","test764")
+        val item18 = SelectableItem("test2", "test73")
+        val item19 = SelectableItem( "test4","test735")
+        val item20 = SelectableItem("test4","test73")
+        val item21 = SelectableItem("test4", "test17")
+        val item22 = SelectableItem("test5", "test753")
+        val item23 = SelectableItem("test1", "test007")
+        val item24 = SelectableItem("test1","test700")
+        val item25 = SelectableItem("test2", "test799")
+        val item26 = SelectableItem( "test4","test877")
+        val item27 = SelectableItem("test4","test77")
+        val item28 = SelectableItem("test4", "test78")
+        val item29 = SelectableItem("test5", "test76")
+        val item30 = SelectableItem("test7", "test7543")
+        val item31 = SelectableItem("test1", "test734")
+        val item32 = SelectableItem("test1","test713")
+        val item33 = SelectableItem("test2", "test723")
+        val item34 = SelectableItem( "test4","test171")
+        val item35 = SelectableItem("test4","test74")
+        val item36 = SelectableItem("test4", "test76")
+        val item37 = SelectableItem("test5", "test75645")
         val list = ArrayList(listOf(item1, item2, item3, item4, item11, item12, item13, item14, item15, item16, item17, item18, item19, item20, item21, item22, item23, item24, item25, item26, item27, item28, item29, item30, item31, item32, item33, item34, item35, item36, item37))
 
-        viewModel = ViewModelProvider(this).get(SectionHeaderExampleViewModel::class.java)
-        viewModel.listWithSectionHeaders = list
-
-        headerListViewPagerViewModel = ViewModelProvider(requireActivity()).get(
-            HeaderListViewPagerViewModel::class.java)
-        binding.offerTypeList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                totalScroll += dy
-                headerListViewPagerViewModel.settings.get()?.setTopListTranslationY(totalScroll)
-            }
-        })
-
-
-        val adapter = SectionHeaderExampleAdapter(viewModel) {
+        val adapter = SelectableExampleAdapter(list, arrayListOf(5, 10, 11)) { item, isSelected ->
 
         }
 
-        val stickyDecoration = StickyHeaderItemDecoration(binding.offerTypeList, R.layout.section_header_item, adapter)
-        binding.offerTypeList.addItemDecoration(stickyDecoration)
-
         binding.offerTypeList.adapter = adapter
-
-        adapter.updateDataAndAddHeaders(ArrayList(viewModel.listWithSectionHeaders?: listOf()))
 
         return binding.root
     }
