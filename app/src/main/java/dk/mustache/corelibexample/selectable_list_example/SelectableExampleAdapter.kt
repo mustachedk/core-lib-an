@@ -12,6 +12,6 @@ import dk.mustache.corelibexample.R
 import dk.mustache.corelibexample.databinding.SectionHeaderItemCustomExampleBinding
 import java.util.*
 
-class SelectableExampleAdapter (items: List<SelectableItem>, selectedList: ArrayList<Int>, val onSelected: (item: SelectableItem, selected: Boolean) -> Unit) : SelectableAdapter<SelectableItem>(items, selectedList, onSelected, false) {
+class SelectableExampleAdapter (items: List<SelectableItem>, selectedList: ArrayList<Int>, val onSelected: (item: SelectableItem, selected: Boolean) -> Unit) : SelectableAdapter<SelectableItem>(items, selectedList, onSelected, false, dk.mustache.corelib.R.layout.item_selectable_std_text, R.drawable.ic_vector_selecteable_red, dk.mustache.corelib.R.drawable.ic_vector_unselected) {
 
 }

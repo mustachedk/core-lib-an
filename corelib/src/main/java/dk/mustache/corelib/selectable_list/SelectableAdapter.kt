@@ -6,15 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.ItemSelectablePickerBinding
 import dk.mustache.corelib.BR
+import dk.mustache.corelib.MustacheCoreLib
 
 
-abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: ArrayList<Int>, val onItemSelectionToggled: (item: T, selected: Boolean) -> Unit, val singleSelection: Boolean = true, val layoutResId: Int = R.layout.item_selectable_std_text) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: ArrayList<Int>, val onItemSelectionToggled: (item: T, selected: Boolean) -> Unit, val singleSelection: Boolean = true, val layoutResId: Int = R.layout.item_selectable_std_text, val selectedIcon: Int = R.drawable.ic_vector_selected, val unselectedIcon: Int = R.drawable.ic_vector_unselected) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var layoutInflater: LayoutInflater? = null
 
     inner class SelectableListItemViewHolder(val itemSelectablePickerBinding: ItemSelectablePickerBinding, val customResBinding: ViewDataBinding) : RecyclerView.ViewHolder(itemSelectablePickerBinding.root) {
@@ -100,9 +102,11 @@ abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: A
             }
 
             if (selectedValueList.contains(position)) {
-                holder.itemSelectablePickerBinding.categoryChecked.visibility = View.VISIBLE
+                val checkedDrawable = ContextCompat.getDrawable(MustacheCoreLib.getContextCheckInit(), selectedIcon)
+                holder.itemSelectablePickerBinding.categoryChecked.setImageDrawable(checkedDrawable)
             } else {
-                holder.itemSelectablePickerBinding.categoryChecked.visibility = View.INVISIBLE
+                val uncheckedDrawable = ContextCompat.getDrawable(MustacheCoreLib.getContextCheckInit(), unselectedIcon)
+                holder.itemSelectablePickerBinding.categoryChecked.setImageDrawable(uncheckedDrawable)
             }
         }
     }
