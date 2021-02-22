@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.5.7'
+  implementation 'com.github.mustachedk:core-lib-an:0.5.8'
 }
 ```
 
@@ -53,3 +53,4 @@ dependencies {
 * SectionHeaderListAdapter
 * HeaderListViewPagerFragment
 * StickyHeaderListAdapter
+* SelectableAdapter
