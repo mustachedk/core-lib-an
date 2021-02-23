@@ -11,7 +11,7 @@
         android:elevation="21dp">
 
         <ImageView
-            android:id="@+id/category_checked"
+            android:id="@+id/checked_image"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_vector_selected"

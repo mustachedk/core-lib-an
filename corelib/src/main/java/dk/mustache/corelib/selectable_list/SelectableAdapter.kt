@@ -14,9 +14,10 @@ import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.ItemSelectablePickerBinding
 import dk.mustache.corelib.BR
 import dk.mustache.corelib.MustacheCoreLib
+import dk.mustache.corelib.utils.toPx
 
 
-abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: ArrayList<Int>, val onItemSelectionToggled: (item: T, selected: Boolean) -> Unit, val singleSelection: Boolean = true, val layoutResId: Int = R.layout.item_selectable_std_text, val selectedIcon: Int = R.drawable.ic_vector_selected, val unselectedIcon: Int = R.drawable.ic_vector_unselected) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: ArrayList<Int>, val onItemSelectionToggled: (item: T, selected: Boolean) -> Unit, val settings: SelectableAdapterSettings) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var layoutInflater: LayoutInflater? = null
 
     inner class SelectableListItemViewHolder(val itemSelectablePickerBinding: ItemSelectablePickerBinding, val customResBinding: ViewDataBinding) : RecyclerView.ViewHolder(itemSelectablePickerBinding.root) {
@@ -29,7 +30,7 @@ abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: A
         }
 
         val selectablePickerBinding = DataBindingUtil.inflate<ItemSelectablePickerBinding>(layoutInflater!!, R.layout.item_selectable_picker, parent, false)
-        var binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater!!, layoutResId, parent, false)
+        var binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater!!, settings.layoutResId, parent, false)
 
         return SelectableListItemViewHolder(selectablePickerBinding, binding)
     }
@@ -82,12 +83,15 @@ abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: A
 
             set.applyTo(parentLayout)
 
+            val params = holder.itemSelectablePickerBinding.checkedImage.layoutParams as ConstraintLayout.LayoutParams
+            params.marginEnd = settings.endMargin.toPx()
+
             val item = items[position]
             childLayoutBinding.setVariable(BR.item, item)
             childLayoutBinding.executePendingBindings()
 
             holder.itemSelectablePickerBinding.selectableItemLayout.setOnClickListener {
-                if (singleSelection) {
+                if (settings.singleSelection) {
                     selectedValueList.clear()
                     selectedValueList.add(position)
                 } else {
@@ -102,11 +106,11 @@ abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: A
             }
 
             if (selectedValueList.contains(position)) {
-                val checkedDrawable = ContextCompat.getDrawable(MustacheCoreLib.getContextCheckInit(), selectedIcon)
-                holder.itemSelectablePickerBinding.categoryChecked.setImageDrawable(checkedDrawable)
+                val checkedDrawable = ContextCompat.getDrawable(MustacheCoreLib.getContextCheckInit(), settings.selectedIcon)
+                holder.itemSelectablePickerBinding.checkedImage.setImageDrawable(checkedDrawable)
             } else {
-                val uncheckedDrawable = ContextCompat.getDrawable(MustacheCoreLib.getContextCheckInit(), unselectedIcon)
-                holder.itemSelectablePickerBinding.categoryChecked.setImageDrawable(uncheckedDrawable)
+                val uncheckedDrawable = ContextCompat.getDrawable(MustacheCoreLib.getContextCheckInit(), settings.unselectedIcon)
+                holder.itemSelectablePickerBinding.checkedImage.setImageDrawable(uncheckedDrawable)
             }
         }
     }
