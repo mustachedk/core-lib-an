@@ -59,7 +59,7 @@ open class StandardDialogFragment : DialogFragment() {
         }
 
         if (dialogSetup.alternativeStyle!=0 && dialogSetup.setAlternativeStyleIfProvided) {
-            setStyle(STYLE_NO_TITLE, R.style.BasicBaseDialogStyle)
+            setStyle(STYLE_NO_TITLE, dialogSetup.alternativeStyle)
         }
     }
 
