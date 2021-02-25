@@ -12,6 +12,7 @@ import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import dk.mustache.corelib.BR
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.FragmentAlertDialogBinding
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
@@ -19,9 +20,9 @@ import dk.mustache.corelib.fragment_dialog.FragmentDialogSetup
 
 open class StandardDialogFragment : DialogFragment() {
 
-    private var mListener: BaseDialogFragmentListener? = null
-    private lateinit var dialogSetup: FragmentDialogSetup
-    private lateinit var binding: ViewDataBinding
+    var mListener: BaseDialogFragmentListener? = null
+    lateinit var dialogSetup: FragmentDialogSetup
+    lateinit var binding: ViewDataBinding
 
     interface BaseDialogFragmentListener {
         fun dialogButtonClicked(
@@ -37,9 +38,7 @@ open class StandardDialogFragment : DialogFragment() {
         const val BUTTON_CANCEL = 2
         const val TEXT_CLICKED = 3
 
-        fun newInstance(dialogSetup: FragmentDialogSetup): StandardDialogFragment {
-            val fragment = StandardDialogFragment()
-
+        fun setupDialog(dialogSetup: FragmentDialogSetup, fragment : StandardDialogFragment): StandardDialogFragment {
             val args = Bundle()
             args.putParcelable(DIALOG_SETUP, dialogSetup)
 
@@ -57,6 +56,10 @@ open class StandardDialogFragment : DialogFragment() {
             if (setup!=null) {
                 dialogSetup = setup
             }
+        }
+
+        if (dialogSetup.alternativeStyle!=0 && dialogSetup.setAlternativeStyleIfProvided) {
+            setStyle(STYLE_NO_TITLE, R.style.BasicBaseDialogStyle)
         }
     }
 
@@ -100,9 +103,16 @@ open class StandardDialogFragment : DialogFragment() {
                 }
             }
             else -> {
+                try {
+                    dialogBinding.setVariable(BR.dialogSetup, dialogSetup)
+                    dialogBinding.executePendingBindings()
+                } catch (e: Exception) {
 
+                }
             }
         }
+
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -111,6 +121,10 @@ open class StandardDialogFragment : DialogFragment() {
             dialogSetup.alternativeStyle
         } else {
             R.style.BottomSheetDialogStyle
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && dialogSetup.darkStatusBarButtons) {
+            dialog?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }
 

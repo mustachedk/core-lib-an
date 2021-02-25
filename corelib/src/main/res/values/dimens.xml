@@ -6,5 +6,6 @@
     <dimen name="cell_height_small">48dp</dimen>
     <dimen name="cell_height">54dp</dimen>
     <dimen name="dialog_top_margin">30dp</dimen>
+    <dimen name="custom_dialog_side_margin">30dp</dimen>
     <dimen name="activity_horizontal_margin">10dp</dimen>
 </resources>
