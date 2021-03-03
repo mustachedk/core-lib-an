@@ -38,10 +38,12 @@ class EmptyStateView : ConstraintLayout {
         defStyleAttr
     ) { init(context, attrs) }
 
-    private var onClickListener: OnClickListener? = null
+    private var leftButtonOnClickListener: OnClickListener? = null
+    private var rightButtonOnClickListener: OnClickListener? = null
 
-    fun setOnClickListener(l: OnClickListener) {
-        onClickListener = l
+    fun setOnClickListener(ll: OnClickListener, rl: OnClickListener? = null) {
+        leftButtonOnClickListener = ll
+        rightButtonOnClickListener = rl
     }
 
     private fun init(context: Context?, attrs: AttributeSet?) {
@@ -183,11 +185,8 @@ class EmptyStateView : ConstraintLayout {
                 )
             )
         }
-        setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-            }
-
-        })
+        binding.emptystateButton.setOnClickListener(leftButtonOnClickListener)
+        binding.emptystateButton2.setOnClickListener(rightButtonOnClickListener)
 
         binding.genEmptystateLayout.setOnClickListener {
             clickListener?.onEmptystateClicked()
