@@ -14,15 +14,23 @@
         <attr name="titleSize" format="integer" />
         <attr name="buttonTextSize" format="integer" />
         <attr name="subtitleSize" format="integer" />
-        <attr name="imageDrawable" format="string" />
-        <attr name="buttonBackground" format="string" />
-        <attr name="titleFont" format="string" />
+        <attr name="titleSizeSp" format="dimension" />
+        <attr name="buttonTextSizeSp" format="dimension" />
+        <attr name="subtitleSizeSp" format="dimension" />
+        <attr name="buttonLayoutHeight" format="dimension" />
+        <attr name="imageDrawable" format="reference" />
+        <attr name="buttonBackground" format="reference" />
+        <attr name="button2Background" format="reference" />
+        <attr name="expandButtonLayoutToEdge" format="boolean" />
+        <attr name="titleFont" format="reference" />
         <attr name="titleColor" format="reference" />
         <attr name="subtitleColor" format="reference" />
         <attr name="subtitleFont" format="reference" />
         <attr name="buttonTextFont" format="string" />
-        <attr name="showButton" format="string" />
+        <attr name="showButton" format="boolean" />
+        <attr name="showButton2" format="boolean" />
         <attr name="buttonText" format="string" />
+        <attr name="button2Text" format="string" />
         <attr name="hideClickEffect" format="string" />
     </declare-styleable>
 

@@ -6,6 +6,7 @@
     android:id="@+id/dialog_string_picker_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:layout_behavior="dk.mustache.corelib.utils.LockableBottomSheetBehavior"
     android:layout_gravity="bottom"
     android:background="@drawable/bottom_sheet_menu_rounded"
     android:paddingTop="5dp"

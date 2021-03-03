@@ -25,6 +25,7 @@ import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
+import dk.mustache.corelib.menu_bottom_sheet.BottomSheetDialogSettings
 import dk.mustache.corelib.menu_bottom_sheet.MenuDialogType
 import dk.mustache.corelib.network.AccessToken
 import dk.mustache.corelib.network.AuthorizationRepository
@@ -137,7 +138,7 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
 //                                                   R.color.light_gray_background)
 //        picker.show(supportFragmentManager, picker.tag)
 
-        //BottomSheetDoublePicker test - usage remember to implement BottomSheetDoublePicker.BottomSheetPickerListener in Activity or parentFragement
+//        BottomSheetDoublePicker test - usage remember to implement BottomSheetDoublePicker.BottomSheetPickerListener in Activity or parentFragement
 //        val picker = BottomSheetDoublePicker.newInstance(PickerTypeEnum.TEXT_PICKER,
 //            listOf("d1test1","d1test2","d1test3"),
 //            listOf("d2test1","d2test2","d2test3"),
@@ -149,18 +150,18 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
 //        picker.show(supportFragmentManager, picker.tag)
 
         //BaseDialogFragment
-        val dialog = StandardDialogExampleFragment.newInstance(FragmentDialogSetup(
-            header = "Header",
-            text = "Text",
-            positiveButtonText = "Custom text",
-            negativeButtonText = "test",
-            dialogType = DialogTypeEnum.CUSTOM,
-            alternativeLayout = R.layout.fragment_dialog_custom,
-            alternativeStyle = R.style.FragmentDialogStyle,
-            showNegativeButton = true,
-            setAlternativeStyleIfProvided = true
-        ))
-        dialog.show(supportFragmentManager, "FragmentDialog")
+//        val dialog = StandardDialogExampleFragment.newInstance(FragmentDialogSetup(
+//            header = "Header",
+//            text = "Text",
+//            positiveButtonText = "Custom text",
+//            negativeButtonText = "test",
+//            dialogType = DialogTypeEnum.CUSTOM,
+//            alternativeLayout = R.layout.fragment_dialog_custom,
+//            alternativeStyle = R.style.FragmentDialogStyle,
+//            showNegativeButton = true,
+//            setAlternativeStyleIfProvided = true
+//        ))
+//        dialog.show(supportFragmentManager, "FragmentDialog")
 
         testRetroFit()
         //endRegion

@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.6.1'
+  implementation 'com.github.mustachedk:core-lib-an:0.7.0'
 }
 ```
 
@@ -30,7 +30,8 @@ dependencies {
 * ScreenUtil
 * ValidateUtil
 * ViewUtil
-* BitmapCropper
+* BitmapCropper app:layout_behavior="com.your.package.LockableBottomSheetBehavior"
+
 
 ##### Views
 * OneClickButton
@@ -47,6 +48,9 @@ dependencies {
 * BottomSheetFullscreenDialogFragment
 * StandardDialogFragment
 * BasicBaseDialogFragment
+
+##### Behaviors
+* LockableBottomSheetBehavior
 
 ##### Base Classes:
 * DataBindingAdapter (DataBindingViewHolder)
