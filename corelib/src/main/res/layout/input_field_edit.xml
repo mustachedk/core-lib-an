@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="labelText"
+            type="String" />
+
+        <variable
+            name="selectionText"
+            type="String" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/input_field_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <TextView
+        android:id="@+id/input_label"
+        android:fontFamily="@font/sf_pro_text_medium"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cell_height_small"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:background="@drawable/edit_label_background"
+        android:focusable="true"
+        android:textStyle="bold"
+        android:gravity="center_vertical|start"
+        android:paddingEnd="10dp"
+        android:text="@{labelText}"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Butik"/>
+
+    <EditText
+        android:id="@+id/input_edit"
+        android:fontFamily="@font/sf_pro_text_medium"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cell_height_small"
+        android:layout_marginStart="100dp"
+        android:background="@drawable/edit_value_background"
+        android:focusable="true"
+        android:inputType="text"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:gravity="center_vertical|end"
+        android:paddingStart="60dp"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:text="@{selectionText}"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text=""/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/country_code_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/cell_height_small"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="@+id/input_edit"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/flag_image"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:src="@drawable/ic_vector_denmark"
+            android:layout_marginTop="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_countrycode_dk"
+            android:layout_marginStart="5dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@+id/flag_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

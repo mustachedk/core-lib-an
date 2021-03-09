@@ -34,6 +34,18 @@
         <attr name="hideClickEffect" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="InputFieldLayout">
+        <attr name="labelText" format="string" />
+        <attr name="defaultText" format="string" />
+        <attr name="backgroundLayout" format="reference" />
+        <attr name="labelFont" format="reference" />
+        <attr name="labelFontColor" format="reference" />
+        <attr name="labelFontSize" format="dimension" />
+        <attr name="editTextFont" format="reference" />
+        <attr name="editTextColor" format="reference" />
+        <attr name="editTextSize" format="dimension" />
+    </declare-styleable>
+
     <style name="BasicBaseDialogStyle" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimaryDark">@color/transparent</item>

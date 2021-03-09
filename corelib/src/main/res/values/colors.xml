@@ -15,5 +15,13 @@
     <color name="emptystate_subheader">#292929</color>
     <color name="button_gradient_start">#B7082A</color>
     <color name="button_gradient_end">#E10933</color>
+    <color name="main_darker_background">#3E3E3E</color>
+    <color name="edit_value_border">#D1D4D7</color>
+    <color name="edit_value_background">#AAEFF1F5</color>
+    <color name="edit_value_background_effect">#CCFFDDDD</color>
     <color name="ticket_shadow_gray">#B3B3B3</color>
+    <color name="trans_gray_text">#6044454D</color>
+    <color name="gradient_color">#4D3E3E3E</color>
+    <color name="eclipse_transparent">#303A3A3A</color>
+    <color name="search_hint">#64000000</color>
 </resources>

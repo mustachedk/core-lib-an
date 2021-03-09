@@ -13,10 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import dk.mustache.corelib.MustacheCoreLib
+import dk.mustache.corelib.bottomsheet_inputdialog.BottomSheetInputDialogFragment
+import dk.mustache.corelib.bottomsheet_inputdialog.InputDialogTypeEnum
+import dk.mustache.corelib.bottomsheet_inputdialog.InputField
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetDoublePicker
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetPicker
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
-import dk.mustache.corelib.fragment_dialog.FragmentDialogSetup
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_CANCEL
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_OK
@@ -25,7 +27,6 @@ import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
-import dk.mustache.corelib.menu_bottom_sheet.BottomSheetDialogSettings
 import dk.mustache.corelib.menu_bottom_sheet.MenuDialogType
 import dk.mustache.corelib.network.AccessToken
 import dk.mustache.corelib.network.AuthorizationRepository
@@ -36,7 +37,6 @@ import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
-import dk.mustache.corelibexample.standard_dialog_example.StandardDialogExampleFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -49,7 +49,8 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
     LocationUtil.LocationChangedCallback,
     EmptyStateView.OnEmptystateActionListener,
     BottomSheetPicker.BottomSheetPickerListener<PickerTypeEnum>,
-    BottomSheetDoublePicker.BottomSheetPickerListener<PickerTypeEnum>{
+    BottomSheetDoublePicker.BottomSheetPickerListener<PickerTypeEnum>,
+    BottomSheetInputDialogFragment.BottomSheetInputFieldListener {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private var locationUtil: LocationUtil? = null
@@ -116,6 +117,13 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
         val fragment = HeaderListViewPagerFragment.newInstance()
 
         setFragment(fragment)
+
+        val dialog = BottomSheetInputDialogFragment.createInputFields(InputDialogTypeEnum.LOGIN)
+        dialog.inputFieldList?.get(0)?.dataText = "Andreas"
+        dialog.inputFieldList?.get(0)?.isSelectionEnabled = false
+
+        val inputDialog = BottomSheetInputDialogFragment.newInstance(dialog.inputType, dialog)
+        inputDialog.show(supportFragmentManager, "BottomSheetInputDialog")
 
 
 //        Handler(Looper.getMainLooper()).postDelayed({
@@ -316,5 +324,25 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
     override fun pickerItemSelected(paramType: PickerTypeEnum?, values: List<String>) {
         val str = values.get(0) + " " + values.get(1)
         Toast.makeText(this, str, Toast.LENGTH_LONG).show()
+    }
+
+    override fun saveDataClicked(
+        inputDataList: ArrayList<InputField>,
+        inputType: InputDialogTypeEnum,
+        onCallbackAfterSaveButtonClick: (index: Int, close: Boolean) -> Unit
+    ) {
+
+    }
+
+    override fun cancelInputDialogClicked(inputType: InputDialogTypeEnum) {
+
+    }
+
+    override fun inputItemClicked(inputData: InputField, onDataChange: (newText: String) -> Unit) {
+
+    }
+
+    override fun nothingSaved(inputType: InputDialogTypeEnum) {
+
     }
 }

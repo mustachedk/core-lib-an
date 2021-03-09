@@ -9,4 +9,55 @@
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
     <string name="menu_header">Menu Header</string>
     <string name="menu_menu_item">Menu item text</string>
+
+    <string name="onboarding_incomplete_profile_header">Færdiggør din profil</string>
+    <string name="phone_countrycode_dk">+45</string>
+    <string name="phone_countrycode_error">Vi understøtter pt. kun danske numre</string>
+
+    <string name="onboarding_log_in_header">Log ind med din profil</string>
+    <string name="onboarding_log_in_text">Log ind i appen med din profil og få adgang til alle vores tilbud, inspiration og nyheder.</string>
+
+    <string name="nearest_stores_header">NÆRMESTE</string>
+    <string name="other_stores_header">ANDRE BUTIKKER</string>
+
+    <string name="title_choose_stores">Butik</string>
+    <string name="title_choose_segment">Segment</string>
+    <string name="hint_phone">Indtast dit telefonnummer</string>
+    <string name="label_phone">Telefonnummer</string>
+    <string name="sub_title_stores">BUTIKKER</string>
+
+    <string name="onboarding_card_name_label">Navn</string>
+    <string name="onboarding_card_name_hint">Indtast kortnavn</string>
+
+    <string name="card_save">Gem kort</string>
+    <string name="no_card_to_replace_error">Intet kort at erstatte</string>
+    <string name="no_card_to_delete_error">Intet kort at slette</string>
+    <string name="no_card_added_error">Kortet kunne ikke tilføjes</string>
+    <string name="no_card_to_add_error">Ingen kort at tilføje</string>
+    <string name="add_card_dialog_header">Tilføj nyt kort</string>
+    <string name="scan_card">Scan nyt kort</string>
+    <string name="input_new_card">Indtast nyt kort</string>
+    <string name="home_new_card">Tilføj dit kundekort</string>
+    <string name="home_cta_location">Må vi bruge din lokalitet?</string>
+    <string name="name_your_card">Navngiv dit kundekort</string>
+    <string name="max_cards_error">Du kan højst tilføje 5 kundekort</string>
+    <string name="card_exist_error">Dit kundekort er allerede tilføjet</string>
+    <string name="only_numbers_error">Kundenummeret kan kun indeholde tal</string>
+
+    <string name="back_with_html">&lt;u&gt;Tilbage&lt;/u&gt;</string>
+    <string name="close_with_html">&lt;u&gt;Luk&lt;/u&gt;</string>
+    <string name="parse_user_exist">Parse user already exist</string>
+    <string name="data_not_set_error">Error: Data are not properly set</string>
+    <string name="segment_store_missing_error">Du skal vælge både segment og butik</string>
+    <string name="customer_no_error">Kundenummer skal være mindst 4 tegn</string>
+    <string name="customer_name_error">Navngiv dit kundekort</string>
+    <string name="customer_card_add_error">Kortet kunne ikke tilføjes</string>
+    <string name="wrong_pin_or_phone_error">Forkert telefonnummer eller pinkode</string>
+    <string name="edit_phone">Rediger telefonnummer</string>
+    <string name="user_not_exist_forgot_pin">Tjek, at dit telefonnummer er korrekt eller opret en profil</string>
+
+    <string name="product_offers_card_number_label">#</string>
+    <string name="general_continue">Fortsæt</string>
+
+    <string name="add_card_continue">&lt;u&gt;Fortsæt uden&lt;/u&gt;</string>
 </resources>

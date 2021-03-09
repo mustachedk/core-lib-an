@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="20dp">
+    <View
+        android:id="@+id/background_dim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0"
+        android:visibility="invisible"
+        android:background="@color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/bottom_gradient"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:alpha="0.3"
+        android:visibility="gone"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:src="@drawable/gradient_main_menu"/>
+
+    <ScrollView
+        android:id="@+id/scroll_input_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="20dp">
+            <ImageView
+                android:id="@+id/top_background"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_vector_skew"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/input_dialog_background"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:paddingTop="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/top_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/input_dialog_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/kollektifbold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/input_dialog_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="test header"/>
+
+                <TextView
+                    android:id="@+id/input_dialog_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintBottom_toTopOf="@+id/input_box_list"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="test text lorem ibsen madsen larsen troelsen frederiksen tallesen larsen mullesen"/>
+
+                <LinearLayout
+                    android:id="@+id/input_box_list"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/save_data_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/save_data_button"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/cell_height_small"
+                    android:text="@string/card_save"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_black_background_radius"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/input_dialog_back_button"/>
+
+                <ProgressBar
+                    android:id="@+id/activity_indicator"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:progressDrawable="@drawable/progress_drawable_input"
+                    app:layout_constraintEnd_toEndOf="@+id/save_data_button"
+                    app:layout_constraintStart_toStartOf="@+id/save_data_button"
+                    app:layout_constraintTop_toTopOf="@+id/save_data_button"
+                    app:layout_constraintBottom_toBottomOf="@+id/save_data_button"
+                    />
+
+                <TextView
+                    android:id="@+id/input_dialog_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_card_continue"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/sf_pro_text_regular"
+                    android:textSize="14sp"
+                    app:htmlText="@{@string/back_with_html}"
+                    android:padding="15dp"
+                    android:alpha="0.8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/onboarding_selection_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
