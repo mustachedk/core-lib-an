@@ -51,6 +51,9 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="SwipeAcceptLayout">
+    </declare-styleable>
+
     <style name="BasicBaseDialogStyle" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimaryDark">@color/transparent</item>

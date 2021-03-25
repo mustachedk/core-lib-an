@@ -21,4 +21,6 @@
     <color name="gradient_progress_animation_light">#E10933</color>
     <color name="test_blue">#3333ff</color>
     <color name="progress_dot">#32000000</color>
+    <color name="carissma_salem">#e77b95</color>
+    <color name="gray">#979797</color>
 </resources>

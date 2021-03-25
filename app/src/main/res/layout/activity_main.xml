@@ -37,6 +37,19 @@
             app:buttonTextColor="@color/white"
             app:hideClickEffect="false"
             />
+
+        <dk.mustache.corelib.swipe_accept_layout.SwipeAcceptLayout
+            android:id="@+id/swipe_accept_layout"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="34dp"
+            app:label="@{`Swipe to accept`}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

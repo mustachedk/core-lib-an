@@ -121,7 +121,7 @@
             android:layout_height="30dp"
             app:progressLabel="@{@string/progress_label}"
             app:endLabel="@{@string/end_label}"
-            app:currentProgress="50"
+            app:currentProgress="10"
             app:progressBarEndStyle="rounded"
             app:progressLabelColor="@color/test_blue"
             app:endLabelColor="@color/test_blue"

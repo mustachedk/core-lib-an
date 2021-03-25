@@ -1,6 +1,7 @@
 package dk.mustache.corelibexample
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.pm.PackageManager
 import android.location.Location
@@ -31,6 +32,7 @@ import dk.mustache.corelib.network.AccessToken
 import dk.mustache.corelib.network.AuthorizationRepository
 import dk.mustache.corelib.network.AuthorizationType
 import dk.mustache.corelib.network.RetroClient
+import dk.mustache.corelib.swipe_accept_layout.SwipeAcceptLayout
 import dk.mustache.corelib.utils.*
 import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
@@ -117,12 +119,24 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
 
         setFragment(fragment)
 
-
+        //TEST of update of HeaderListViewPagerFragment
 //        Handler(Looper.getMainLooper()).postDelayed({
 //            //test of data update
 //            val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
 //            viewModel.updatePageDataList(listOf(t6, t7, t8, t4, t5))
 //        }, 5000)
+
+        //TEST of swipe accept layout
+        binding.swipeAcceptLayout.swipeListener = object: SwipeAcceptLayout.SwipeListener {
+            override fun onSwipeAccept() {
+                Toast.makeText(MustacheCoreLib.getContextCheckInit(), "Swipe Accepted!", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onSwipeStarted() {
+                Toast.makeText(MustacheCoreLib.getContextCheckInit(), "Swipe initiated!", Toast.LENGTH_SHORT).show()
+            }
+
+        }
 
         //BottomSheetMenuFragment uncomment to see usage
 //        val menu = BottomSheetMenuFragment.newInstance(BottomSheetDialogSettings("Menu Header", listOf("Menu Option 1", "Menu Option 2", "Menu Option 3", "Menu Option 4"), MenuDialogType.CUSTOM))
@@ -239,6 +253,7 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
         t.commit()
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
