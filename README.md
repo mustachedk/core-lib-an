@@ -40,6 +40,7 @@ dependencies {
 
 ##### Layouts
 * TicketConstraintLayoutMasked
+* AnimatedProgressLayout
 * SwipeAcceptLayout
 
 ##### Dialogs
