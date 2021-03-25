@@ -34,6 +34,23 @@
         <attr name="hideClickEffect" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="AnimatedProgressLayout">
+        <attr name="currentProgress" format="integer"/>
+        <attr name="showDots" format="boolean"/>
+        <attr name="backgroundCornerRadius" format="integer"/>
+        <attr name="backgroundAnimationEnabled" format="boolean"/>
+        <attr name="progressBackgroundColor" format="color"/>
+        <attr name="progressLabelColor" format="color"/>
+        <attr name="endLabelColor" format="color"/>
+        <attr name="backgroundAnimationDrawable" format="reference"/>
+        <attr name="backgroundDrawable" format="reference"/>
+        <attr name="progressBarEndStyle" format="enum">
+            <enum name="triangle" value="0"/>
+            <enum name="rounded" value="1"/>
+            <enum name="straight" value="2"/>
+        </attr>
+    </declare-styleable>
+
     <style name="BasicBaseDialogStyle" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimaryDark">@color/transparent</item>

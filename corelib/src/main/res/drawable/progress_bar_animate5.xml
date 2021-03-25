@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="0dp"/>
+    <gradient
+        android:startColor="@color/gradient_progress_animation_dark"
+        android:centerX="0.6"
+        android:centerColor="@color/gradient_progress_animation_light"
+        android:endColor="@color/gradient_progress_animation_dark"
+        android:angle="180"
+        />
+</shape>

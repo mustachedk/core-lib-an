@@ -1,6 +1,7 @@
 package dk.mustache.corelibexample
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,14 @@ open class Pager2Fragment : GenericPagerFragment() {
         binding.pageData = pageData as SpecialData
 
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        Handler().postDelayed({
+//            binding.animatedProgressbar.setBackgroundAnimationEnabled(false)
+        },5000)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

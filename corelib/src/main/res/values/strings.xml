@@ -9,4 +9,6 @@
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
     <string name="menu_header">Menu Header</string>
     <string name="menu_menu_item">Menu item text</string>
+    <string name="progress_label">10%</string>
+    <string name="end_label">50%</string>
 </resources>
