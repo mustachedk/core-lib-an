@@ -143,7 +143,13 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
                         mPath?.addRoundRect(r, cornerRadius.toPx().toFloat(), cornerRadius.toPx().toFloat(), Path.Direction.CW)
                         mPath?.close()
                     }
-                    STRAIGHT_STYLE -> { }
+                    STRAIGHT_STYLE -> {
+                        val r = RectF(0f, 0f, cvWidth.toFloat(), h.toFloat())
+                        mPath = Path()
+
+                        mPath?.addRect(r, Path.Direction.CW)
+                        mPath?.close()
+                    }
                 }
 
 
