@@ -40,6 +40,7 @@ dependencies {
 
 ##### Layouts
 * TicketConstraintLayoutMasked
+* SwipeAcceptLayout
 
 ##### Dialogs
 * BottomSheetMenu
