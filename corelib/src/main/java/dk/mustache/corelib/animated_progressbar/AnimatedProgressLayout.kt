@@ -172,6 +172,7 @@ class AnimatedProgressLayout : ConstraintLayout {
             valueAnimator.addUpdateListener {
                 val value = it.animatedValue as Float
                 binding.progressDrawableLayout.setProgress(value)
+                binding.progressDrawableLayout.setLabel("${value.toInt()}%")
             }
             valueAnimator.duration = progressAnimationDuration.toLong()
             valueAnimator.interpolator = DecelerateInterpolator()
