@@ -19,6 +19,7 @@ import dk.mustache.corelib.utils.toPx
 
 class AnimatedProgressForegroundLayout : ConstraintLayout {
 
+    private var currentProgress: Float = 0f
     lateinit var binding: AnimatedProgressDrawableLayoutBinding
     var progressTranslationStart = -1000
     var progressTranslationEnd = 1000
@@ -92,15 +93,15 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
         this.endStyle = endStyle?:0
     }
 
-    fun setProgress(progress: Int) {
+    fun setProgress(progress: Float) {
         isProgressMax = progress>=100
         val set = ConstraintSet()
             if (progress<100) {
-                set.constrainPercentWidth(R.id.progress_clip_view, (progress.toFloat() / 100f))
+                set.constrainPercentWidth(R.id.progress_clip_view, (progress / 100f))
             } else {
                 set.constrainPercentWidth(R.id.progress_clip_view, 0.9999f)
             }
-
+        currentProgress = progress
         set.applyTo(binding.progressBackgroundCl)
         invalidate()
     }

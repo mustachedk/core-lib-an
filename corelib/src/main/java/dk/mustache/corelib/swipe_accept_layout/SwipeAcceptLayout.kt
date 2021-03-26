@@ -83,7 +83,7 @@ class SwipeAcceptLayout : ConstraintLayout, View.OnTouchListener {
 
         setOnTouchListener(this)
 
-        binding.swipeBackground.setProgress(100)
+        binding.swipeBackground.setProgress(100f)
         startX = binding.swipeButton.x+5.toPx()
         startBoundary = startX-10.toPx()
         binding.swipeBackground.viewTreeObserver.addOnGlobalLayoutListener {

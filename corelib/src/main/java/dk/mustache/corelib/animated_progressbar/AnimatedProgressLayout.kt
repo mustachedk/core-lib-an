@@ -1,5 +1,6 @@
 package dk.mustache.corelib.animated_progressbar
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Path
@@ -10,6 +11,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -24,6 +26,9 @@ import dk.mustache.corelib.utils.toPx
 
 class AnimatedProgressLayout : ConstraintLayout {
 
+    private var progressAnimationDuration: Int = 0
+    private var currentProgress: Float = 0f
+    private var animateProgress = false
     lateinit var binding: AnimatedProgressLayoutBinding
     var targetValue: String = ""
     private var showDots: Boolean = false
@@ -99,6 +104,9 @@ class AnimatedProgressLayout : ConstraintLayout {
             ContextCompat.getColor(MustacheCoreLib.getContextCheckInit(), R.color.button_gradient_end)
         )
 
+        animateProgress = a.getBoolean(R.styleable.AnimatedProgressLayout_animateProgress, false)
+        progressAnimationDuration = a.getInt(R.styleable.AnimatedProgressLayout_progressAnimationDuration, 0)
+
         setEndLabelTextColor(endLabelColor)
 
         showDots = a.getBoolean(R.styleable.AnimatedProgressLayout_showDots, false)
@@ -107,7 +115,7 @@ class AnimatedProgressLayout : ConstraintLayout {
 
         setCornerRadius(cornerRadius)
 
-        setProgress(progressInt)
+        setProgress(progressInt.toFloat())
 
         a.recycle()
 
@@ -152,13 +160,26 @@ class AnimatedProgressLayout : ConstraintLayout {
         targetValue = text
     }
 
-    fun setProgress(progress: Int) {
-        if (progress>=100) {
+    fun setProgress(updatedProgress: Float) {
+        if (updatedProgress>=100) {
             binding.endLabel.setTextColor(ContextCompat.getColor(MustacheCoreLib.getContextCheckInit(), R.color.white))
         } else {
             binding.endLabel.setTextColor(ContextCompat.getColor(MustacheCoreLib.getContextCheckInit(), R.color.black))
         }
-        binding.progressDrawableLayout.setProgress(progress)
+
+        if (animateProgress) {
+            val valueAnimator = ValueAnimator.ofFloat(currentProgress, updatedProgress)
+            valueAnimator.addUpdateListener {
+                val value = it.animatedValue as Float
+                binding.progressDrawableLayout.setProgress(value)
+            }
+            valueAnimator.duration = progressAnimationDuration.toLong()
+            valueAnimator.interpolator = DecelerateInterpolator()
+            valueAnimator.start()
+        } else {
+            binding.progressDrawableLayout.setProgress(updatedProgress)
+        }
+        currentProgress = updatedProgress
     }
 
     fun setNumberOfProgressDots(numOfDots: Int) {
