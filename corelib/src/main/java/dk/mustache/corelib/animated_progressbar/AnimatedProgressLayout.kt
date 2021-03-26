@@ -26,6 +26,9 @@ import dk.mustache.corelib.utils.toPx
 
 class AnimatedProgressLayout : ConstraintLayout {
 
+    private var maxProgress: Int = 0
+    private var endLabelPostFix: String = ""
+    private var progressLabelPostFix: String = ""
     private var progressAnimationDuration: Int = 0
     private var currentProgress: Float = 0f
     private var animateProgress = false
@@ -82,6 +85,15 @@ class AnimatedProgressLayout : ConstraintLayout {
             0
         )
 
+        maxProgress = a.getInt(
+            R.styleable.AnimatedProgressLayout_maxProgress,
+            100
+        )
+        binding.progressDrawableLayout.maxProgress = maxProgress
+
+        endLabelPostFix = a.getString(R.styleable.AnimatedProgressLayout_endLabelPostfix)?:"%"
+        progressLabelPostFix = a.getString(R.styleable.AnimatedProgressLayout_progressLabelPostfix)?:"%"
+
         val cornerRadius = a.getInt(
             R.styleable.AnimatedProgressLayout_backgroundCornerRadius,
             10
@@ -117,6 +129,8 @@ class AnimatedProgressLayout : ConstraintLayout {
 
         setProgress(progressInt.toFloat())
 
+        setEndLabel()
+
         a.recycle()
 
     }
@@ -150,10 +164,14 @@ class AnimatedProgressLayout : ConstraintLayout {
         binding.progressDrawableLayout.setLabel(text)
     }
 
-    fun setEndLabel(text: String) {
+    fun setEndLabel() {
         binding.endLabel.visibility = View.VISIBLE
         binding.endLabel.setTextColor(endLabelColor)
-        binding.endLabel.text = text
+        binding.endLabel.text = "$maxProgress $endLabelPostFix"
+    }
+
+    fun setEndLabelPost(text: String) {
+        endLabelPostFix = text
     }
 
     fun setTarget(text: String) {
@@ -161,7 +179,7 @@ class AnimatedProgressLayout : ConstraintLayout {
     }
 
     fun setProgress(updatedProgress: Float) {
-        if (updatedProgress>=100) {
+        if (updatedProgress>=maxProgress) {
             binding.endLabel.setTextColor(ContextCompat.getColor(MustacheCoreLib.getContextCheckInit(), R.color.white))
         } else {
             binding.endLabel.setTextColor(ContextCompat.getColor(MustacheCoreLib.getContextCheckInit(), R.color.black))
@@ -172,13 +190,14 @@ class AnimatedProgressLayout : ConstraintLayout {
             valueAnimator.addUpdateListener {
                 val value = it.animatedValue as Float
                 binding.progressDrawableLayout.setProgress(value)
-                binding.progressDrawableLayout.setLabel("${value.toInt()}%")
+                binding.progressDrawableLayout.setLabel("${value.toInt()} $progressLabelPostFix")
             }
             valueAnimator.duration = progressAnimationDuration.toLong()
             valueAnimator.interpolator = DecelerateInterpolator()
             valueAnimator.start()
         } else {
             binding.progressDrawableLayout.setProgress(updatedProgress)
+            binding.progressDrawableLayout.setLabel("${updatedProgress.toInt()} $progressLabelPostFix")
         }
         currentProgress = updatedProgress
     }

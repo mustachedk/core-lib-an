@@ -29,6 +29,7 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
     var endStyle: Int = 0
     val triSize = 10f.toPx()
     var valueAnimator : ValueAnimator? = null
+    var maxProgress: Int = 0
 
     constructor(context: Context) : super(context) { init(context, null) }
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { init(
@@ -94,10 +95,10 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
     }
 
     fun setProgress(progress: Float) {
-        isProgressMax = progress>=100
+        isProgressMax = progress>=maxProgress
         val set = ConstraintSet()
-            if (progress<100) {
-                set.constrainPercentWidth(R.id.progress_clip_view, (progress / 100f))
+            if (progress<maxProgress) {
+                set.constrainPercentWidth(R.id.progress_clip_view, (progress / maxProgress.toFloat()))
             } else {
                 set.constrainPercentWidth(R.id.progress_clip_view, 0.9999f)
             }

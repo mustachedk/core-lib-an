@@ -42,6 +42,9 @@
         <attr name="progressBackgroundColor" format="color"/>
         <attr name="progressLabelColor" format="color"/>
         <attr name="endLabelColor" format="color"/>
+        <attr name="endLabelPostfix" format="string"/>
+        <attr name="maxProgress" format="integer"/>
+        <attr name="progressLabelPostfix" format="string"/>
         <attr name="backgroundAnimationDrawable" format="reference"/>
         <attr name="backgroundDrawable" format="reference"/>
         <attr name="animateProgress" format="boolean"/>
