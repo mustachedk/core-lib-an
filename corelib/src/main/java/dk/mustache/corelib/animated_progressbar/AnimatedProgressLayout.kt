@@ -170,11 +170,11 @@ class AnimatedProgressLayout : ConstraintLayout {
         binding.progressDrawableLayout.setBackgoundAnimationDrawable(drawable)
     }
 
-    fun setProgressLabel(text: String) {
+    private fun setProgressLabel(text: String) {
         binding.progressDrawableLayout.setLabel(text)
     }
 
-    fun setEndLabel() {
+    private fun setEndLabel() {
         binding.endLabel.visibility = View.VISIBLE
         binding.endLabel.setTextColor(endLabelColor)
         binding.endLabel.text = "$maxProgress$endLabelPostFix"

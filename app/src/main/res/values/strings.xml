@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CoreLibExample</string>
+    <string name="percentage">%</string>
 </resources>
