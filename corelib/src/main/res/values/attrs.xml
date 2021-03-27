@@ -49,6 +49,7 @@
         <attr name="backgroundDrawable" format="reference"/>
         <attr name="animateProgress" format="boolean"/>
         <attr name="progressAnimationDuration" format="integer"/>
+        <attr name="forceShowProgressInPercentage" format="boolean"/>
         <attr name="progressBarEndStyle" format="enum">
             <enum name="triangle" value="0"/>
             <enum name="rounded" value="1"/>

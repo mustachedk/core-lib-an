@@ -26,6 +26,7 @@ import dk.mustache.corelib.utils.toPx
 
 class AnimatedProgressLayout : ConstraintLayout {
 
+    private var forceShowProgressInPercentage: Boolean = false
     private var maxProgress: Int = 0
     private var endLabelPostFix: String = ""
     private var progressLabelPostFix: String = ""
@@ -93,6 +94,8 @@ class AnimatedProgressLayout : ConstraintLayout {
 
         endLabelPostFix = a.getString(R.styleable.AnimatedProgressLayout_endLabelPostfix)?:"%"
         progressLabelPostFix = a.getString(R.styleable.AnimatedProgressLayout_progressLabelPostfix)?:"%"
+        forceShowProgressInPercentage =
+            a.getBoolean(R.styleable.AnimatedProgressLayout_forceShowProgressInPercentage, false)
 
         val cornerRadius = a.getInt(
             R.styleable.AnimatedProgressLayout_backgroundCornerRadius,
@@ -167,7 +170,7 @@ class AnimatedProgressLayout : ConstraintLayout {
     fun setEndLabel() {
         binding.endLabel.visibility = View.VISIBLE
         binding.endLabel.setTextColor(endLabelColor)
-        binding.endLabel.text = "$maxProgress $endLabelPostFix"
+        binding.endLabel.text = "$maxProgress$endLabelPostFix"
     }
 
     fun setEndLabelPost(text: String) {
@@ -190,16 +193,22 @@ class AnimatedProgressLayout : ConstraintLayout {
             valueAnimator.addUpdateListener {
                 val value = it.animatedValue as Float
                 binding.progressDrawableLayout.setProgress(value)
-                binding.progressDrawableLayout.setLabel("${value.toInt()} $progressLabelPostFix")
+                binding.progressDrawableLayout.setLabel(progressLabel(value))
             }
             valueAnimator.duration = progressAnimationDuration.toLong()
             valueAnimator.interpolator = DecelerateInterpolator()
             valueAnimator.start()
         } else {
             binding.progressDrawableLayout.setProgress(updatedProgress)
-            binding.progressDrawableLayout.setLabel("${updatedProgress.toInt()} $progressLabelPostFix")
+            binding.progressDrawableLayout.setLabel(progressLabel(updatedProgress))
         }
         currentProgress = updatedProgress
+    }
+
+    private fun progressLabel(updatedProgress: Float) = if (forceShowProgressInPercentage) {
+        "${updatedProgress.div(maxProgress).times(100).toInt()}%"
+    } else {
+        "${updatedProgress.toInt()}$progressLabelPostFix"
     }
 
     fun setNumberOfProgressDots(numOfDots: Int) {

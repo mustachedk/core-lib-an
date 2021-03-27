@@ -172,6 +172,7 @@
             app:progressBarEndStyle="rounded"
             app:progressLabelColor="@color/test_blue"
             app:endLabelColor="@color/test_blue"
+            app:forceShowProgressInPercentage="true"
             app:backgroundCornerRadius="20"
             app:backgroundAnimationEnabled="true"
             app:backgroundAnimationDrawable="@drawable/progress_bar_animate6"
