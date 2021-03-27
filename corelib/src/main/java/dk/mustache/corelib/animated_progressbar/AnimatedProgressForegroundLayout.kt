@@ -18,7 +18,7 @@ import dk.mustache.corelib.databinding.AnimatedProgressDrawableLayoutBinding
 import dk.mustache.corelib.utils.toPx
 
 class AnimatedProgressForegroundLayout : ConstraintLayout {
-
+    var progressIndentationPercentage = 0f
     private var currentProgress: Float = 0f
     lateinit var binding: AnimatedProgressDrawableLayoutBinding
     var progressTranslationStart = -1000
@@ -28,19 +28,27 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
     var mPath: Path? = null
     var endStyle: Int = 0
     val triSize = 10f.toPx()
-    var valueAnimator : ValueAnimator? = null
+    var valueAnimator: ValueAnimator? = null
     var maxProgress: Int = 0
 
-    constructor(context: Context) : super(context) { init(context, null) }
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { init(
-        context,
-        attrs
-    ) }
+    constructor(context: Context) : super(context) {
+        init(context, null)
+    }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        init(
+            context,
+            attrs
+        )
+    }
+
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
-    ) { init(context, attrs) }
+    ) {
+        init(context, attrs)
+    }
 
     private fun init(context: Context?, attrs: AttributeSet?) {
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -69,7 +77,7 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
     }
 
     fun setAnimationEnabled(enabled: Boolean?) {
-        if (enabled==false) {
+        if (enabled == false) {
             valueAnimator?.cancel()
             binding.benefitProgressImage.visibility = View.GONE
         } else {
@@ -91,25 +99,31 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
     }
 
     fun setEndStyle(endStyle: Int?) {
-        this.endStyle = endStyle?:0
+        this.endStyle = endStyle ?: 0
     }
 
     fun setProgress(progress: Float) {
-        isProgressMax = progress>=maxProgress
+        val progressPercentage = (progress / maxProgress.toFloat())
+        val indentationReductionPercentage =
+            progressIndentationPercentage.div(100).times(progressPercentage)
+
+        isProgressMax = progress >= maxProgress
         val set = ConstraintSet()
-            if (progress<maxProgress) {
-                set.constrainPercentWidth(R.id.progress_clip_view, (progress / maxProgress.toFloat()))
-            } else {
-                set.constrainPercentWidth(R.id.progress_clip_view, 0.9999f)
-            }
+        if (progress < maxProgress) {
+            set.constrainPercentWidth(R.id.progress_clip_view,
+                progressPercentage.plus(progressIndentationPercentage)
+                    .minus(indentationReductionPercentage))
+        } else {
+            set.constrainPercentWidth(R.id.progress_clip_view, 0.9999f)
+        }
         currentProgress = progress
         set.applyTo(binding.progressBackgroundCl)
         invalidate()
     }
 
-    override fun dispatchDraw(canvas: Canvas){
+    override fun dispatchDraw(canvas: Canvas) {
         val path = mPath
-        if (path!=null) {
+        if (path != null) {
             canvas.save()
             canvas.clipPath(path)
             super.dispatchDraw(canvas);
@@ -127,7 +141,7 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
                 mPath?.addRoundRect(r, 0f, 0f, Path.Direction.CW)
                 mPath?.close()
             } else {
-                when(endStyle) {
+                when (endStyle) {
                     TRIANGLE_STYLE -> {
                         mPath = Path()
                         mPath?.moveTo(cvWidth - triSize, 0f)
@@ -142,7 +156,10 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
                         val r = RectF(0f, 0f, cvWidth.toFloat(), h.toFloat())
                         mPath = Path()
 
-                        mPath?.addRoundRect(r, cornerRadius.toPx().toFloat(), cornerRadius.toPx().toFloat(), Path.Direction.CW)
+                        mPath?.addRoundRect(r,
+                            cornerRadius.toPx().toFloat(),
+                            cornerRadius.toPx().toFloat(),
+                            Path.Direction.CW)
                         mPath?.close()
                     }
                     STRAIGHT_STYLE -> {

@@ -17,12 +17,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import dk.mustache.corelib.MustacheCoreLib
-import dk.mustache.corelib.databinding.AnimatedProgressLayoutBinding
 import dk.mustache.corelib.R
+import dk.mustache.corelib.databinding.AnimatedProgressLayoutBinding
 import dk.mustache.corelib.databinding.ProgressDotLayoutBinding
 import dk.mustache.corelib.databinding.ProgressEndLayoutBinding
 import dk.mustache.corelib.utils.toPx
-
 
 class AnimatedProgressLayout : ConstraintLayout {
 
@@ -81,6 +80,11 @@ class AnimatedProgressLayout : ConstraintLayout {
             setLayoutBackground(backgroundDrawable)
         }
 
+        val progressIndentationFloat = a.getFloat(
+            R.styleable.AnimatedProgressLayout_progressIndentationPercentage, 0f
+        )
+        setProgressIndentationPercentage(progressIndentationFloat)
+
         val progressInt = a.getInt(
             R.styleable.AnimatedProgressLayout_currentProgress,
             0
@@ -135,11 +139,14 @@ class AnimatedProgressLayout : ConstraintLayout {
         setEndLabel()
 
         a.recycle()
-
     }
 
     fun setLayoutBackground(drawable: Drawable) {
         binding.animatedProgressLayout.background = drawable
+    }
+
+    fun setProgressIndentationPercentage(indentationPercentage:Float) {
+        binding.progressDrawableLayout.progressIndentationPercentage = indentationPercentage
     }
 
     fun setEndLabelTextColor(colorId: Int) {
