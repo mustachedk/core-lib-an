@@ -104,8 +104,8 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
 
     fun setProgress(progress: Float) {
         val progressPercentage = (progress / maxProgress.toFloat())
-        val indentationReductionPercentage =
-            progressIndentationPercentage.div(100).times(progressPercentage)
+        val indentationReductionPercentage = progressPercentage.times(progressIndentationPercentage)
+
 
         isProgressMax = progress >= maxProgress
         val set = ConstraintSet()
