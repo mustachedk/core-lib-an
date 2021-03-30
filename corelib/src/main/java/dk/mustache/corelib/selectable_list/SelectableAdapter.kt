@@ -1,8 +1,6 @@
 package dk.mustache.corelib.selectable_list
 
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -17,7 +15,7 @@ import dk.mustache.corelib.MustacheCoreLib
 import dk.mustache.corelib.utils.toPx
 
 
-abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: ArrayList<Int>, val onItemSelectionToggled: (item: T, selected: Boolean) -> Unit, val settings: SelectableAdapterSettings) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+abstract class SelectableAdapter<T : SelectableItem>(val items: List<T>, val onItemSelectionToggled: (item: T, selected: Boolean) -> Unit, val settings: SelectableAdapterSettings) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var layoutInflater: LayoutInflater? = null
 
     inner class SelectableListItemViewHolder(val itemSelectablePickerBinding: ItemSelectablePickerBinding, val customResBinding: ViewDataBinding) : RecyclerView.ViewHolder(itemSelectablePickerBinding.root) {
@@ -91,21 +89,14 @@ abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: A
             childLayoutBinding.executePendingBindings()
 
             holder.itemSelectablePickerBinding.selectableItemLayout.setOnClickListener {
-                if (settings.singleSelection) {
-                    selectedValueList.clear()
-                    selectedValueList.add(position)
-                } else {
-                    if (selectedValueList.contains(position)) {
-                        selectedValueList.remove(position)
-                    } else {
-                        selectedValueList.add(position)
-                    }
-                }
-                onItemSelectionToggled(item, selectedValueList.contains(position))
+                deselectAll()
+                item.selected = !item.selected
+
+                onItemSelectionToggled(item, item.selected)
                 notifyDataSetChanged()
             }
 
-            if (selectedValueList.contains(position)) {
+            if (item.selected) {
                 val checkedDrawable = ContextCompat.getDrawable(MustacheCoreLib.getContextCheckInit(), settings.selectedIcon)
                 holder.itemSelectablePickerBinding.checkedImage.setImageDrawable(checkedDrawable)
             } else {
@@ -122,32 +113,28 @@ abstract class SelectableAdapter<T>(val items: List<T>, val selectedValueList: A
     fun isAllSelected(): Boolean {
         var allSelected = true
         items.forEachIndexed { index, s ->
-            if(!selectedValueList.contains(index)) {
+            if(!s.selected) {
                 allSelected = false
             }
         }
         return allSelected
     }
 
-    fun deSelectAll() {
-        items.forEachIndexed { index, s ->
-            if(selectedValueList.contains(index)) {
-                selectedValueList.remove(index)
-            }
+    fun deselectAll() {
+        items.forEach { item ->
+            item.selected = false
         }
     }
 
     fun selectAll() {
-        items.forEachIndexed { index, s ->
-            if(!selectedValueList.contains(index)) {
-                selectedValueList.add(index)
-            }
+        items.forEach { item ->
+            item.selected = true
         }
     }
 
     fun toggleAllSelection() {
         if (isAllSelected()) {
-            deSelectAll()
+            deselectAll()
         } else {
             selectAll()
         }

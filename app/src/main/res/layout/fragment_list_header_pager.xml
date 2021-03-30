@@ -196,43 +196,25 @@
             app:layout_constraintTop_toBottomOf="@id/animated_progressbar4"
             />
 
-<!--        <dk.mustache.corelib.animated_progressbar.AnimatedProgressLayout-->
-<!--            android:id="@+id/animated_progressbar6"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="24dp"-->
-<!--            app:endLabelPostfix=" point"-->
-<!--            app:progressLabelPostfix=" point"-->
-<!--            app:maxProgress="220"-->
-<!--            app:progressIndentationPercentage="0.18"-->
-<!--            app:currentProgress="110"-->
-<!--            app:progressBarEndStyle="rounded"-->
-<!--            app:progressLabelColor="@color/white"-->
-<!--            app:endLabelColor="@color/black"-->
-<!--            app:forceShowProgressInPercentage="false"-->
-<!--            app:backgroundCornerRadius="20"-->
-<!--            app:backgroundDrawable="@drawable/progress_bar_background_amba"-->
-<!--            app:progressBackgroundColor="@color/gradient_progress_animation_dark"-->
-<!--            app:animateProgress="true"-->
-<!--            app:backgroundAnimationEnabled="true"-->
-<!--            app:progressAnimationDuration="500"-->
-<!--            android:layout_marginBottom="15dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:layout_marginEnd="10dp"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/animated_progressbar5"-->
-<!--            />-->
-
-        <dk.mustache.corelib.animated_background.AnimatedBackgroundLayout
-            android:id="@+id/animated_background2"
-            android:layout_width="0dp"
+        <dk.mustache.corelib.animated_progressbar.AnimatedProgressLayout
+            android:id="@+id/animated_progressbar6"
+            android:layout_width="match_parent"
             android:layout_height="24dp"
-            app:outerGradientColor="@color/gradient_progress_animation_dark"
-            app:centerGradientColor="@color/gradient_progress_animation_light"
-            app:bgCornerRadius="20dp"
-            app:bgAnimationEnabled="true"
-            app:bgAnimationDuration="500"
+            app:endLabelPostfix=" point"
+            app:progressLabelPostfix=" point"
+            app:maxProgress="220"
+            app:progressIndentationPercentage="0.18"
+            app:currentProgress="110"
+            app:progressBarEndStyle="rounded"
+            app:progressLabelColor="@color/white"
+            app:endLabelColor="@color/black"
+            app:forceShowProgressInPercentage="false"
+            app:backgroundCornerRadius="20"
+            app:backgroundDrawable="@drawable/progress_bar_background_amba"
+            app:progressBackgroundColor="@color/gradient_progress_animation_dark"
+            app:animateProgress="true"
+            app:backgroundAnimationEnabled="true"
+            app:progressAnimationDuration="500"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
@@ -240,6 +222,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/animated_progressbar5"
+            />
+
+        <dk.mustache.corelib.animated_background.AnimatedBackgroundLayout
+            android:id="@+id/animated_background2"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            app:outerGradientColor="@color/white"
+            app:centerGradientColor="@color/black"
+            app:bgCornerRadius="20dp"
+            app:bgAnimationEnabled="true"
+            app:bgAnimationDuration="1000"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/animated_progressbar6"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

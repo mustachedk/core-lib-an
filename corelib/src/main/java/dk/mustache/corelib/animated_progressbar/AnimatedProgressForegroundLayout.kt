@@ -21,8 +21,8 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
     var progressIndentationPercentage = 0f
     private var currentProgress: Float = 0f
     lateinit var binding: AnimatedProgressDrawableLayoutBinding
-    var progressTranslationStart = -1000
-    var progressTranslationEnd = 1000
+    var progressTranslationStart = -2000
+    var progressTranslationEnd = 2000
     var cornerRadius = 10
     var isProgressMax = false
     var mPath: Path? = null
