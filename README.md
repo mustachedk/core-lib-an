@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:0.8.2'
+  implementation 'com.github.mustachedk:core-lib-an:0.8.3'
 }
 ```
 
@@ -42,6 +42,7 @@ dependencies {
 * TicketConstraintLayoutMasked
 * AnimatedProgressLayout
 * SwipeAcceptLayout
+* AnimatedBackgroundLayout
 
 ##### Dialogs
 * BottomSheetMenu
