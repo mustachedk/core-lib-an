@@ -15,12 +15,15 @@
             android:id="@+id/pss_swipe_pay_layout"
             android:layout_width="match_parent"
             android:layout_height="60dp">
-            <dk.mustache.corelib.animated_progressbar.AnimatedProgressLayout
+            <dk.mustache.corelib.animated_background.AnimatedBackgroundLayout
                 android:id="@+id/swipe_background"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:currentProgress="0"
-                app:backgroundCornerRadius="30"
+                app:outerGradientColor="@color/black"
+                app:centerGradientColor="@color/white"
+                app:bgCornerRadius="30dp"
+                app:bgAnimationEnabled="true"
+                app:bgAnimationDuration="1000"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

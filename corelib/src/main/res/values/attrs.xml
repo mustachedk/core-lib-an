@@ -58,6 +58,15 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="AnimatedBackgroundLayout">
+        <attr name="centerGradientColor" format="color"/>
+        <attr name="outerGradientColor" format="color"/>
+        <attr name="animateBackgroundCornerRadius" format="integer"/>bgAnimationEnabled
+        <attr name="bgAnimationEnabled" format="boolean"/>
+        <attr name="bgCornerRadius" format="dimension"/>
+        <attr name="bgAnimationDuration" format="integer"/>
+    </declare-styleable>
+
     <declare-styleable name="SwipeAcceptLayout">
     </declare-styleable>
 

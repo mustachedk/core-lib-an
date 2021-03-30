@@ -30,7 +30,7 @@ dependencies {
 * ScreenUtil
 * ValidateUtil
 * ViewUtil
-* BitmapCropper app:layout_behavior="com.your.package.LockableBottomSheetBehavior"
+* BitmapCropper
 
 
 ##### Views
