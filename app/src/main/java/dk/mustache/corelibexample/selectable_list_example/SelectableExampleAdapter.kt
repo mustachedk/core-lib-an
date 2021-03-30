@@ -13,6 +13,6 @@ import dk.mustache.corelibexample.R
 import dk.mustache.corelibexample.databinding.SectionHeaderItemCustomExampleBinding
 import java.util.*
 
-class SelectableExampleAdapter (items: List<SelectableItem>, selectedList: ArrayList<Int>, val onSelected: (item: SelectableItem, selected: Boolean) -> Unit) : SelectableAdapter<SelectableItem>(items, selectedList, onSelected, SelectableAdapterSettings()) {
+class SelectableExampleAdapter (items: List<SelectableItem>, selectedList: ArrayList<Int>, val onSelected: (item: SelectableItem, selected: Boolean) -> Unit) : SelectableAdapter<SelectableItem>(items, onSelected, SelectableAdapterSettings()) {
 
 }
