@@ -31,6 +31,7 @@ dependencies {
 * ValidateUtil
 * ViewUtil
 * BitmapCropper
+* GPSSingleShotCurrentLocation
 
 
 ##### Views
