@@ -17,16 +17,21 @@ class GPSSingleShotCurrentLocation {
     interface SingleLocationListener {
         fun onCurrentLocationAvailable(location: Location?)
         fun onMissingPermission()
+        fun onGPSNotEnabled()
     }
 
     @RequiresPermission("android.permission.ACCESS_FINE_LOCATION")
-    fun requestSingleUpdate(context: Context, listener: SingleLocationListener) {
+    fun requestSingleUpdate(context: Context, requireGps: Boolean = false, listener: SingleLocationListener) {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         val isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val criteria = Criteria()
         if (isGPSEnabled) {
-            val criteria = Criteria()
             criteria.accuracy = Criteria.ACCURACY_FINE
+        } else {
+            criteria.accuracy = Criteria.ACCURACY_COARSE
+        }
+        if ((!requireGps && isNetworkEnabled) || isGPSEnabled) {
             locationManager.requestSingleUpdate(criteria, object : LocationListener {
                 override fun onLocationChanged(location: Location) {
                     listener.onCurrentLocationAvailable(location)
@@ -38,20 +43,7 @@ class GPSSingleShotCurrentLocation {
                 override fun onProviderDisabled(provider: String) {}
             }, null)
         } else {
-            if (isNetworkEnabled) {
-                val criteria = Criteria()
-                criteria.accuracy = Criteria.ACCURACY_COARSE
-                locationManager.requestSingleUpdate(criteria, object : LocationListener {
-                    override fun onLocationChanged(location: Location) {
-                        listener.onCurrentLocationAvailable(location)
-                        locationManager.removeUpdates(this)
-                    }
-
-                    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
-                    override fun onProviderEnabled(provider: String) {}
-                    override fun onProviderDisabled(provider: String) {}
-                }, null)
-            }
+            listener.onGPSNotEnabled()
         }
     }
 
@@ -67,7 +59,7 @@ class GPSSingleShotCurrentLocation {
         ) {
             listener.onMissingPermission()
         } else {
-            requestSingleUpdate(context,listener)
+            requestSingleUpdate(context,listener = listener)
         }
     }
 }
