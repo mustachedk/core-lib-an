@@ -9,7 +9,7 @@ import android.content.IntentFilter
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.processors.BehaviorProcessor
 
-object BluetoothHelper {
+object BluetoothManager {
     const val REQUEST_ENABLE_BT = 0
     private val bluetoothAdapter = lazy { BluetoothAdapter.getDefaultAdapter() }
 
