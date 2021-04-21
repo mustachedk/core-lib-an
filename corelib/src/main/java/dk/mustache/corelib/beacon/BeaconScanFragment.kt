@@ -31,7 +31,7 @@ abstract class BeaconScanFragment : Fragment(), BeaconConsumer {
         isScanning = true
     }
 
-    private fun stopScan() {
+    fun stopScan() {
         unbindBeaconManager()
         activity?.keepScreenOn(false)
         isScanning = false
