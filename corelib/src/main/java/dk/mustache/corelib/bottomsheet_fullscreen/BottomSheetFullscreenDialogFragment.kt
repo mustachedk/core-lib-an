@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.widget.FrameLayout
+import androidx.core.view.ViewCompat.getDisplay
 import com.google.android.material.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -33,7 +34,9 @@ abstract class BottomSheetFullScreenDialogFragment : BottomSheetDialogFragment()
     private fun getDesiredBottomSheetDialogHeight(context: Context, topMargin: Int): Int {
         // Calculate window height for fullscreen use
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+        @Suppress("DEPRECATION")
+        val display = requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
         val displayHeight= displayMetrics.heightPixels
         return displayHeight.minus(topMargin)
     }
