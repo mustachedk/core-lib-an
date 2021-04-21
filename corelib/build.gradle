@@ -8,13 +8,13 @@ android {
         enabled = true
     }
 
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 18
-        versionName "0.9.1"
+        versionName "1.0.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -73,6 +73,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 //    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+
+    implementation 'org.altbeacon:android-beacon-library:2.12.1'
 }
 
 repositories {
