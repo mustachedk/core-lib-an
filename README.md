@@ -32,6 +32,8 @@ dependencies {
 * ViewUtil
 * BitmapCropper
 * GPSSingleShotCurrentLocation
+* Bluetooth enable and isEnabled
+* Beacon
 
 
 ##### Views
