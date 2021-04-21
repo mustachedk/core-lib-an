@@ -1,23 +1,20 @@
 package dk.mustache.corelibexample
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.annotation.SuppressLint
 import android.app.Application
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import dk.mustache.corelib.MustacheCoreLib
+import dk.mustache.corelib.beacon.BeaconScanActivity
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetDoublePicker
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetPicker
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
-import dk.mustache.corelib.fragment_dialog.FragmentDialogSetup
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_CANCEL
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_OK
@@ -26,7 +23,6 @@ import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
-import dk.mustache.corelib.menu_bottom_sheet.BottomSheetDialogSettings
 import dk.mustache.corelib.menu_bottom_sheet.MenuDialogType
 import dk.mustache.corelib.network.AccessToken
 import dk.mustache.corelib.network.AuthorizationRepository
@@ -38,16 +34,15 @@ import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
-import dk.mustache.corelibexample.standard_dialog_example.StandardDialogExampleFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
+class MainActivity : BeaconScanActivity(),
+    BottomSheetMenuFragment.BottomSheetMenuListener,
     StandardDialogFragment.BaseDialogFragmentListener,
-    AppCompatActivity(),
     LocationUtil.LocationChangedCallback,
     EmptyStateView.OnEmptystateActionListener,
     BottomSheetPicker.BottomSheetPickerListener<PickerTypeEnum>,
@@ -117,7 +112,8 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
 //        ))
         val fragment = HeaderListViewPagerFragment.newInstance()
 
-        setFragment(fragment)
+        //Uncomment to start HeaderListViewPagerFragment
+//        setFragment(fragment)
 
         //TEST of update of HeaderListViewPagerFragment
 //        Handler(Looper.getMainLooper()).postDelayed({
@@ -253,26 +249,26 @@ class MainActivity : BottomSheetMenuFragment.BottomSheetMenuListener,
         t.commit()
     }
 
-    @SuppressLint("MissingSuperCall")
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            RC_ACCESS_FINE_LOCATION -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (hasPermission(this, ACCESS_FINE_LOCATION)) {
-                        /** User granted location permission */
-                    } else {
-                        /** We don't have the location permission */
-                    }
-                } else {
-                    /** User denied location permission */
-                }
-            }
-        }
-    }
+//    @SuppressLint("MissingSuperCall")
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        when (requestCode) {
+//            RC_ACCESS_FINE_LOCATION -> {
+//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (hasPermission(this, ACCESS_FINE_LOCATION)) {
+//                        /** User granted location permission */
+//                    } else {
+//                        /** We don't have the location permission */
+//                    }
+//                } else {
+//                    /** User denied location permission */
+//                }
+//            }
+//        }
+//    }
 
     override fun locationChanged(location: Location) {
         currentLocation = location
