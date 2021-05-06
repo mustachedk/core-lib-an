@@ -113,7 +113,7 @@ class MainActivity : BeaconScanActivity(),
         val fragment = HeaderListViewPagerFragment.newInstance()
 
         //Uncomment to start HeaderListViewPagerFragment
-//        setFragment(fragment)
+        setFragment(fragment)
 
         //TEST of update of HeaderListViewPagerFragment
 //        Handler(Looper.getMainLooper()).postDelayed({
