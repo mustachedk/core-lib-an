@@ -21,8 +21,8 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
     var progressIndentationPercentage = 0f
     private var currentProgress: Float = 0f
     lateinit var binding: AnimatedProgressDrawableLayoutBinding
-    var progressTranslationStart = -2000
-    var progressTranslationEnd = 2000
+    var progressTranslationStart = -1000
+    var progressTranslationEnd = 1000
     var cornerRadius = 10
     var isProgressMax = false
     var mPath: Path? = null
@@ -70,7 +70,7 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
             val animationPosition = it.animatedValue as Int
             binding.benefitProgressImage.translationX = animationPosition.toFloat()
         }
-        valueAnimator?.duration = 2000
+        valueAnimator?.duration = 1000L
         valueAnimator?.repeatCount = ValueAnimator.INFINITE
         valueAnimator?.repeatMode = ValueAnimator.RESTART
         valueAnimator?.start()
@@ -106,13 +106,14 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
         val progressPercentage = (progress / maxProgress.toFloat())
         val indentationReductionPercentage = progressPercentage.times(progressIndentationPercentage)
 
-
         isProgressMax = progress >= maxProgress
         val set = ConstraintSet()
         if (progress < maxProgress) {
             set.constrainPercentWidth(R.id.progress_clip_view,
                 progressPercentage.plus(progressIndentationPercentage)
                     .minus(indentationReductionPercentage))
+
+            binding.progressLabel
         } else {
             set.constrainPercentWidth(R.id.progress_clip_view, 0.9999f)
         }
@@ -170,8 +171,6 @@ class AnimatedProgressForegroundLayout : ConstraintLayout {
                         mPath?.close()
                     }
                 }
-
-
             }
         }
     }

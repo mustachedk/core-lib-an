@@ -1,10 +1,14 @@
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="endStyle"
-            type="Integer" />
+            type="java.lang.Integer" />
+
         <variable
             name="backgroundAnimationEnabled"
             type="Boolean" />
@@ -13,44 +17,40 @@
     <FrameLayout
         android:id="@+id/animated_progress_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/progress_background">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/progress_dots"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="horizontal"></LinearLayout>
 
         <dk.mustache.corelib.animated_progressbar.AnimatedProgressForegroundLayout
             android:id="@+id/progress_drawable_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:endStyle="@{endStyle}"
             app:animationEnabled="@{backgroundAnimationEnabled}"
-            />
+            app:endStyle="@{endStyle}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/benefit_custom_progressbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:targetApi="n">
 
             <TextView
                 android:id="@+id/end_label"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:visibility="gone"
-                android:fontFamily="@font/roboto_bold"
-                android:textSize="11sp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="sans-serif"
                 android:gravity="center"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="10%"
-                />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="10%" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>
