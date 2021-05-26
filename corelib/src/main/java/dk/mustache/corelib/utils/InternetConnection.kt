@@ -43,7 +43,7 @@ object InternetConnection {
                             }
                         }
 
-                        override fun onLost(network: Network?) {
+                        override fun onLost(network: Network) {
                             TaskHandler.doTaskOnMainThread {
                                 connectionStatus.set(ConnectionStatus.NO_CONNECTION)
                             }

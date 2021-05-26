@@ -15,7 +15,7 @@ import android.net.ConnectivityManager
  */
 @RequiresPermission(permission.ACCESS_NETWORK_STATE)
 fun isConnected(context: Context): Boolean {
-    return getNetworkInfo(context).isConnected
+    return getNetworkInfo(context)?.isConnected?:false
 }
 
 /**
@@ -26,6 +26,6 @@ fun isConnected(context: Context): Boolean {
  * @return Network info
  */
 @RequiresPermission(permission.ACCESS_NETWORK_STATE)
-private fun getNetworkInfo(context: Context): NetworkInfo {
+private fun getNetworkInfo(context: Context): NetworkInfo? {
     return (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
 }
