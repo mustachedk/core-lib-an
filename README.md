@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:1.0.4'
+  implementation 'com.github.mustachedk:core-lib-an:1.0.5'
 }
 ```
 
@@ -54,9 +54,6 @@ dependencies {
 * BottomSheetFullscreenDialogFragment
 * StandardDialogFragment
 * BasicBaseDialogFragment
-
-##### Behaviors
-* LockableBottomSheetBehavior
 
 ##### Base Classes:
 * DataBindingAdapter (DataBindingViewHolder)
