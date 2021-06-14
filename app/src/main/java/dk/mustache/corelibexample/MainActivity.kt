@@ -42,7 +42,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainActivity : BeaconScanActivity(),
     BottomSheetMenuFragment.BottomSheetMenuListener,
-    StandardDialogFragment.BaseDialogFragmentListener,
+    StandardDialogFragment.BaseDialogFragmentListener<DialogTypeEnum>,
     LocationUtil.LocationChangedCallback,
     EmptyStateView.OnEmptystateActionListener,
     BottomSheetPicker.BottomSheetPickerListener<PickerTypeEnum>,

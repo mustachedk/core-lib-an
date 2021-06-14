@@ -18,16 +18,16 @@ import dk.mustache.corelib.databinding.FragmentAlertDialogBinding
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
 import dk.mustache.corelib.fragment_dialog.FragmentDialogSetup
 
-open class StandardDialogFragment : DialogFragment() {
+open class StandardDialogFragment <T: Enum<T>> : DialogFragment() {
 
-    var mListener: BaseDialogFragmentListener? = null
-    lateinit var dialogSetup: FragmentDialogSetup
+    var mListener: BaseDialogFragmentListener<T>? = null
+    lateinit var dialogSetup: FragmentDialogSetup<T>
     lateinit var binding: ViewDataBinding
 
-    interface BaseDialogFragmentListener {
+    interface BaseDialogFragmentListener <T: Enum<T>> {
         fun dialogButtonClicked(
             index: Int,
-            dialogType: DialogTypeEnum
+            dialogType: T
         )
         fun nothingSelected()
     }
@@ -38,7 +38,10 @@ open class StandardDialogFragment : DialogFragment() {
         const val BUTTON_CANCEL = 2
         const val TEXT_CLICKED = 3
 
-        fun setupDialog(dialogSetup: FragmentDialogSetup, fragment : StandardDialogFragment): StandardDialogFragment {
+        fun <T: Enum<T>> setupDialog(
+            dialogSetup: FragmentDialogSetup<T>,
+            fragment: StandardDialogFragment<T>
+        ): StandardDialogFragment<T> {
             val args = Bundle()
             args.putParcelable(DIALOG_SETUP, dialogSetup)
 
@@ -52,7 +55,7 @@ open class StandardDialogFragment : DialogFragment() {
         super.onCreate(savedInstanceState)
 
         if (arguments!=null) {
-            val setup = arguments?.getParcelable<FragmentDialogSetup>(DIALOG_SETUP)
+            val setup = arguments?.getParcelable<FragmentDialogSetup<T>>(DIALOG_SETUP)
             if (setup!=null) {
                 dialogSetup = setup
             }
@@ -139,10 +142,10 @@ open class StandardDialogFragment : DialogFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val cardDetailsListener = parentFragment
-        if (cardDetailsListener is BaseDialogFragmentListener)
-            mListener = cardDetailsListener
-        else if (activity is BaseDialogFragmentListener){
-            mListener = activity as BaseDialogFragmentListener
+        if (cardDetailsListener is BaseDialogFragmentListener<*>)
+            mListener = cardDetailsListener as BaseDialogFragmentListener<T>
+        else if (activity is BaseDialogFragmentListener<*>){
+            mListener = activity as BaseDialogFragmentListener<T>
         } else
             throw RuntimeException(parentFragment?.tag + " must implement BaseDialogFragmentListener")
     }
