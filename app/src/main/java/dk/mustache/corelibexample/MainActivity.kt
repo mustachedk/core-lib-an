@@ -15,6 +15,7 @@ import dk.mustache.corelib.beacon.BeaconScanActivity
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetDoublePicker
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetPicker
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
+import dk.mustache.corelib.fragment_dialog.FragmentDialogSetup
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_CANCEL
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_OK
@@ -34,6 +35,7 @@ import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
+import dk.mustache.corelibexample.standard_dialog_example.StandardDialogExampleFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -160,18 +162,18 @@ class MainActivity : BeaconScanActivity(),
 //        picker.show(supportFragmentManager, picker.tag)
 
         //BaseDialogFragment
-//        val dialog = StandardDialogExampleFragment.newInstance(FragmentDialogSetup(
-//            header = "Header",
-//            text = "Text",
-//            positiveButtonText = "Custom text",
-//            negativeButtonText = "test",
-//            dialogType = DialogTypeEnum.CUSTOM,
-//            alternativeLayout = R.layout.fragment_dialog_custom,
-//            alternativeStyle = R.style.FragmentDialogStyle,
-//            showNegativeButton = true,
-//            setAlternativeStyleIfProvided = true
-//        ))
-//        dialog.show(supportFragmentManager, "FragmentDialog")
+        val dialog = StandardDialogExampleFragment.newInstance(FragmentDialogSetup(
+            header = "Header",
+            text = "Text",
+            positiveButtonText = "Custom text",
+            negativeButtonText = "test",
+            dialogType = DialogTypeEnum.CUSTOM,
+            alternativeLayout = R.layout.fragment_dialog_custom,
+            alternativeStyle = R.style.FragmentDialogStyle,
+            showNegativeButton = true,
+            setAlternativeStyleIfProvided = true
+        ))
+        dialog.show(supportFragmentManager, "FragmentDialog")
 
         testRetroFit()
         //endRegion
