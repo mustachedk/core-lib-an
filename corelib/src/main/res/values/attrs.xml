@@ -34,6 +34,12 @@
         <attr name="hideClickEffect" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="ToolbarDropdownConstraintLayout">
+        <attr name="title"/>
+        <attr name="subtitle"/>
+        <attr name="bottomShadowElevation" format="dimension"/>
+    </declare-styleable>
+
     <declare-styleable name="AnimatedProgressLayout">
         <attr name="currentProgress" format="integer"/>
         <attr name="showDots" format="boolean"/>

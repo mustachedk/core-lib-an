@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="overlayView"
+            type="android.view.View" />
+        <variable
+            name="coursesSelectionTitle"
+            type="String" />
+        <variable
+            name="coursesCountSubtitle"
+            type="String" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="50dp">
+        <dk.mustache.corelib.toolbar_expanding.ToolbarDropdownConstraintLayout
+            android:id="@+id/constraint_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            app:title="@{coursesSelectionTitle}"
+            app:subtitle="@{coursesCountSubtitle + ` ` + @string/courses_subtitle}"
+            app:dropdownOverlay="@{overlayView}"
+            app:topbarHeight="@{50}"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:src="@drawable/animated_progress_background_animation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+        </dk.mustache.corelib.toolbar_expanding.ToolbarDropdownConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

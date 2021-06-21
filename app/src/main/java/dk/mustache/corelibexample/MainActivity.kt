@@ -36,6 +36,7 @@ import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
 import dk.mustache.corelibexample.standard_dialog_example.StandardDialogExampleFragment
+import dk.mustache.corelibexample.toolbar_expandable_test.CoursesFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -82,9 +83,9 @@ class MainActivity : BeaconScanActivity(),
         val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
 
         val t1 = SpecialData("t1", Pager2Fragment::class.java,"test1 testtkhjgsklfgh;k ")
-        val t2 = SpecialData("t2", PagerFragment::class.java,"test2 lkjlkjoitmkgj fjdgkfhjkdjfgh hkjfhgkjdhfgkjh ")
+        val t2 = SpecialData("t2", Pager2Fragment::class.java,"test2 lkjlkjoitmkgj fjdgkfhjkdjfgh hkjfhgkjdhfgkjh ")
         val t3 = SpecialData("t3", PagerFragment::class.java, "test3")
-        val t4 = SpecialData("1234567890", Pager2Fragment::class.java, "test4 testtttt")
+        val t4 = SpecialData("1234567890", CoursesFragment::class.java, "test4 testtttt")
         val t5 = SpecialData("2345678901", PagerFragment::class.java, "testerkjhksdfgkj figkj")
         val t6 = SpecialData("6825643", PagerFragment::class.java, "983465")
         val t7 = SpecialData("89302", Pager2Fragment::class.java, "3435iji54793457345958678954")
@@ -162,18 +163,18 @@ class MainActivity : BeaconScanActivity(),
 //        picker.show(supportFragmentManager, picker.tag)
 
         //BaseDialogFragment
-        val dialog = StandardDialogExampleFragment.newInstance(FragmentDialogSetup(
-            header = "Header",
-            text = "Text",
-            positiveButtonText = "Custom text",
-            negativeButtonText = "test",
-            dialogType = DialogTypeEnum.CUSTOM,
-            alternativeLayout = R.layout.fragment_dialog_custom,
-            alternativeStyle = R.style.FragmentDialogStyle,
-            showNegativeButton = true,
-            setAlternativeStyleIfProvided = true
-        ))
-        dialog.show(supportFragmentManager, "FragmentDialog")
+//        val dialog = StandardDialogExampleFragment.newInstance(FragmentDialogSetup(
+//            header = "Header",
+//            text = "Text",
+//            positiveButtonText = "Custom text",
+//            negativeButtonText = "test",
+//            dialogType = DialogTypeEnum.CUSTOM,
+//            alternativeLayout = R.layout.fragment_dialog_custom,
+//            alternativeStyle = R.style.FragmentDialogStyle,
+//            showNegativeButton = true,
+//            setAlternativeStyleIfProvided = true
+//        ))
+//        dialog.show(supportFragmentManager, "FragmentDialog")
 
         testRetroFit()
         //endRegion
