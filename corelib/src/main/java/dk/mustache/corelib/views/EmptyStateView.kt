@@ -181,7 +181,7 @@ class EmptyStateView : ConstraintLayout {
                 )
             )
         } else {
-            binding.emptystateTitle.setTypeface(
+            binding.emptystateSubtitle.setTypeface(
                 ResourcesCompat.getFont(
                     getContext(),
                     R.font.roboto_medium
