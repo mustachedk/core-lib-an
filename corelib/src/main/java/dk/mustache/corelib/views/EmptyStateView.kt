@@ -167,7 +167,7 @@ class EmptyStateView : ConstraintLayout {
             binding.emptystateTitle.setTypeface(
                 ResourcesCompat.getFont(
                     getContext(),
-                    R.font.roboto_bold
+                    R.font.gotham_black
                 )
             )
         }
