@@ -2,6 +2,7 @@
 <resources>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="red">#CC092F</color>
     <color name="transBlack">#eeeeee</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="section_item_text">#292929</color>
@@ -22,5 +23,6 @@
     <color name="test_blue">#3333ff</color>
     <color name="progress_dot">#32000000</color>
     <color name="carissma_salem">#e77b95</color>
+    <color name="divider_mercury">#e5e5e5</color>
     <color name="gray">#979797</color>
 </resources>
