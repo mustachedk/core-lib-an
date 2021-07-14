@@ -46,6 +46,7 @@ dependencies {
 * AnimatedProgressLayout
 * SwipeAcceptLayout
 * AnimatedBackgroundLayout
+* ToolbarDropdownConstraintLayout
 
 ##### Dialogs
 * BottomSheetMenu
