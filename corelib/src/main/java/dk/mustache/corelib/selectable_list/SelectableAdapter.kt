@@ -89,7 +89,9 @@ abstract class SelectableAdapter<T : SelectableItem>(val items: List<T>, val onI
             childLayoutBinding.executePendingBindings()
 
             holder.itemSelectablePickerBinding.selectableItemLayout.setOnClickListener {
-                deselectAll()
+                if (settings.singleSelection) {
+                    deselectAll()
+                }
                 item.selected = !item.selected
 
                 onItemSelectionToggled(item, item.selected)
