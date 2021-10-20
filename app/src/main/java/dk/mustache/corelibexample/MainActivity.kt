@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.Observable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
@@ -95,6 +96,15 @@ class MainActivity : BeaconScanActivity(),
 //        viewModel.updatePageDataList(listOf(t6, t4, t5))
 
         viewModel.selectedIndexObservable.set(3)
+
+
+        viewModel.selectedIndexObservable.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                val test = viewModel.selectedIndexObservable.get()
+                test.toString()
+            }
+
+        })
         //SCROLL TYPE
         viewModel.settings.set(
             HeaderListViewPagerSettings(

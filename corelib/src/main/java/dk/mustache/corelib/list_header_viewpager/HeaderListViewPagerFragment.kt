@@ -167,7 +167,7 @@ class HeaderListViewPagerFragment : Fragment() {
                         binding.offerTypeList.scrollToPosition(0)
                     }
 
-
+                    viewModel.selectedIndexObservable.set(position)
 
                     horizontalListAdapter.notifyItemChanged(0)
                 } else {
