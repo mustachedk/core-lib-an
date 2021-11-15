@@ -22,7 +22,7 @@ class OneClickButton : androidx.appcompat.widget.AppCompatTextView {
     ) { init(context, attrs) }
 
     fun init (context: Context, attrs: AttributeSet?) {
-        gravity = TextView.TEXT_ALIGNMENT_CENTER
+//        gravity = TextView.TEXT_ALIGNMENT_CENTER
     }
 
     override fun setOnClickListener(l: OnClickListener?) {
