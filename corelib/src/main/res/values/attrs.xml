@@ -7,6 +7,11 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="SwipeListItemLayout">
+        <attr name="swipeDistanceLeft" format="dimension" />
+        <attr name="swipeDistanceRight" format="dimension" />
+    </declare-styleable>
+
     <declare-styleable name="EmptystateLayout">
         <attr name="buttonTextColor" format="string" />
         <attr name="titleText" format="string" />
@@ -84,10 +89,19 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="OneClickButtonWithLoadingIndicator">
+        <attr name="android:fontFamily" format="reference"/>
+        <attr name="android:text" format="string" localization="suggested"/>
+        <attr name="android:textSize" format="dimension"/>
+        <attr name="android:textColor" format="color"/>
+        <attr name="showLoadingIndicator" format="boolean"/>
+        <attr name="loadingIndicatorColor" format="color"/>
+    </declare-styleable>
+
     <declare-styleable name="AnimatedBackgroundLayout">
         <attr name="centerGradientColor" format="color"/>
         <attr name="outerGradientColor" format="color"/>
-        <attr name="animateBackgroundCornerRadius" format="integer"/>bgAnimationEnabled
+        <attr name="animateBackgroundCornerRadius" format="integer"/>
         <attr name="bgAnimationEnabled" format="boolean"/>
         <attr name="bgCornerRadius" format="dimension"/>
         <attr name="bgAnimationDuration" format="integer"/>

@@ -4,6 +4,8 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.app.Application
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -78,6 +80,11 @@ class MainActivity : BeaconScanActivity(),
         )
 
         binding.mainEmptystate.clickListener = this
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            binding.buttonWithLoading.showLoadingIndicator(true)
+//                                                    binding.buttonWithLoading.
+        }, 3000)
 
         //region HeaderListViewPager testdata
 
