@@ -11,4 +11,7 @@
     <string name="menu_menu_item">Menu item text</string>
     <string name="progress_label">10%</string>
     <string name="end_label">50%</string>
+
+    <string name="quantity_discount_label">%1$s FOR %2$s KR</string>
+    <string name="max_quantity_label">MAX %s PR. KUNDE</string>
 </resources>
