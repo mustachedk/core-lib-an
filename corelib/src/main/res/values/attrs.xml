@@ -143,4 +143,16 @@
         <item name="android:windowEnterAnimation">@anim/enter_bottom</item>
         <item name="android:windowExitAnimation">@anim/exit_bottom</item>
     </style>
+
+    <declare-styleable name="PSSPriceLayout">
+        <attr name="priceTextSpSize" format="integer" />
+        <attr name="oreTextTopPadding" format="dimension" />
+        <attr name="krTextSize" format="integer" />
+        <attr name="oreTextSize" format="integer" />
+        <attr name="defaultKr" format="integer" />
+        <attr name="defaultOre" format="integer" />
+        <attr name="priceTextFont" format="reference" />
+        <attr name="priceTextColor" format="color" />
+    </declare-styleable>
+
 </resources>
