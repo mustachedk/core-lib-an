@@ -1,6 +1,6 @@
 package dk.mustache.corelib.price_layout
 
-class PriceConfigurationItem(
+data class PriceConfigurationItem(
     val discountPrice: Double,
     val price: Double,
     val discountAmount: Double,

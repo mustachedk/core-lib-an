@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:1.1.9'
+  implementation 'com.github.mustachedk:core-lib-an:1.1.10'
 }
 ```
 
@@ -43,7 +43,7 @@ dependencies {
 * OrientationAwareRecyclerView
 
 ##### Layouts
-* PSSPriceLayout
+* PriceLayout
 * TicketConstraintLayoutMasked
 * AnimatedProgressLayout
 * SwipeAcceptLayout

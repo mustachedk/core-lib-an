@@ -16,7 +16,7 @@ import androidx.databinding.DataBindingUtil
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.PssPriceLayoutBinding
 
-class PSSPriceLayout : ConstraintLayout {
+class PriceLayout : ConstraintLayout {
 
     lateinit var binding: PssPriceLayoutBinding
     var kr: Int = 0
