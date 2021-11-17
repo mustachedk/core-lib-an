@@ -15,7 +15,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.PssPriceLayoutBinding
-import kotlinx.android.synthetic.main.pss_price_layout.view.*
 
 class PSSPriceLayout : ConstraintLayout {
 
@@ -35,7 +34,7 @@ class PSSPriceLayout : ConstraintLayout {
         set(value) {
             field = value
             if(hideLabels) {
-                label_container.visibility = View.GONE
+                binding.labelContainer.visibility = View.GONE
             }
         }
 
