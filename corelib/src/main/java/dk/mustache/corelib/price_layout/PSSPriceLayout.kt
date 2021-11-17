@@ -30,6 +30,14 @@ class PSSPriceLayout : ConstraintLayout {
             field = value
         }
 
+    var hideLabels: Boolean = false
+        set(value) {
+            field = value
+            if(hideLabels) {
+                binding.labelContainer.visibility = View.GONE
+            }
+        }
+
     var priceConfigurationItem: PriceConfigurationItem? = null
         set(value) {
             field = value
