@@ -158,8 +158,8 @@ class SwipeListItemLayout : ConstraintLayout {
 
                     if (!tempSwipeLock) {
                         if (swipeDirection == SwipeDirectionEnum.NOT_SWIPING) {
-                            if ((swipeSettingsEnum != SwipeSettingsEnum.LEFT_TO_RIGHT && startX > currentX && startX > currentX + 10f.toPx()) ||
-                                (swipeSettingsEnum != SwipeSettingsEnum.RIGHT_TO_LEFT && startX < currentX && startX < currentX - 10f.toPx())
+                            if (((swipeSettingsEnum != SwipeSettingsEnum.LEFT_TO_RIGHT || swipePosition==SwipePositionEnum.SWIPED_LEFT_TO_RIGHT) && startX > currentX && startX > currentX + 10f.toPx()) ||
+                                ((swipeSettingsEnum != SwipeSettingsEnum.RIGHT_TO_LEFT || swipePosition==SwipePositionEnum.SWIPED_RIGHT_TO_LEFT) && startX < currentX && startX < currentX - 10f.toPx())
                             ) {
                                 val direction = -(startX - currentX)
                                 currentTranslation += direction
