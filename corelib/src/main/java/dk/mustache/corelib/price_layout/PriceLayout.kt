@@ -66,8 +66,8 @@ class PriceLayout : ConstraintLayout {
     // Show yellow label with the discount above the price.
     private fun showDiscountLabel(priceConfigurationItem: PriceConfigurationItem?) {
         binding.discountLabel.text = context.getString(R.string.quantity_discount_label,
-            priceConfigurationItem?.discountAmount?.toString(),
-            priceConfigurationItem?.discountPrice?: "")
+            priceConfigurationItem?.discountAmount?.toInt()?.toString(),
+            String.format("%.2f", priceConfigurationItem?.discountPrice?: ""))
         binding.discountLabel.visibility = View.VISIBLE
     }
 
