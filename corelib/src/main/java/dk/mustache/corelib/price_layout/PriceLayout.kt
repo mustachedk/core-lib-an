@@ -50,6 +50,9 @@ class PriceLayout : ConstraintLayout {
             if(priceConfigurationItem?.displayMaxNumberPerCustomerLabel() == true) {
                 showMaxQuantityPerCustomerLabel(priceConfigurationItem)
             }
+            if(priceConfigurationItem?.type == 2) {
+                showAvoidWasteLabel()
+            }
         }
 
     // Show yellow price with the old price below.
@@ -79,6 +82,12 @@ class PriceLayout : ConstraintLayout {
         if(priceConfigurationItem?.displayDiscountLabel() == false) {
             binding.discountLabel.visibility = View.GONE
         }
+    }
+
+    private fun showAvoidWasteLabel() {
+        binding.maxAmountLabel.text = context.getString(R.string.avoid_waste_label)
+        binding.maxAmountLabel.visibility = View.VISIBLE
+        binding.discountLabel.visibility = View.GONE
     }
 
     constructor(context: Context) : super(context) { init(context, null) }
