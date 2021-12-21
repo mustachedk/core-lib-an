@@ -67,6 +67,11 @@ class SwipeListItemLayout : ConstraintLayout {
         }
     }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        getChildAt(0).bringToFront()
+        super.onSizeChanged(w, h, oldw, oldh)
+    }
+
     fun setSwipedLeftToRight(animated: Boolean = true) {
         val childToSwipe = this.getChildAt(1)
         swipePosition = SwipePositionEnum.SWIPED_LEFT_TO_RIGHT
