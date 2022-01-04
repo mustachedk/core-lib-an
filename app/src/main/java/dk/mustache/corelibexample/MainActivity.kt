@@ -52,7 +52,7 @@ class MainActivity : BeaconScanActivity(),
     LocationUtil.LocationChangedCallback,
     EmptyStateView.OnEmptystateActionListener,
     BottomSheetPicker.BottomSheetPickerListener<PickerTypeEnum>,
-    BottomSheetDoublePicker.BottomSheetPickerListener<PickerTypeEnum>{
+    BottomSheetDoublePicker.BottomSheetPickerListener<PickerTypeEnum> {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private var locationUtil: LocationUtil? = null
@@ -83,7 +83,6 @@ class MainActivity : BeaconScanActivity(),
 
         Handler(Looper.getMainLooper()).postDelayed({
             binding.buttonWithLoading.showLoadingIndicator(true)
-//                                                    binding.buttonWithLoading.
         }, 3000)
 
         //region HeaderListViewPager testdata
@@ -99,10 +98,10 @@ class MainActivity : BeaconScanActivity(),
         val t7 = SpecialData("89302", Pager2Fragment::class.java, "3435iji54793457345958678954")
         val t8 = SpecialData("89892345", Pager2Fragment::class.java, "13746")
 
-        viewModel.updatePageDataList(listOf(t1, t2, t3, t4, t5, t6, t7, t8))
+        viewModel.updatePageDataList(listOf(/*t1, t2, t3, t4, t5,*/ t6, t7, t8))
 //        viewModel.updatePageDataList(listOf(t6, t4, t5))
 
-        viewModel.selectedIndexObservable.set(3)
+        viewModel.selectedIndexObservable.set(0)
 
 
         viewModel.selectedIndexObservable.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
@@ -115,7 +114,7 @@ class MainActivity : BeaconScanActivity(),
         //SCROLL TYPE
         viewModel.settings.set(
             HeaderListViewPagerSettings(
-                paddingBetween = 10.toPx(),
+                paddingBetween = 1.toPx(),
                 type = HeaderListViewPagerTypeEnum.SCROLL,
                 filterLayoutId = R.layout.top_list_scroll_item,
                 lastItemPaddingEnd = 10.toPx(),
@@ -139,8 +138,23 @@ class MainActivity : BeaconScanActivity(),
 //        Handler(Looper.getMainLooper()).postDelayed({
 //            //test of data update
 //            val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
-//            viewModel.updatePageDataList(listOf(t6, t7, t8, t4, t5))
+//            viewModel.updatePageDataList(listOf(t6, t7))
+//            viewModel.selectedIndexObservable.set(1)
 //        }, 5000)
+//
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            //test of data update
+//            val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
+//            viewModel.updatePageDataList(listOf(t1, t2, t3, t4))
+//            viewModel.selectedIndexObservable.set(3)
+//        }, 10000)
+//
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            //test of data update
+//            val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
+//            viewModel.updatePageDataList(listOf(t8, t7))
+//            viewModel.selectedIndexObservable.set(1)
+//        }, 15000)
 
         //TEST of swipe accept layout
         binding.swipeAcceptLayout.swipeListener = object: SwipeAcceptLayout.SwipeListener {

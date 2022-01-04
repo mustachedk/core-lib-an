@@ -47,7 +47,7 @@ class GPSSingleShotCurrentLocation {
         }
     }
 
-    private fun requestCurrentLocation(context: Context, listener: SingleLocationListener) {
+    fun requestCurrentLocation(context: Context, listener: SingleLocationListener) {
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.ACCESS_FINE_LOCATION
