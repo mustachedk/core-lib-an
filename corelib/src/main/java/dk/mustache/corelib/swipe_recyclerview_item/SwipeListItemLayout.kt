@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import dk.mustache.corelib.R
@@ -15,7 +16,7 @@ import java.util.*
 import kotlin.math.abs
 
 
-class SwipeListItemLayout : ConstraintLayout {
+class SwipeListItemLayout : FrameLayout {
 
     lateinit var binding : SwipeListItemLayoutBinding
     var listener: SwipeLayoutActionListener? = null
