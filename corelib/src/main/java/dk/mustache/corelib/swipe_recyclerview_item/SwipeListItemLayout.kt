@@ -18,7 +18,7 @@ import kotlin.math.abs
 
 class SwipeListItemLayout : FrameLayout {
 
-    lateinit var binding : SwipeListItemLayoutBinding
+    //lateinit var binding : SwipeListItemLayoutBinding
     var listener: SwipeLayoutActionListener? = null
     var startX = 0f
     var startY = 0f
@@ -40,7 +40,7 @@ class SwipeListItemLayout : FrameLayout {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { init(context, attrs) }
 
     private fun init(context: Context, attrs: AttributeSet?) {
-        binding = SwipeListItemLayoutBinding.inflate(LayoutInflater.from(context), this, true)
+        //binding = SwipeListItemLayoutBinding.inflate(LayoutInflater.from(context), this, true)
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.SwipeListItemLayout, 0, 0)
 
