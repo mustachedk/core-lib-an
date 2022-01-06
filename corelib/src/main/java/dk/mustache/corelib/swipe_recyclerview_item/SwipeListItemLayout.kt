@@ -16,9 +16,9 @@ import java.util.*
 import kotlin.math.abs
 
 
-class SwipeListItemLayout : FrameLayout {
+class SwipeListItemLayout : ConstraintLayout {
 
-    //lateinit var binding : SwipeListItemLayoutBinding
+    lateinit var binding : SwipeListItemLayoutBinding
     var listener: SwipeLayoutActionListener? = null
     var startX = 0f
     var startY = 0f
@@ -40,7 +40,7 @@ class SwipeListItemLayout : FrameLayout {
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { init(context, attrs) }
 
     private fun init(context: Context, attrs: AttributeSet?) {
-        //binding = SwipeListItemLayoutBinding.inflate(LayoutInflater.from(context), this, true)
+        binding = SwipeListItemLayoutBinding.inflate(LayoutInflater.from(context), this, true)
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.SwipeListItemLayout, 0, 0)
 
@@ -69,38 +69,47 @@ class SwipeListItemLayout : FrameLayout {
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        getChildAt(0).bringToFront()
+        val view = getChildAt(1)
+        view.elevation = 1f
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
-    fun setSwipedLeftToRight(animated: Boolean = true) {
+    fun setSwipedLeftToRight(animated: Boolean = true, activateListener: Boolean = true) {
         val childToSwipe = this.getChildAt(1)
         swipePosition = SwipePositionEnum.SWIPED_LEFT_TO_RIGHT
         swipeDirection = SwipeDirectionEnum.NOT_SWIPING
         if (animated) {
             childToSwipe.animate().translationX(maxSwipeDistanceLeftToRight)
                 .setDuration(200).withEndAction {
-                    listener?.onSwipedLeftToRight()
+                    if (activateListener) {
+                        listener?.onSwipedLeftToRight()
+                    }
                 }.start()
         } else {
             childToSwipe.translationX = maxSwipeDistanceLeftToRight
-            listener?.onSwipedLeftToRight()
+            if (activateListener) {
+                listener?.onSwipedLeftToRight()
+            }
         }
         tempSwipeLock = true
     }
 
-    fun setSwipedRightToLeft(animated: Boolean = true) {
+    fun setSwipedRightToLeft(animated: Boolean = true, activateListener: Boolean = true) {
         swipePosition = SwipePositionEnum.SWIPED_RIGHT_TO_LEFT
         val childToSwipe = this.getChildAt(1)
         if (animated) {
             childToSwipe.animate().translationX(-maxSwipeDistanceRightToLeft)
                 .setDuration(200).withEndAction {
-                    listener?.onSwipedRightToLeft()
+                    if (activateListener) {
+                        listener?.onSwipedRightToLeft()
+                    }
                 }.start()
 
         } else {
             childToSwipe.translationX = -maxSwipeDistanceRightToLeft
-            listener?.onSwipedRightToLeft()
+            if (activateListener) {
+                listener?.onSwipedRightToLeft()
+            }
         }
         swipeDirection = SwipeDirectionEnum.NOT_SWIPING
         tempSwipeLock = true
@@ -111,6 +120,7 @@ class SwipeListItemLayout : FrameLayout {
             SwipeDirectionEnum.LEFT_TO_RIGHT -> {
                 if(swipePosition==SwipePositionEnum.SWIPED_RIGHT_TO_LEFT) {
                     close()
+                    listener?.onClosed()
                 } else {
                     setSwipedLeftToRight()
                 }
@@ -118,6 +128,7 @@ class SwipeListItemLayout : FrameLayout {
             SwipeDirectionEnum.RIGHT_TO_LEFT -> {
                 if(swipePosition==SwipePositionEnum.SWIPED_LEFT_TO_RIGHT) {
                     close()
+                    listener?.onClosed()
                 } else {
                     setSwipedRightToLeft()
                 }
@@ -268,5 +279,6 @@ class SwipeListItemLayout : FrameLayout {
         fun onSwiping(swipeDistance: Float, swipeDirection: SwipeDirectionEnum)
         fun onSwipedLeftToRight()
         fun onSwipedRightToLeft()
+        fun onClosed()
     }
 }
