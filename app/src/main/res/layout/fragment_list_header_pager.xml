@@ -65,6 +65,7 @@
             android:layout_marginTop="50dp"
             android:orientation="vertical"
             tools:listitem="@layout/item_selectable_picker"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -247,6 +248,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/animated_progressbar6"
+            />
+
+        <ImageView
+            android:id="@+id/barcode_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="10dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -84,6 +84,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    implementation "com.google.zxing:core:3.3.0"
+    implementation 'com.google.zxing:javase:3.3.0'
+
     //RX Java and RetroFit
     implementation "io.reactivex.rxjava3:rxjava:3.0.6"
     implementation "io.reactivex.rxjava3:rxandroid:3.0.0"

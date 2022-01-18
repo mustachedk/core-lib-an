@@ -15,7 +15,9 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.zxing.BarcodeFormat
 import dk.mustache.corelib.MustacheCoreLib
+import dk.mustache.corelib.barcode_bitmap_creator.BarcodeBitmapCreator
 import dk.mustache.corelib.beacon.BeaconScanActivity
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetDoublePicker
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetPicker
@@ -155,6 +157,10 @@ class MainActivity : BeaconScanActivity(),
 
         binding.offerTypeList.adapter = adapter
         binding.offerTypeList.layoutManager = LinearLayoutManager(MustacheCoreLib.getContextCheckInit())
+
+        BarcodeBitmapCreator.createBarcodeBitmapFromString("9781782808084", BarcodeFormat.EAN_13, 300.toPx(), 160.toPx()) {
+            binding.barcodeLayout.setImageBitmap(it)
+        }
 
         adapter.updateDataAndAddHeaders(list)
 
