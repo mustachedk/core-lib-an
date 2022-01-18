@@ -159,7 +159,7 @@ class MainActivity : BeaconScanActivity(),
         binding.offerTypeList.layoutManager = LinearLayoutManager(MustacheCoreLib.getContextCheckInit())
 
         BarcodeBitmapCreator.createBarcodeBitmapFromString("9781782808084", BarcodeFormat.EAN_13, 300.toPx(), 160.toPx()) {
-            binding.barcodeLayout.setImageBitmap(it)
+//            binding.barcodeLayout.setImageBitmap(it)
         }
 
         adapter.updateDataAndAddHeaders(list)

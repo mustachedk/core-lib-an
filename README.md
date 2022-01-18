@@ -34,6 +34,7 @@ dependencies {
 * GPSSingleShotCurrentLocation
 * Bluetooth enable and isEnabled
 * Beacon
+* BarcodeBitmapCreator
 
 
 ##### Views
