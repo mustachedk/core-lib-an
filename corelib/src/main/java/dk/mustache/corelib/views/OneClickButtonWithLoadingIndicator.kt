@@ -46,14 +46,15 @@ class OneClickButtonWithLoadingIndicator : ConstraintLayout {
 
 
         try {
-            val oneClickFont = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val oneClickFont =
                 a.getFont(
                     R.styleable.OneClickButtonWithLoadingIndicator_android_fontFamily
                 )
+                binding.oneClickButton2.typeface = oneClickFont
             } else {
-                TODO("VERSION.SDK_INT < O")
+                //TODO set font on old versions of android
             }
-            binding.oneClickButton2.typeface = oneClickFont
         } catch (e: Exception) {
 
         }
