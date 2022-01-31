@@ -158,9 +158,9 @@ class MainActivity : BeaconScanActivity(),
         binding.offerTypeList.adapter = adapter
         binding.offerTypeList.layoutManager = LinearLayoutManager(MustacheCoreLib.getContextCheckInit())
 
-        BarcodeBitmapCreator.createBarcodeBitmapFromString("9781782808084", BarcodeFormat.EAN_13, 300.toPx(), 160.toPx()) {
-//            binding.barcodeLayout.setImageBitmap(it)
-        }
+//        BarcodeBitmapCreator.createBarcodeBitmapFromString("9781782808084", BarcodeFormat.EAN_13, 300.toPx(), 160.toPx()) {
+//              binding.barcodeLayout.setImageBitmap(it)
+//        }
 
         adapter.updateDataAndAddHeaders(list)
 
@@ -214,18 +214,18 @@ class MainActivity : BeaconScanActivity(),
 //            HeaderListViewPagerTypeEnum.STRETCH,
 //            R.layout.top_list_scroll_item
 //        ))
-//        val fragment = HeaderListViewPagerFragment.newInstance()
+        val fragment = HeaderListViewPagerFragment.newInstance()
 
         //Uncomment to start HeaderListViewPagerFragment
 //        setFragment(fragment)
 
         //TEST of update of HeaderListViewPagerFragment
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            //test of data update
-//            val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
-//            viewModel.updatePageDataList(listOf(t6, t7))
-//            viewModel.selectedIndexObservable.set(1)
-//        }, 5000)
+        Handler(Looper.getMainLooper()).postDelayed({
+            //test of data update
+            val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
+            viewModel.updatePageDataList(listOf(t6, t7))
+            viewModel.selectedIndexObservable.set(1)
+        }, 5000)
 //
 //        Handler(Looper.getMainLooper()).postDelayed({
 //            //test of data update
@@ -362,10 +362,10 @@ class MainActivity : BeaconScanActivity(),
     }
 
     private fun setFragment(fragment: Fragment) {
-        val t: FragmentTransaction =
-            supportFragmentManager.beginTransaction()
-        t.replace(R.id.test_fragment_container, fragment)
-        t.commit()
+            val t: FragmentTransaction =
+                supportFragmentManager.beginTransaction()
+            t.replace(R.id.test_headerlist_fragment_container, fragment)
+            t.commit()
     }
 
 //    @SuppressLint("MissingSuperCall")

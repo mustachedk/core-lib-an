@@ -15,7 +15,7 @@
         ListViewpagerFragment">
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/offer_list_pager"
+            android:id="@+id/header_list_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"

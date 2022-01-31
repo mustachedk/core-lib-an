@@ -17,11 +17,11 @@ class HeaderListViewPagerSettings(
     val snapCenter: Boolean = true,
     //Swipe sensitivity: The lower the value the more sensitive for horizontal swipe. Should be > 0
     val swipeSensitivity: Int = 6,
+    val horizontalListHeight: Int = 0,
     private val filterAnchorY: Int = 0,
     private val filterTranslationYStart: Int = 0,
 ) : Parcelable {
-    private val filterTranslationYCurrent: ObservableField<Int> = ObservableField(
-        filterTranslationYStart)
+    private val filterTranslationYCurrent: ObservableField<Int> = ObservableField(filterTranslationYStart)
 
     fun setTopListTranslationY(scrollY: Int) {
         if (scrollY > maxScrollRange()) {

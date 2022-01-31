@@ -25,7 +25,7 @@ class HeaderListViewPagerFragment : Fragment() {
     private lateinit var horizontalListAdapter: HorizontalListAdapter
     private lateinit var snapHelper: LinearSnapHelper
     private lateinit var layoutManager: LinearLayoutManager
-    private lateinit var offerListPagerAdapter: BottomPagerAdapter
+    private lateinit var viewListPagerAdapter: BottomPagerStateAdapter
     private var currentTypeListScroll = 0
     private var first = true
     private lateinit var viewModel: HeaderListViewPagerViewModel
@@ -42,20 +42,20 @@ class HeaderListViewPagerFragment : Fragment() {
     fun setupViewPager() {
         val pageList = viewModel.pageDataListObservable.get()
         horizontalListAdapter.submitList(pageList)
-        offerListPagerAdapter = BottomPagerAdapter(this, ArrayList(pageList ?: ArrayList()))
-        binding.offerListPager.offscreenPageLimit = viewModel.settings.get()?.offscreenPageLimit?:1
-        binding.offerListPager.adapter = offerListPagerAdapter
+        viewListPagerAdapter = BottomPagerStateAdapter(this, ArrayList(pageList ?: ArrayList()))
+        binding.headerListPager.offscreenPageLimit = viewModel.settings.get()?.offscreenPageLimit?:1
+        binding.headerListPager.adapter = viewListPagerAdapter
 
         if (!pageList.isNullOrEmpty()) {
             Handler().post {
-                binding.offerListPager.currentItem =
+                binding.headerListPager.currentItem =
                     viewModel.selectedIndexObservable.get()
             }
-            binding.offerListPager.visibility = View.VISIBLE
+            binding.headerListPager.visibility = View.VISIBLE
             viewModel.currentShownPage = viewModel.selectedIndexObservable.get()
             binding.offerTypeList.smoothScrollToPosition(viewModel.currentShownPage)
         } else {
-            binding.offerListPager.visibility = View.GONE
+            binding.headerListPager.visibility = View.GONE
         }
 
         binding.offerTypeList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -71,10 +71,10 @@ class HeaderListViewPagerFragment : Fragment() {
             }
         })
 
-        binding.offerListPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.headerListPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
-                viewModel.pageScrollState.set(state)
+                viewModel.pageScrollStateObservable.set(state)
             }
         })
     }
@@ -93,8 +93,8 @@ class HeaderListViewPagerFragment : Fragment() {
     val selectionListener = object : ProductGroupSelectionListener {
 
         override fun typeSelected(pageData: PageData<GenericPagerFragment>, index: Int) {
-            if (binding.offerListPager.currentItem == index) {
-                offerListPagerAdapter.scrollAllToTop()
+            if (binding.headerListPager.currentItem == index) {
+                viewListPagerAdapter.scrollAllToTop()
             }
             if (index == 0) {
                 horizontalListAdapter.hasScrolled = false
@@ -108,7 +108,7 @@ class HeaderListViewPagerFragment : Fragment() {
                         binding.offerTypeList.scrollToPosition(0)
                 }, 500)
             }
-            binding.offerListPager.currentItem = index
+            binding.headerListPager.currentItem = index
         }
     }
 
@@ -146,9 +146,9 @@ class HeaderListViewPagerFragment : Fragment() {
         binding.offerTypeList.layoutManager = layoutManager
         binding.offerTypeList.adapter = horizontalListAdapter
 
-        binding.offerListPager.isSaveEnabled = false
-        binding.offerListPager.reduceDragSensitivity()
-        binding.offerListPager.registerOnPageChangeCallback(object :
+        binding.headerListPager.isSaveEnabled = false
+        binding.headerListPager.reduceDragSensitivity()
+        binding.headerListPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 if (!first) {
@@ -245,31 +245,31 @@ class HeaderListViewPagerFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         viewModel.selectedIndexObservable.addOnPropertyChangedCallback(selectedPageCallback)
-        viewModel.pageDataListObservable.addOnPropertyChangedCallback(callBack)
+        viewModel.pageDataListObservable.addOnPropertyChangedCallback(changeViewPageListCallback)
     }
 
     override fun onStop() {
         super.onStop()
         viewModel.selectedIndexObservable.removeOnPropertyChangedCallback(selectedPageCallback)
-        viewModel.pageDataListObservable.removeOnPropertyChangedCallback(callBack)
+        viewModel.pageDataListObservable.removeOnPropertyChangedCallback(changeViewPageListCallback)
     }
 
 
     val selectedPageCallback = object : androidx.databinding.Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             val selectedPage = viewModel.selectedIndexObservable.get()
-            binding.offerListPager.currentItem = selectedPage
+            binding.headerListPager.currentItem = selectedPage
         }
     }
 
-    val callBack = object : androidx.databinding.Observable.OnPropertyChangedCallback() {
+    val changeViewPageListCallback = object : androidx.databinding.Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             val pageDataList = viewModel.pageDataListObservable.get()
             if (!pageDataList.isNullOrEmpty()) {
-                horizontalListAdapter.submitList(pageDataList.map { it as PageData<GenericPagerFragment> })
+                horizontalListAdapter.submitList(pageDataList.map { it })
                 horizontalListAdapter.notifyDataSetChanged()
                 if (!pageDataList.isNullOrEmpty()) {
-                    offerListPagerAdapter.replaceData(pageDataList)
+                    viewListPagerAdapter.replaceData(pageDataList)
                 }
             } else {
 
@@ -292,13 +292,12 @@ class HeaderListViewPagerFragment : Fragment() {
     }
 
     @SuppressLint("UseRequireInsteadOfGet")
-    inner class BottomPagerAdapter(
+    inner class BottomPagerStateAdapter(
         val fragment: Fragment,
         var pagerDataList: ArrayList<PageData<GenericPagerFragment>>
     ) : FragmentStateAdapter(fragment.childFragmentManager!!, fragment.lifecycle!!) {
 
         private var fragmentList = ArrayList<GenericPagerFragment>()
-        private val handler = Handler()
 
         fun clearAdapter() {
             pagerDataList.clear()

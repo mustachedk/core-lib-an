@@ -7,7 +7,7 @@ import dk.mustache.corelib.viewmodels.ObservableBaseViewModel
 open class HeaderListViewPagerViewModel : ObservableBaseViewModel() {
     var currentShownPage: Int = 0
     var selectedIndexObservable = ObservableInt(-1)
-    var pageScrollState = ObservableInt(0)
+    var pageScrollStateObservable = ObservableInt(0)
     val pageDataListObservable = ObservableField<List<PageData<GenericPagerFragment>>>()
     val settings = ObservableField<HeaderListViewPagerSettings>(HeaderListViewPagerSettings())
     fun <T : PageData<*>> updatePageDataList(pageList: List<T>) {

@@ -48,16 +48,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
-        <FrameLayout
-            android:id="@+id/test_fragment_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
         <dk.mustache.corelib.views.OneClickButtonWithLoadingIndicator
             android:id="@+id/button_with_loading"
             android:layout_width="wrap_content"
@@ -68,6 +58,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <FrameLayout
+            android:id="@+id/test_headerlist_fragment_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package dk.mustache.corelib.list_header_viewpager
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
@@ -47,10 +48,18 @@ class HorizontalListAdapter(
         )
         when (settings.type) {
             HeaderListViewPagerTypeEnum.STRETCH -> {
-                //parent.measuredHeight does not work with wrap_content
-                val height: Int = parent.measuredHeight
-                val width: Int =  (screenWidth / itemCount) - (10.toPx() / itemCount)
-                viewHolder.itemView.setLayoutParams(RecyclerView.LayoutParams(width, height))
+                viewHolder.itemView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+
+                        val height = parent.measuredHeight
+
+                        if (height>0) {
+                            val width: Int =  (screenWidth / itemCount) - (10.toPx() / itemCount)
+                            viewHolder.itemView.setLayoutParams(RecyclerView.LayoutParams(width, height))
+                            parent.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                        }
+                    }
+                })
             }
             else -> {
 
