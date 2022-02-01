@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:paddingEnd="@{viewModel.paddingEnd}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -27,7 +26,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:text="@{viewModel.pageData.topListItemText}"
-                android:onClick="@{() -> viewModel.filterOffersByPageData()}"
+                android:onClick="@{() -> viewModel.setAsSelectedAndCallback()}"
                 android:background="@{viewModel.selected ? @drawable/offer_type_rounded_corners : @drawable/offer_type_rounded_corners_white}"
                 android:textColor="@{viewModel.selected ? @color/white : @color/black}"
                 android:textSize="13sp"

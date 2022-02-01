@@ -22,15 +22,13 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/offer_type_list"
+            android:id="@+id/horizontal_header_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:translationY="@{viewModel.settings.topListTranslationY}"
-            android:paddingTop="10dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
             app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/top_list_item"
-            android:paddingBottom="10dp"/>
+            tools:listitem="@layout/top_list_item"/>
         </FrameLayout>
 </layout>

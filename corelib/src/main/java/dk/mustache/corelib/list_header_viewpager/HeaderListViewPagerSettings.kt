@@ -8,16 +8,18 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class HeaderListViewPagerSettings(
-    val paddingBetween: Int = 10.toPx(),
+    val paddingBetweenItems: Int = 10.toPx(),
     val type: HeaderListViewPagerTypeEnum = HeaderListViewPagerTypeEnum.STRETCH,
     val filterLayoutId: Int = R.layout.top_list_item,
     val filterBackgroundColor: Int = R.color.transparent,
     val offscreenPageLimit: Int = 1,
     val lastItemPaddingEnd: Int = 100,
+    val firstItemPaddingStart: Int = 0,
     val snapCenter: Boolean = true,
     //Swipe sensitivity: The lower the value the more sensitive for horizontal swipe. Should be > 0
     val swipeSensitivity: Int = 6,
     val horizontalListHeight: Int = 0,
+    val compatibilityModePreVersion123 : Boolean = true,
     private val filterAnchorY: Int = 0,
     private val filterTranslationYStart: Int = 0,
 ) : Parcelable {

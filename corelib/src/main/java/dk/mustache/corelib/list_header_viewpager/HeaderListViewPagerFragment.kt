@@ -3,6 +3,7 @@ package dk.mustache.corelib.list_header_viewpager
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import androidx.viewpager2.widget.ViewPager2
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.FragmentHeaderListViewpagerBinding
 import dk.mustache.corelib.utils.getScreenWidth
+import dk.mustache.corelib.utils.toPx
 
 class HeaderListViewPagerFragment : Fragment() {
 
@@ -40,25 +42,29 @@ class HeaderListViewPagerFragment : Fragment() {
     }
 
     fun setupViewPager() {
-        val pageList = viewModel.pageDataListObservable.get()
-        horizontalListAdapter.submitList(pageList)
+        val pageList = viewModel.pageDataListObservable.get() ?: mutableListOf()
+        horizontalListAdapter.updateData(pageList)
         viewListPagerAdapter = BottomPagerStateAdapter(this, ArrayList(pageList ?: ArrayList()))
         binding.headerListPager.offscreenPageLimit = viewModel.settings.get()?.offscreenPageLimit?:1
         binding.headerListPager.adapter = viewListPagerAdapter
 
+        if (viewModel.settings.get()?.compatibilityModePreVersion123==true) {
+            binding.horizontalHeaderList.setPadding(0,10.toPx(),0, 10.toPx())
+        }
+
         if (!pageList.isNullOrEmpty()) {
-            Handler().post {
+            Handler(Looper.getMainLooper()).post {
                 binding.headerListPager.currentItem =
                     viewModel.selectedIndexObservable.get()
             }
             binding.headerListPager.visibility = View.VISIBLE
             viewModel.currentShownPage = viewModel.selectedIndexObservable.get()
-            binding.offerTypeList.smoothScrollToPosition(viewModel.currentShownPage)
+            binding.horizontalHeaderList.smoothScrollToPosition(viewModel.currentShownPage)
         } else {
             binding.headerListPager.visibility = View.GONE
         }
 
-        binding.offerTypeList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.horizontalHeaderList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dx > 0) {
@@ -81,18 +87,18 @@ class HeaderListViewPagerFragment : Fragment() {
 
     fun selectProductGroupByIndex(index: Int) {
         viewModel.currentShownPage = index
-        if (index < horizontalListAdapter.currentList.size) {
+        if (index < horizontalListAdapter.itemCount) {
             horizontalListAdapter.selectedIndex = viewModel.currentShownPage
 
             horizontalListAdapter.notifyDataSetChanged()
 
-            binding.offerTypeList.smoothScrollToPosition(index)
+            binding.horizontalHeaderList.smoothScrollToPosition(index)
         }
     }
 
-    val selectionListener = object : ProductGroupSelectionListener {
+    val selectionListener = object : SelectionListener {
 
-        override fun typeSelected(pageData: PageData<GenericPagerFragment>, index: Int) {
+        override fun headerSelected(pageData: PageData<GenericPagerFragment>, index: Int) {
             if (binding.headerListPager.currentItem == index) {
                 viewListPagerAdapter.scrollAllToTop()
             }
@@ -105,7 +111,7 @@ class HeaderListViewPagerFragment : Fragment() {
             if (index < 1) {
                 Handler().postDelayed({
                     if (isAdded)
-                        binding.offerTypeList.scrollToPosition(0)
+                        binding.horizontalHeaderList.scrollToPosition(0)
                 }, 500)
             }
             binding.headerListPager.currentItem = index
@@ -125,26 +131,27 @@ class HeaderListViewPagerFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val settings = viewModel.settings.get()
 
-        horizontalListAdapter = HorizontalListAdapter(requireActivity(),
-            selectionListener,
-            viewModel.currentShownPage,
-            settings ?: HeaderListViewPagerSettings(),
-            getScreenWidth(requireActivity()),
-            settings?.filterLayoutId ?: R.layout.top_list_item,
-            false,
-            false,
-            settings?.paddingBetween ?: 10,
-            settings?.lastItemPaddingEnd ?: 100
+        horizontalListAdapter = HorizontalListAdapter(
+            context = requireActivity(),
+            selectionListener = selectionListener,
+            selectedIndex = viewModel.currentShownPage,
+            settings = settings ?: HeaderListViewPagerSettings(),
+            screenWidth = getScreenWidth(requireActivity()),
+            listItemLayout = settings?.filterLayoutId ?: R.layout.top_list_item,
+            hasScrolled = false,
+            padding = settings?.paddingBetweenItems ?: 10,
+            paddingStart = settings?.firstItemPaddingStart ?: 100,
+            lastItemPaddingEnd = settings?.lastItemPaddingEnd ?: 100
             )
         if (settings?.snapCenter==true) {
             layoutManager = CenterLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             snapHelper = LinearSnapHelper()
-            snapHelper.attachToRecyclerView(binding.offerTypeList)
+            snapHelper.attachToRecyclerView(binding.horizontalHeaderList)
         } else {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
-        binding.offerTypeList.layoutManager = layoutManager
-        binding.offerTypeList.adapter = horizontalListAdapter
+        binding.horizontalHeaderList.layoutManager = layoutManager
+        binding.horizontalHeaderList.adapter = horizontalListAdapter
 
         binding.headerListPager.isSaveEnabled = false
         binding.headerListPager.reduceDragSensitivity()
@@ -156,15 +163,15 @@ class HeaderListViewPagerFragment : Fragment() {
                     if (position != 0) {
                         val dataList = viewModel.pageDataListObservable.get()?:ArrayList()
                         if (position>=dataList.lastIndex) {
-                            Handler().postDelayed({
+                            Handler(Looper.getMainLooper()).postDelayed({
                                 if (isAdded) {
-                                    binding.offerTypeList.scrollToPosition(dataList.lastIndex)
+                                    binding.horizontalHeaderList.scrollToPosition(dataList.lastIndex)
                                 }
                             },300)
                         }
                         horizontalListAdapter.hasScrolled = true
                     } else {
-                        binding.offerTypeList.scrollToPosition(0)
+                        binding.horizontalHeaderList.scrollToPosition(0)
                     }
 
                     viewModel.selectedIndexObservable.set(position)
@@ -173,7 +180,7 @@ class HeaderListViewPagerFragment : Fragment() {
                 } else {
                     Handler().postDelayed({
                         if (isAdded) {
-                            binding.offerTypeList.smoothScrollToPosition(viewModel.currentShownPage)
+                            binding.horizontalHeaderList.smoothScrollToPosition(viewModel.currentShownPage)
                         }
                     }, 500)
                     first = false
@@ -193,7 +200,7 @@ class HeaderListViewPagerFragment : Fragment() {
             }
         })
 
-        binding.offerTypeList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.horizontalHeaderList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView!!, dx, dy)
 
@@ -206,11 +213,11 @@ class HeaderListViewPagerFragment : Fragment() {
 
                     if (!isScrollingToStart) {
                         isScrollingToStart = true
-                            Handler().postDelayed({
-                                binding.offerTypeList.scrollToPosition(dataList.lastIndex)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                binding.horizontalHeaderList.scrollToPosition(dataList.lastIndex)
                                 isScrollingToStart = false
                                 currentTypeListScroll = 0
-                            }, 200)
+                            }, 10)
                         }
                     }
                     scrollDirection = scrollingRight
@@ -222,11 +229,11 @@ class HeaderListViewPagerFragment : Fragment() {
                     if(layoutManager.findFirstCompletelyVisibleItemPosition()==0){
                         if (!isScrollingToStart) {
                             isScrollingToStart = true
-                            Handler().postDelayed({
-                                binding.offerTypeList.scrollToPosition(0)
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                binding.horizontalHeaderList.scrollToPosition(0)
                                 isScrollingToStart = false
                                 currentTypeListScroll = 0
-                            }, 200)
+                            }, 10)
                         }
                     }
                 }
@@ -237,7 +244,7 @@ class HeaderListViewPagerFragment : Fragment() {
                 ContextCompat.getColor(it,
                     it1)
             }
-        }?.let { binding.offerTypeList.setBackgroundColor(it) }
+        }?.let { binding.horizontalHeaderList.setBackgroundColor(it) }
 
         setupViewPager()
     }
@@ -266,8 +273,7 @@ class HeaderListViewPagerFragment : Fragment() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             val pageDataList = viewModel.pageDataListObservable.get()
             if (!pageDataList.isNullOrEmpty()) {
-                horizontalListAdapter.submitList(pageDataList.map { it })
-                horizontalListAdapter.notifyDataSetChanged()
+                horizontalListAdapter.updateData(pageDataList.map { it })
                 if (!pageDataList.isNullOrEmpty()) {
                     viewListPagerAdapter.replaceData(pageDataList)
                 }

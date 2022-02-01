@@ -1,6 +1,5 @@
 package dk.mustache.corelibexample
 
-import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.app.Application
 import android.location.Location
 import android.os.Bundle
@@ -13,16 +12,11 @@ import androidx.databinding.Observable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.SimpleItemAnimator
-import com.google.zxing.BarcodeFormat
 import dk.mustache.corelib.MustacheCoreLib
-import dk.mustache.corelib.barcode_bitmap_creator.BarcodeBitmapCreator
 import dk.mustache.corelib.beacon.BeaconScanActivity
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetDoublePicker
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetPicker
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
-import dk.mustache.corelib.fragment_dialog.FragmentDialogSetup
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_CANCEL
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_OK
@@ -36,18 +30,13 @@ import dk.mustache.corelib.network.AccessToken
 import dk.mustache.corelib.network.AuthorizationRepository
 import dk.mustache.corelib.network.AuthorizationType
 import dk.mustache.corelib.network.RetroClient
-import dk.mustache.corelib.sticky_header_decoration.StickyHeaderItemDecoration
-import dk.mustache.corelib.swipe_accept_layout.SwipeAcceptLayout
 import dk.mustache.corelib.swipe_recyclerview_item.SwipeSettingsEnum
 import dk.mustache.corelib.utils.*
 import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
-import dk.mustache.corelibexample.databinding.FragmentListHeaderPagerBinding
 import dk.mustache.corelibexample.model.MockResponse
-import dk.mustache.corelibexample.section_header_example.SectionExampleItem
 import dk.mustache.corelibexample.section_header_example.SectionHeaderExampleViewModel
-import dk.mustache.corelibexample.standard_dialog_example.StandardDialogExampleFragment
 import dk.mustache.corelibexample.swipe_recyclerview_item_example.SwipeListAdapter
 import dk.mustache.corelibexample.swipe_recyclerview_item_example.SwipeSectionExampleItem
 import dk.mustache.corelibexample.toolbar_expandable_test.CoursesFragment
@@ -76,18 +65,18 @@ class MainActivity : BeaconScanActivity(),
 
         locationUtil = LocationUtil(this)
         locationUtil?.registerLocationListener(this)
-        requestPermissionWithRationale(
-            this,
-            ACCESS_FINE_LOCATION,
-            RC_ACCESS_FINE_LOCATION,
-            "Test Title",
-            "Test Message",
-            "Test Button"
-        )
+//        requestPermissionWithRationale(
+//            this,
+//            ACCESS_FINE_LOCATION,
+//            RC_ACCESS_FINE_LOCATION,
+//            "Test Title",
+//            "Test Message",
+//            "Test Button"
+//        )
 
-        var binding = DataBindingUtil.setContentView<FragmentListHeaderPagerBinding>(
+        var binding = DataBindingUtil.setContentView<ActivityMainBinding>(
             this,
-            R.layout.fragment_list_header_pager
+            R.layout.activity_main
         )
 
         //TODO uncomment to test headerlistviewpager
@@ -150,13 +139,13 @@ class MainActivity : BeaconScanActivity(),
 
         }
 
-        val stickyDecoration = StickyHeaderItemDecoration(binding.offerTypeList, R.layout.section_header_item, adapter)
-        binding.offerTypeList.addItemDecoration(stickyDecoration)
-
-        (binding.offerTypeList.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-
-        binding.offerTypeList.adapter = adapter
-        binding.offerTypeList.layoutManager = LinearLayoutManager(MustacheCoreLib.getContextCheckInit())
+//        val stickyDecoration = StickyHeaderItemDecoration(binding.offerTypeList, R.layout.section_header_item, adapter)
+//        binding.offerTypeList.addItemDecoration(stickyDecoration)
+//
+//        (binding.offerTypeList.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+//
+//        binding.offerTypeList.adapter = adapter
+//        binding.offerTypeList.layoutManager = LinearLayoutManager(MustacheCoreLib.getContextCheckInit())
 
 //        BarcodeBitmapCreator.createBarcodeBitmapFromString("9781782808084", BarcodeFormat.EAN_13, 300.toPx(), 160.toPx()) {
 //              binding.barcodeLayout.setImageBitmap(it)
@@ -175,7 +164,7 @@ class MainActivity : BeaconScanActivity(),
         val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
 
         val t1 = SpecialData("t1", Pager2Fragment::class.java,"test1 testtkhjgsklfgh;k ")
-        val t2 = SpecialData("t2", Pager2Fragment::class.java,"test2 lkjlkjoitmkgj fjdgkfhjkdjfgh hkjfhgkjdhfgkjh ")
+        val t2 = SpecialData("t2", Pager2Fragment::class.java,"test2 lkjlkjoitmkgj fjdgkfhjkdjfgh jkhhkjhjk hkjfhgkjdhfgkjh ")
         val t3 = SpecialData("t3", PagerFragment::class.java, "test3")
         val t4 = SpecialData("1234567890", CoursesFragment::class.java, "test4 testtttt")
         val t5 = SpecialData("2345678901", PagerFragment::class.java, "testerkjhksdfgkj figkj")
@@ -199,32 +188,44 @@ class MainActivity : BeaconScanActivity(),
         //SCROLL TYPE
         viewModel.settings.set(
             HeaderListViewPagerSettings(
-                paddingBetween = 1.toPx(),
                 type = HeaderListViewPagerTypeEnum.SCROLL,
                 filterLayoutId = R.layout.top_list_scroll_item,
-                lastItemPaddingEnd = 10.toPx(),
+                paddingBetweenItems = 10.toPx(),
+                firstItemPaddingStart = 10.toPx(),
+                lastItemPaddingEnd = 15.toPx(),
                 snapCenter = true,
-                swipeSensitivity = 1
+                swipeSensitivity = 1,
+                compatibilityModePreVersion123 = false
             )
         )
 
         //STRETCH type
-//        viewModel.settings.set(HeaderListViewPagerSettings(
-//            10.toPx(),
-//            HeaderListViewPagerTypeEnum.STRETCH,
-//            R.layout.top_list_scroll_item
-//        ))
+//        viewModel.settings.set(
+//            HeaderListViewPagerSettings(
+//                type = HeaderListViewPagerTypeEnum.STRETCH,
+//                filterLayoutId = R.layout.top_list_stretch_item,
+//                paddingBetweenItems = 30.toPx(),
+//                lastItemPaddingEnd = 10.toPx(),
+//                firstItemPaddingStart = 10.toPx(),
+//                horizontalListHeight = 0.toPx(),
+//                snapCenter = true,
+//                swipeSensitivity = 1,
+//                compatibilityModePreVersion123 = false
+//            )
+//        )
         val fragment = HeaderListViewPagerFragment.newInstance()
 
         //Uncomment to start HeaderListViewPagerFragment
-//        setFragment(fragment)
+        setHeaderListViewPagerFragment(fragment)
 
         //TEST of update of HeaderListViewPagerFragment
         Handler(Looper.getMainLooper()).postDelayed({
+
             //test of data update
             val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
-            viewModel.updatePageDataList(listOf(t6, t7))
-            viewModel.selectedIndexObservable.set(1)
+            viewModel.updatePageDataList(listOf(t4, t7, t6, t1, t2, t3))
+//            viewModel.updatePageDataList(listOf(t4, t7, t6, t1))
+            viewModel.selectedIndexObservable.set(4)
         }, 5000)
 //
 //        Handler(Looper.getMainLooper()).postDelayed({
@@ -361,7 +362,7 @@ class MainActivity : BeaconScanActivity(),
         locationUtil?.stopLocationUpdates()
     }
 
-    private fun setFragment(fragment: Fragment) {
+    private fun setHeaderListViewPagerFragment(fragment: Fragment) {
             val t: FragmentTransaction =
                 supportFragmentManager.beginTransaction()
             t.replace(R.id.test_headerlist_fragment_container, fragment)
