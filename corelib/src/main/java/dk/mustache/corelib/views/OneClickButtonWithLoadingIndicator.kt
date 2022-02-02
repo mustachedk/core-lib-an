@@ -45,7 +45,6 @@ class OneClickButtonWithLoadingIndicator : ConstraintLayout {
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.OneClickButtonWithLoadingIndicator, 0, 0)
 
-
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val oneClickFont =
@@ -62,6 +61,8 @@ class OneClickButtonWithLoadingIndicator : ConstraintLayout {
 
         val textColor = a.getColor(R.styleable.OneClickButtonWithLoadingIndicator_android_textColor,
         ContextCompat.getColor(MustacheCoreLib.getContextCheckInit(), R.color.red))
+
+        binding.oneClickButton2.setTextColor(textColor)
 
         val loadingIndicatorColor = a.getColor(R.styleable.OneClickButtonWithLoadingIndicator_loadingIndicatorColor,
             ContextCompat.getColor(MustacheCoreLib.getContextCheckInit(), R.color.red))

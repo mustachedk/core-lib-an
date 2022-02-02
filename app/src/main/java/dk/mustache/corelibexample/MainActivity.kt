@@ -166,7 +166,7 @@ class MainActivity : BeaconScanActivity(),
         val t1 = SpecialData("t1", Pager2Fragment::class.java,"test1 testtkhjgsklfgh;k ")
         val t2 = SpecialData("t2", Pager2Fragment::class.java,"test2 lkjlkjoitmkgj fjdgkfhjkdjfgh jkhhkjhjk hkjfhgkjdhfgkjh ")
         val t3 = SpecialData("t3", PagerFragment::class.java, "test3")
-        val t4 = SpecialData("1234567890", CoursesFragment::class.java, "test4 testtttt")
+        val t4 = SpecialData("1234567890", CoursesFragment::class.java, "test678")
         val t5 = SpecialData("2345678901", PagerFragment::class.java, "testerkjhksdfgkj figkj")
         val t6 = SpecialData("6825643", PagerFragment::class.java, "983465")
         val t7 = SpecialData("89302", Pager2Fragment::class.java, "3435iji54793457345958678954")
