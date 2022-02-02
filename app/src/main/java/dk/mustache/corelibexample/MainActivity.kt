@@ -227,6 +227,19 @@ class MainActivity : BeaconScanActivity(),
 //            viewModel.updatePageDataList(listOf(t4, t7, t6, t1))
             viewModel.selectedIndexObservable.set(4)
         }, 5000)
+
+        binding.buttonWithLoading.setOnClickListener {
+            Toast.makeText(this, "testsetstetsgdkfjhk", Toast.LENGTH_LONG).show()
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            binding.buttonWithLoading.showLoadingIndicator(true)
+        },1000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            binding.buttonWithLoading.showLoadingIndicator(false)
+        },10000)
+
 //
 //        Handler(Looper.getMainLooper()).postDelayed({
 //            //test of data update

@@ -21,6 +21,7 @@ import java.lang.Exception
 class OneClickButtonWithLoadingIndicator : ConstraintLayout {
 
     lateinit var binding : LayoutOneclickLoadingIndicatorBinding
+    private var buttonEnabledWhenLoading: Boolean = false
 
     constructor(context: Context) : super(context) { init(context, null) }
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { init(
@@ -75,20 +76,26 @@ class OneClickButtonWithLoadingIndicator : ConstraintLayout {
             R.styleable.OneClickButtonWithLoadingIndicator_showLoadingIndicator, false
         )
 
+        buttonEnabledWhenLoading = a.getBoolean(
+            R.styleable.OneClickButtonWithLoadingIndicator_loadingIndicatorEnabledWhenLoading, false
+        )
+
         binding.oneClickButton2.text = text
 
         binding.oneClickButton2.gravity = TextView.TEXT_ALIGNMENT_CENTER
 
-//        setShowLoadingIndicator(showLoadingIndicator)
+        setShowLoadingIndicator(showLoadingIndicator)
 
         a.recycle()
     }
 
     fun setShowLoadingIndicator(showLoadingIndicator: Boolean) {
         if (showLoadingIndicator) {
+            this.isClickable = false
             binding.loadingIndicator.visibility = View.VISIBLE
             binding.oneClickButton2.visibility = View.INVISIBLE
         } else {
+            this.isClickable = true
             binding.loadingIndicator.visibility = View.INVISIBLE
             binding.oneClickButton2.visibility = View.VISIBLE
         }
