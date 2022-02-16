@@ -37,6 +37,8 @@ class SwipeListItemLayout : ConstraintLayout {
     var lockClick = false
     var startClickTime = 0L
     var sneakPeakDistance = 50f
+    val minimumDistance = 30f.toPx()
+    lateinit var handlerBelowSneak : Handler
 
     constructor(context: Context) : super(context) { init(context, null) }
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { init(context, attrs) }
@@ -44,6 +46,8 @@ class SwipeListItemLayout : ConstraintLayout {
 
     private fun init(context: Context, attrs: AttributeSet?) {
         binding = SwipeListItemLayoutBinding.inflate(LayoutInflater.from(context), this, true)
+
+        handlerBelowSneak = Handler(android.os.Looper.getMainLooper())
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.SwipeListItemLayout, 0, 0)
 
@@ -130,7 +134,7 @@ class SwipeListItemLayout : ConstraintLayout {
         tempSwipeLock = true
     }
 
-    val handlerBelowSneak = Handler(Looper.getMainLooper())
+
     val belowSneakRunnable = Runnable {
         close()
     }
@@ -140,7 +144,7 @@ class SwipeListItemLayout : ConstraintLayout {
         when (swipeDirection) {
             SwipeDirectionEnum.LEFT_TO_RIGHT -> {
                 //If below sneak peak then wait and swipe back after time
-                if (abs(currentTranslation)<=sneakPeakDistance) {
+                if (abs(currentTranslation)<=sneakPeakDistance && abs(currentTranslation)>minimumDistance/*HACK*/) {
                     handlerBelowSneak.postDelayed(belowSneakRunnable,200)
                 } else {
                     if (swipePosition == SwipePositionEnum.SWIPED_RIGHT_TO_LEFT) {
@@ -152,7 +156,7 @@ class SwipeListItemLayout : ConstraintLayout {
                 }
             }
             SwipeDirectionEnum.RIGHT_TO_LEFT -> {
-                if (abs(currentTranslation)<=sneakPeakDistance) {
+                if (abs(currentTranslation)<=sneakPeakDistance && abs(currentTranslation)>minimumDistance/*HACK*/) {
                     handlerBelowSneak.postDelayed(belowSneakRunnable,200)
                 } else if(swipePosition==SwipePositionEnum.SWIPED_LEFT_TO_RIGHT) {
                     close()
@@ -182,13 +186,14 @@ class SwipeListItemLayout : ConstraintLayout {
     }
 
     override fun onInterceptTouchEvent(e: MotionEvent): Boolean {
+
+        handlerBelowSneak.removeCallbacks(belowSneakRunnable)
         val child = this.getChildAt(0)
         val childToSwipe = this.getChildAt(1)
 
         if (swipeSettingsEnum!=SwipeSettingsEnum.SWIPE_LOCKED) {
             when (e.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
-                    handlerBelowSneak.removeCallbacks(belowSneakRunnable)
                     startX = e.x
                     startY = e.y
                     swipeDirection = SwipeDirectionEnum.NOT_SWIPING
@@ -199,7 +204,6 @@ class SwipeListItemLayout : ConstraintLayout {
                 }
 
                 MotionEvent.ACTION_MOVE -> {
-                    handlerBelowSneak.removeCallbacks(belowSneakRunnable)
                     val currentX = e.x
                     val currentY = e.y
 
@@ -236,13 +240,11 @@ class SwipeListItemLayout : ConstraintLayout {
                                         && swipePosition != SwipePositionEnum.SWIPED_RIGHT_TO_LEFT
                                     ) {
                                         setSwipedRightToLeft()
-                                        reset(e)
                                     } else if (Math.abs(currentTranslation) > maxSwipeDistanceLeftToRight
                                         && swipeDirection == SwipeDirectionEnum.LEFT_TO_RIGHT
                                         && swipePosition != SwipePositionEnum.SWIPED_LEFT_TO_RIGHT
                                     ) {
                                         setSwipedLeftToRight()
-                                        reset(e)
                                     } else {
                                         when (swipePosition) {
                                             SwipePositionEnum.SWIPED_RIGHT_TO_LEFT -> {
@@ -283,10 +285,11 @@ class SwipeListItemLayout : ConstraintLayout {
 
                 MotionEvent.ACTION_CANCEL,
                 MotionEvent.ACTION_UP -> {
-                    val currentX = e.x
-                    val currentY = e.y
-                    determineStateAndAnimate(currentX)
-                    reset(e)
+                    //TODO hack to prevent misfiring ACTION_CANCEL
+                        val currentX = e.x
+                        val currentY = e.y
+                        determineStateAndAnimate(currentX)
+                        reset(e)
                 }
             }
         }
