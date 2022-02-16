@@ -37,7 +37,7 @@ class SwipeListItemLayout : ConstraintLayout {
     var lockClick = false
     var startClickTime = 0L
     var sneakPeakDistance = 50f
-    val minimumDistance = 30f.toPx()
+    var onlyAcceptOnTouchRelease = true
     lateinit var handlerBelowSneak : Handler
 
     constructor(context: Context) : super(context) { init(context, null) }
@@ -144,7 +144,7 @@ class SwipeListItemLayout : ConstraintLayout {
         when (swipeDirection) {
             SwipeDirectionEnum.LEFT_TO_RIGHT -> {
                 //If below sneak peak then wait and swipe back after time
-                if (abs(currentTranslation)<=sneakPeakDistance && abs(currentTranslation)>minimumDistance/*HACK*/) {
+                if (abs(currentTranslation)<=sneakPeakDistance) {
                     handlerBelowSneak.postDelayed(belowSneakRunnable,200)
                 } else {
                     if (swipePosition == SwipePositionEnum.SWIPED_RIGHT_TO_LEFT) {
@@ -156,7 +156,7 @@ class SwipeListItemLayout : ConstraintLayout {
                 }
             }
             SwipeDirectionEnum.RIGHT_TO_LEFT -> {
-                if (abs(currentTranslation)<=sneakPeakDistance && abs(currentTranslation)>minimumDistance/*HACK*/) {
+                if (abs(currentTranslation)<=sneakPeakDistance) {
                     handlerBelowSneak.postDelayed(belowSneakRunnable,200)
                 } else if(swipePosition==SwipePositionEnum.SWIPED_LEFT_TO_RIGHT) {
                     close()
@@ -238,13 +238,16 @@ class SwipeListItemLayout : ConstraintLayout {
                                     if (Math.abs(currentTranslation) > maxSwipeDistanceRightToLeft
                                         && swipeDirection == SwipeDirectionEnum.RIGHT_TO_LEFT
                                         && swipePosition != SwipePositionEnum.SWIPED_RIGHT_TO_LEFT
+                                        && !onlyAcceptOnTouchRelease
                                     ) {
                                         setSwipedRightToLeft()
                                     } else if (Math.abs(currentTranslation) > maxSwipeDistanceLeftToRight
                                         && swipeDirection == SwipeDirectionEnum.LEFT_TO_RIGHT
                                         && swipePosition != SwipePositionEnum.SWIPED_LEFT_TO_RIGHT
+                                        && !onlyAcceptOnTouchRelease
                                     ) {
                                         setSwipedLeftToRight()
+
                                     } else {
                                         when (swipePosition) {
                                             SwipePositionEnum.SWIPED_RIGHT_TO_LEFT -> {
