@@ -236,11 +236,13 @@ class SwipeListItemLayout : ConstraintLayout {
                                         && swipePosition != SwipePositionEnum.SWIPED_RIGHT_TO_LEFT
                                     ) {
                                         setSwipedRightToLeft()
+                                        reset(e)
                                     } else if (Math.abs(currentTranslation) > maxSwipeDistanceLeftToRight
                                         && swipeDirection == SwipeDirectionEnum.LEFT_TO_RIGHT
                                         && swipePosition != SwipePositionEnum.SWIPED_LEFT_TO_RIGHT
                                     ) {
                                         setSwipedLeftToRight()
+                                        reset(e)
                                     } else {
                                         when (swipePosition) {
                                             SwipePositionEnum.SWIPED_RIGHT_TO_LEFT -> {
@@ -284,11 +286,7 @@ class SwipeListItemLayout : ConstraintLayout {
                     val currentX = e.x
                     val currentY = e.y
                     determineStateAndAnimate(currentX)
-                    swipeDirection = SwipeDirectionEnum.NOT_SWIPING
-                    listener?.onLockScroll(false)
-                    endTranslation = currentTranslation
-                    clickLockLayout(e)
-                    post(enableClickRunnable)
+                    reset(e)
                 }
             }
         }
@@ -298,6 +296,14 @@ class SwipeListItemLayout : ConstraintLayout {
         } else {
             super.onInterceptTouchEvent(e)
         }
+    }
+
+    fun reset(e: MotionEvent) {
+        swipeDirection = SwipeDirectionEnum.NOT_SWIPING
+        listener?.onLockScroll(false)
+        endTranslation = currentTranslation
+        clickLockLayout(e)
+        post(enableClickRunnable)
     }
 
     interface SwipeLayoutActionListener {
