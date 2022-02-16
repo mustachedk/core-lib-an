@@ -93,6 +93,7 @@ open class SwipeListAdapter <T : SwipeSectionItem, Q : ViewModel> (private val s
 
             override fun onClosed() {
                 val swipeItem = itemListWithHeaders[position]
+                itemLayoutClosed(swipeItem, position)
             }
         }
         swipeLayout.setOnClickListener {
@@ -100,7 +101,7 @@ open class SwipeListAdapter <T : SwipeSectionItem, Q : ViewModel> (private val s
         }
     }
 
-    fun itemLayoutClosed(swipeItem : SwipeSectionItem, position: Int) {
+    fun itemLayoutClosed(swipeItem : SectionItem, position: Int) {
         if (swipeItem is SwipeSectionItem) {
             swipeItem.isSwiped = false
             swipeItem.currentSwipe = SwipeDirectionEnum.NOT_SWIPING

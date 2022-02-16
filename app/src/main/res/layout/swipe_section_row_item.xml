@@ -13,8 +13,9 @@
         android:id="@+id/swipeItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:swipeDistanceLeft="100dp"
-        app:swipeDistanceRight="100dp">
+        app:swipeDistanceLeft="200dp"
+        app:swipeDistanceRight="200dp"
+        app:sneakPeakDistance="150dp">
 
         <FrameLayout
             android:layout_width="match_parent"

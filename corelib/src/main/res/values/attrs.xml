@@ -10,6 +10,7 @@
     <declare-styleable name="SwipeListItemLayout">
         <attr name="swipeDistanceLeft" format="dimension" />
         <attr name="swipeDistanceRight" format="dimension" />
+        <attr name="sneakPeakDistance" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="EmptystateLayout">
