@@ -14,8 +14,18 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:1.2.9'
+  implementation 'com.github.mustachedk:core-lib-an:1.2.10'
 }
+```
+###### Add this to your custom Application
+```bash
+class YourApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        //Initialize MustacheCoreLib
+        MustacheCoreLib.init(this)
+        ...
 ```
 
 #### Currently Contains:
