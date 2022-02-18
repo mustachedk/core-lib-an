@@ -17,7 +17,7 @@ dependencies {
   implementation 'com.github.mustachedk:core-lib-an:1.2.10'
 }
 ```
-###### Initialize corelib
+###### Initialize corelib in the Application context
 ```bash
 class YourApplication : Application() {
 
