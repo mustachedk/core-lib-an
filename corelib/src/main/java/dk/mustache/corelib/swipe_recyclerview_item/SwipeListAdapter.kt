@@ -1,4 +1,4 @@
-package dk.mustache.corelibexample.swipe_recyclerview_item_example
+package dk.mustache.corelib.swipe_recyclerview_item
 
 import android.os.Handler
 import android.os.Looper
@@ -8,14 +8,9 @@ import androidx.core.view.children
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import dk.mustache.corelib.databinding.SectionHeaderItemBinding
-import dk.mustache.corelib.section_header_list.SectionHeaderItem
 import dk.mustache.corelib.section_header_list.SectionItem
 import dk.mustache.corelib.section_header_list.SwipeSectionItem
 import dk.mustache.corelib.sticky_header_decoration.StickyHeaderListAdapter
-import dk.mustache.corelib.swipe_recyclerview_item.SwipeDirectionEnum
-import dk.mustache.corelib.swipe_recyclerview_item.SwipeListItemLayout
-import dk.mustache.corelib.swipe_recyclerview_item.SwipePositionEnum
-import dk.mustache.corelib.swipe_recyclerview_item.SwipeSettingsEnum
 
 open class SwipeListAdapter <T : SwipeSectionItem, Q : ViewModel> (private val swipeItems: List<T>, val viewModel: Q, val swipeDirectionsEnabled: SwipeSettingsEnum, rowLayoutRes: Int, rowLayoutAlternativeRes: Int, headerLayoutRes: Int,
                                                                    val onShoppingListItemClicked: (swipeItem: SectionItem) -> Unit,
@@ -28,10 +23,10 @@ open class SwipeListAdapter <T : SwipeSectionItem, Q : ViewModel> (private val s
     private var swipedViewPosition = -1
     private var swipedViewDirection = SwipeDirectionEnum.NOT_SWIPING
 
-    fun resetSwipeAndSetNew(position: Int, swipeDirection: SwipeDirectionEnum) {
+    fun resetSwipeAndSetNew(positionToSwipe: Int, swipeDirection: SwipeDirectionEnum) {
         Handler(Looper.getMainLooper()).post {
             itemListWithHeaders.forEach {
-                if (it is SwipeSectionExampleItem) {
+                if (it is SwipeSectionItem) {
                     if (!it.isSwiped) {
                         it.currentSwipe = SwipeDirectionEnum.NOT_SWIPING
                     }
@@ -39,20 +34,20 @@ open class SwipeListAdapter <T : SwipeSectionItem, Q : ViewModel> (private val s
                 }
             }
 
-            if (swipedViewPosition>=0 && position>=0 && swipedViewPosition<itemListWithHeaders.size) {
+            if (swipedViewPosition>=0 && positionToSwipe>=0 && swipedViewPosition<itemListWithHeaders.size) {
                 notifyItemChanged(swipedViewPosition)
-                val swipeItem = itemListWithHeaders[position]
+                val swipeItem = itemListWithHeaders[positionToSwipe]
                 if (swipeItem is SwipeSectionItem) {
                     swipeItem.isSwiped = true
                     swipeItem.currentSwipe = swipeDirection
                 }
 
-                notifyItemChanged(position)
+                notifyItemChanged(positionToSwipe)
             }
 
             swipedViewDirection = swipeDirection
-            swipedViewPosition = position
-            if (position==-1) {
+            swipedViewPosition = positionToSwipe
+            if (positionToSwipe==-1) {
                 notifyDataSetChanged()
             }
         }
@@ -132,7 +127,7 @@ open class SwipeListAdapter <T : SwipeSectionItem, Q : ViewModel> (private val s
 
         findSwipeLayout(root) { swipeLayout ->
             if (swipeLayout!=null) {
-                if (swipeItem is SwipeSectionExampleItem) {
+                if (swipeItem is SwipeSectionItem) {
                     setupSwipeLayout(swipeLayout, holder.absoluteAdapterPosition, swipeItem)
                     if (swipeItem.isSwiped) {
                         when (swipeItem.currentSwipe) {

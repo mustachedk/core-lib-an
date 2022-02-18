@@ -6,23 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import dk.mustache.corelib.MustacheCoreLib
-import dk.mustache.corelib.list_header_viewpager.GenericPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
-import dk.mustache.corelib.selectable_list.SelectableItem
 import dk.mustache.corelib.sticky_header_decoration.StickyHeaderItemDecoration
 import dk.mustache.corelib.swipe_recyclerview_item.LockableLayoutManager
 import dk.mustache.corelib.swipe_recyclerview_item.SwipeSettingsEnum
 import dk.mustache.corelibexample.databinding.FragmentListHeaderPagerBinding
-import dk.mustache.corelibexample.section_header_example.SectionHeaderExampleAdapter
-import dk.mustache.corelibexample.section_header_example.SectionExampleItem
 import dk.mustache.corelibexample.section_header_example.SectionHeaderExampleViewModel
-import dk.mustache.corelibexample.selectable_list_example.SelectableExampleAdapter
-import dk.mustache.corelibexample.selectable_list_example.SelectableExampleItem
-import dk.mustache.corelibexample.swipe_recyclerview_item_example.SwipeListAdapter
+import dk.mustache.corelib.swipe_recyclerview_item.SwipeListAdapter
 import dk.mustache.corelibexample.swipe_recyclerview_item_example.SwipeSectionExampleItem
 
 open class PagerSwipeExampleFragment : Fragment() {
