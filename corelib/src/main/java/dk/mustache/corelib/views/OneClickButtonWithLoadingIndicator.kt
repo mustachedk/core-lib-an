@@ -73,6 +73,12 @@ class OneClickButtonWithLoadingIndicator : ConstraintLayout {
             R.styleable.OneClickButtonWithLoadingIndicator_android_text
         )
 
+        val textSize = a.getDimension(
+            R.styleable.OneClickButtonWithLoadingIndicator_android_textSize,
+            15f
+        )
+        binding.oneClickButton2.textSize = textSize
+
         val showLoadingIndicator = a.getBoolean(
             R.styleable.OneClickButtonWithLoadingIndicator_showLoadingIndicator, false
         )
