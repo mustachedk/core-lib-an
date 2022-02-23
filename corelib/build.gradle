@@ -26,13 +26,13 @@ android {
         enabled = true
     }
 
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 21
-        versionName "1.2.11"
+        versionName "1.2.12"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -95,5 +95,5 @@ dependencies {
 //    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
 
-    implementation 'org.altbeacon:android-beacon-library:2.12.1'
+    implementation 'org.altbeacon:android-beacon-library:2.19'
 }

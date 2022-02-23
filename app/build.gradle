@@ -8,11 +8,11 @@ android {
         enabled = true
     }
 
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "dk.mustache.corelibexample"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 18
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -70,7 +70,7 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
-    implementation 'org.altbeacon:android-beacon-library:2.12.1'
+    implementation 'org.altbeacon:android-beacon-library:2.19'
 
 
 }
