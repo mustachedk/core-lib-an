@@ -45,7 +45,7 @@ class YourApplication : Application() {
 * Bluetooth enable and isEnabled
 * Beacon
 * BarcodeBitmapCreator
-
+* MDate: Convenience class allowing the easy manipulation and string formatting of a datetime.
 
 ##### Views
 * OneClickButton
@@ -75,3 +75,7 @@ class YourApplication : Application() {
 * HeaderListViewPagerFragment
 * StickyHeaderListAdapter
 * SelectableAdapter
+
+##### String Extensions
+* capitalizeWords
+* case: Set case/capitalization according to parameter (chosen between UpperCase, LowerCase, CapFirst and CapWords)
