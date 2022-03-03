@@ -93,7 +93,8 @@
     <declare-styleable name="OneClickButtonWithLoadingIndicator">
         <attr name="android:fontFamily" format="reference"/>
         <attr name="android:text" format="string" localization="suggested"/>
-        <attr name="android:textSize" format="dimension"/>
+        <attr name="textSize" format="integer"/>
+        <attr name="android:textSize" format="integer"/>
         <attr name="android:textColor" format="color"/>
         <attr name="showLoadingIndicator" format="boolean"/>
         <attr name="loadingIndicatorEnabledWhenLoading" format="boolean"/>

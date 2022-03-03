@@ -78,6 +78,7 @@ dependencies {
     //Google Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'androidx.compose.ui:ui-unit:1.0.0-rc01'
 
     //Test
     testImplementation 'junit:junit:4.12'

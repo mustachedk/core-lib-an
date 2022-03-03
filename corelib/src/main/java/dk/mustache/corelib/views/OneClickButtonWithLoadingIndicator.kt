@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,10 +75,10 @@ class OneClickButtonWithLoadingIndicator : ConstraintLayout {
         )
 
         val textSize = a.getDimension(
-            R.styleable.OneClickButtonWithLoadingIndicator_android_textSize,
+            R.styleable.OneClickButtonWithLoadingIndicator_textSize,
             15f
         )
-        binding.oneClickButton2.textSize = textSize
+        binding.oneClickButton2.textSize = textSize //TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSize.toFloat(), context.getResources().getDisplayMetrics());
 
         val showLoadingIndicator = a.getBoolean(
             R.styleable.OneClickButtonWithLoadingIndicator_showLoadingIndicator, false

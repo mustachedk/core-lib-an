@@ -1,6 +1,8 @@
 package dk.mustache.corelib.utils
 
 import android.content.res.Resources
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 
 /**
  * Convert Pixels (px) to Density Pixels (dp)
