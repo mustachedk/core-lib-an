@@ -111,6 +111,7 @@
     </declare-styleable>
 
     <declare-styleable name="SwipeAcceptLayout">
+        <attr name="swipeDisabled" format="boolean"/>
     </declare-styleable>
 
     <style name="BasicBaseDialogStyle" parent="Theme.AppCompat.Dialog">
