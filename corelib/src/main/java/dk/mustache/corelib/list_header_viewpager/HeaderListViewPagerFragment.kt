@@ -344,7 +344,7 @@ class HeaderListViewPagerFragment : Fragment() {
         override fun createFragment(position: Int): Fragment {
             val newFragment = pagerDataList[position].clazz.newInstance()
             val args = Bundle().apply {
-                putParcelable(GenericPagerFragment.PAGE_DATA, pagerDataList[position])
+                putSerializable(GenericPagerFragment.PAGE_DATA, pagerDataList[position])
             }
 
             newFragment.arguments = args

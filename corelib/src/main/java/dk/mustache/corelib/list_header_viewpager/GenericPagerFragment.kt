@@ -18,7 +18,7 @@ open class GenericPagerFragment() : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val pageDataFromArgs = arguments?.getParcelable<PageData<GenericPagerFragment>?>(PAGE_DATA)
+        val pageDataFromArgs = arguments?.getSerializable(PAGE_DATA) as PageData<GenericPagerFragment>?
         pageData = pageDataFromArgs ?: throw Exception("PageData must be set")
     }
 

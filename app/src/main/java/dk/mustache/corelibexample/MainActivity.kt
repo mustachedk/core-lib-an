@@ -21,6 +21,7 @@ import dk.mustache.corelib.fragment_dialog.StandardDialogFragment
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_CANCEL
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.BUTTON_OK
 import dk.mustache.corelib.fragment_dialog.StandardDialogFragment.Companion.TEXT_CLICKED
+import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerFragment
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
@@ -134,8 +135,8 @@ class MainActivity : BeaconScanActivity(),
 //                compatibilityModePreVersion123 = false
 //            )
 //        )
-//        val fragment = HeaderListViewPagerFragment.newInstance()
-        val fragment = PagerSwipeExampleFragment()
+        val fragment = HeaderListViewPagerFragment.newInstance()
+//        val fragment = PagerSwipeExampleFragment()
 
         //Uncomment to start HeaderListViewPagerFragment
         setFragment(fragment)
