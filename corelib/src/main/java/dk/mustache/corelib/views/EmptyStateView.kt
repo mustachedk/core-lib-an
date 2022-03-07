@@ -40,7 +40,7 @@ class EmptyStateView : ConstraintLayout {
 
     private var onClickListener: OnClickListener? = null
 
-    fun setOnClickListener(l: OnClickListener) {
+    override fun setOnClickListener(l: OnClickListener?) {
         onClickListener = l
     }
 

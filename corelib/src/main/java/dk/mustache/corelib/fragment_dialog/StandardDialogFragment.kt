@@ -43,7 +43,7 @@ open class StandardDialogFragment <T: Enum<T>> : DialogFragment() {
             fragment: StandardDialogFragment<T>
         ): StandardDialogFragment<T> {
             val args = Bundle()
-            args.putParcelable(DIALOG_SETUP, dialogSetup)
+            args.putSerializable(DIALOG_SETUP, dialogSetup)
 
             fragment.arguments = args
 
@@ -55,7 +55,7 @@ open class StandardDialogFragment <T: Enum<T>> : DialogFragment() {
         super.onCreate(savedInstanceState)
 
         if (arguments!=null) {
-            val setup = arguments?.getParcelable<FragmentDialogSetup<T>>(DIALOG_SETUP)
+            val setup = arguments?.getSerializable(DIALOG_SETUP) as FragmentDialogSetup<T>
             if (setup!=null) {
                 dialogSetup = setup
             }

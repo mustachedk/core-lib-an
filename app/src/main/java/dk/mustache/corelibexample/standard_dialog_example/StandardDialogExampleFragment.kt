@@ -34,7 +34,7 @@ class StandardDialogExampleFragment: StandardDialogFragment<DialogTypeEnum>() {
         fun newInstance(dialogSetup: FragmentDialogSetup<DialogTypeEnum>): StandardDialogExampleFragment {
             val fragment = StandardDialogExampleFragment()
             val args = Bundle()
-            args.putParcelable(DIALOG_SETUP, dialogSetup)
+            args.putSerializable(DIALOG_SETUP, dialogSetup)
 
             fragment.arguments = args
 
