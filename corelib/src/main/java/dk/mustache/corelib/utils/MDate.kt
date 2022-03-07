@@ -1,156 +1,109 @@
 package dk.mustache.corelib.utils
 
+import dk.mustache.corelib.utils.MDateFormat.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Convenience class allowing the easy manipulation and string formatting of a java Calendar
- * instance.
+ * There are four primary types of formats: DATE, PRETTYDATE, TIME and ISOWEEK.
  *
- * Can add and subtract years, months, days, hours, minutes and seconds (with plusDateTime,
- * plusDate and plusTime as convenience methods.
+ * Dates and PrettyDates consist of day and month. Add _YEAR to also get year.
  *
- * Can output the contained calendar as a formatted string, using the many different
- * "showXXX" methods. Observe the methods' kdoc to see the pattern used.
+ * Time consists of hour and minute. Add _SECONDS to also get seconds.
+ */
+enum class MDateFormat(val pattern: String) {
+    /** Show date according to pattern "yyyy-MM-dd". Example: "2020-08-23". */
+    DATE_YEAR_REVERSE("yyyy-MM-dd"),
+
+    /** Show date according to pattern "dd/MM yyyy". Example: "23/08 2020". */
+    DATE_YEAR("dd/MM yyyy"),
+
+    /** Show date according to pattern "d/M yyyy". Example: "23/8 2020". */
+    DATE_YEAR_SHORT("d/M yyyy"),
+
+    /** Show date according to pattern "dd/MM". Example: "23/08". */
+    DATE("dd/MM"),
+
+    /** Show date according to pattern "d/M". Example: "23/8". */
+    DATE_SHORT("d/M"),
+
+    /** Show date according to pattern "d. MMMM". Example: "23. august". */
+    PRETTYDATE_LONG("d. MMMM"),
+
+    /** Show date according to pattern "d. MMM". Example: "23. aug". */
+    PRETTYDATE_SHORT("d. MMM"),
+
+    /** Show date according to pattern "d.MMM". Example: "23.aug". */
+    PRETTYDATE_VERYSHORT("d.MMM"),
+
+    /** Show date according to pattern "d. MMMM yyyy". Example: "23. august 2020". */
+    PRETTYDATE_YEAR_LONG ("d. MMMM yyyy"),
+
+    /** Show date according to pattern "d. MMM yyyy". Example: "23. aug 2020". */
+    PRETTYDATE_YEAR_SHORT ("d. MMM yyyy"),
+
+    /** Show date according to pattern "d.MMM yy". Example: "23.aug 20". */
+    PRETTYDATE_YEAR_VERYSHORT ("d.MMM yy"),
+
+    /** Returns the iso week number according to pattern "ww". Example: "07". */
+    ISOWEEK_TWODIGIT ("ww"),
+
+    /** Returns the iso week number according to pattern "w". Example: "7". */
+    ISOWEEK_NATURAL ("w"),
+
+    /** Show time according to pattern "HH:mm:ss". Example: "13:50:50". */
+    TIME_SECONDS ("HH:mm:ss"),
+
+    /** Show time according to pattern "HH:mm". Example: "13:50". */
+    TIME ("HH:mm")
+}
+
+enum class MDatePrettyFormat
+
+/**
+ * Convenience class allowing the easy manipulation and string
+ * formatting of a java Calendar instance.
+ *
+ * Can add and subtract years, months, days, hours, minutes and seconds
+ * (with plusDateTime, plusDate and plusTime as convenience methods.
+ *
+ * Can output the contained calendar as a formatted string, using the
+ * many different "showXXX" methods. Observe the methods' kdoc to see
+ * the pattern used.
  *
  * @property calendar The calendar to encapsulate
  * @property locale The locale to use for formatting
  */
 class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale: Locale) {
 
-    /** Show date according to pattern "yyyy-MM-dd". */
-    fun showYearMonthDay(): String {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", locale)
-        return dateFormat.format(calendar.time)
-    }
-
-    /** Show date according to pattern "dd/MM yyyy". */
-    fun showDayMonthYear(): String {
-        val dateFormat = SimpleDateFormat("dd/MM yyyy", locale)
-        return dateFormat.format(calendar.time)
-    }
-
-    /** Show date according to pattern "d/M yyyy". */
-    fun showShortDayMonthYear(): String {
-        val dateFormat = SimpleDateFormat("d/M yyyy", locale)
-        return dateFormat.format(calendar.time)
-    }
-
-    /** Show date according to pattern "dd/MM". */
-    fun showDayMonth(): String {
-        val dateFormat = SimpleDateFormat("dd/MM", locale)
-        return dateFormat.format(calendar.time)
-    }
-
-    /** Show date according to pattern "d/M". */
-    fun showShortDayMonth(): String {
-        val dateFormat = SimpleDateFormat("d/M", locale)
-        return dateFormat.format(calendar.time)
-    }
-
     /**
-     * Show date according to pattern "d. MMMM". Month is
-     * cased/capitalized according to caseType variable.
+     * Show date or time according to provided format. Only PrettyDate
+     * formats use the caseType parameter.
      *
-     * @param caseType Casing/capitalization of month. Default:
-     *     LowerCase
-     */
-    fun showLongPrettyDate(caseType: CaseType = CaseType.LowerCase): String {
-        val dateFormat = SimpleDateFormat("d. MMMM", locale)
-        return dateFormat.format(calendar.time).case(caseType, locale = locale)
-    }
-
-    /**
-     * Show date according to pattern "d. MMM". Month is
-     * cased/capitalized according to caseType variable.
-     *
-     * @param caseType Casing/capitalization of month. Default:
-     *     LowerCase
-     */
-    fun showShortPrettyDate(caseType: CaseType = CaseType.LowerCase): String {
-        val dateFormat = SimpleDateFormat("d. MMM", locale)
-        return dateFormat.format(calendar.time).case(caseType, locale = locale)
-    }
-
-    /**
-     * Show date according to pattern "d.MMM". Month is
-     * cased/capitalized according to caseType variable.
-     *
-     * @param caseType Casing/capitalization of month. Default:
-     *     LowerCase
-     */
-    fun showVeryShortPrettyDate(caseType: CaseType = CaseType.LowerCase): String {
-        val dateFormat = SimpleDateFormat("d.", locale)
-        val dateFormat2 = SimpleDateFormat("MMM", locale)
-        return dateFormat.format(calendar.time) +
-                dateFormat2.format(calendar.time).case(caseType, locale = locale)
-    }
-
-    /**
-     * Show date according to pattern "d. MMMM yyyy". Month is
-     * cased/capitalized according to caseType variable.
-     *
-     * @param caseType Casing/capitalization of month. Default:
-     *     LowerCase
-     */
-    fun showLongPrettyDateYear(caseType: CaseType = CaseType.LowerCase): String {
-        val dateFormat = SimpleDateFormat("d. MMMM yyyy", locale)
-        return dateFormat.format(calendar.time).case(caseType, locale = locale)
-    }
-
-    /**
-     * Show date according to pattern "d. MMM yyyy". Month is
-     * cased/capitalized according to caseType variable.
-     *
-     * @param caseType Casing/capitalization of month. Default:
-     *     LowerCase
-     */
-    fun showShortPrettyDateYear(caseType: CaseType = CaseType.LowerCase): String {
-        val dateFormat = SimpleDateFormat("d. MMM yyyy", locale)
-        return dateFormat.format(calendar.time).case(caseType, locale = locale)
-    }
-
-    /**
-     * Show date according to pattern "d.MMM yy". Month is
-     * cased/capitalized according to caseType variable.
-     *
-     * @param caseType Casing/capitalization of month. Default:
-     *     LowerCase
-     */
-    fun showVeryShortPrettyDateYear(caseType: CaseType = CaseType.LowerCase): String {
-        val dateFormat = SimpleDateFormat("d.", locale)
-        val dateFormat2 = SimpleDateFormat("MMM yy", locale)
-        return dateFormat.format(calendar.time) +
-                dateFormat2.format(calendar.time).case(caseType, locale = locale)
-    }
-
-    /**
-     * Returns the iso week number as a string.
-     *
-     * @param padded Whether to force two digits, zero-padding if
-     *     necessary. Default: false.
+     * @param format Format of the MDate as either date or time. See
+     *     MDateFormat kdocs for the individual formats.
+     * @param caseType Casing/capitalization of month for pretty
+     *     formats. Default: LowerCase
      * @return
      */
-    fun showIsoWeek(padded: Boolean = false): String {
-        val weekPattern = if (padded) {
-            "ww"
-        } else {
-            "w"
+    fun show(format: MDateFormat, caseType: CaseType = CaseType.LowerCase): String {
+        val dateFormat = SimpleDateFormat(format.pattern, locale)
+        return when (format) {
+            PRETTYDATE_LONG, PRETTYDATE_SHORT, PRETTYDATE_YEAR_LONG, PRETTYDATE_YEAR_SHORT -> dateFormat.format(calendar.time)
+                .case(caseType, locale = locale)
+            PRETTYDATE_VERYSHORT, PRETTYDATE_YEAR_VERYSHORT -> {
+                val dateParts = dateFormat.format(calendar.time).split(".")
+                val formattedDateParts = dateParts.mapIndexed { index, part ->
+                    if (index == 1) { // Month
+                        part.case(caseType, locale = locale)
+                    } else { // Day
+                        part
+                    }
+                }
+                return formattedDateParts.joinToString(".")
+            }
+            else -> dateFormat.format(calendar.time)
         }
-        val dateFormat = SimpleDateFormat(weekPattern, locale)
-        return dateFormat.format(calendar.time)
-    }
-
-    /** Show time according to pattern "HH:mm:ss". */
-    fun showTime(): String {
-        val dateFormat = SimpleDateFormat("HH:mm:ss", locale)
-        return dateFormat.format(calendar.time)
-    }
-
-    /** Show time according to pattern "HH:mm". */
-    fun showHourMinute(): String {
-        val dateFormat = SimpleDateFormat("HH:mm", locale)
-        return dateFormat.format(calendar.time)
     }
 
     /**
