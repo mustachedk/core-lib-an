@@ -27,5 +27,5 @@ fun isConnected(context: Context): Boolean {
  */
 @RequiresPermission(permission.ACCESS_NETWORK_STATE)
 private fun getNetworkInfo(context: Context): NetworkInfo? {
-    return (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+    return (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo!!
 }

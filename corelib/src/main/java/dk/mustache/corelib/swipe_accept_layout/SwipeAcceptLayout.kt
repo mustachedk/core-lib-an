@@ -16,15 +16,32 @@ class SwipeAcceptLayout : ConstraintLayout, View.OnTouchListener {
     var targetValue: String = ""
     private var animationInProgress: Boolean = false
     private var swipeStarted: Boolean = false
+    private var swipeAccepted: Boolean = false
     private var startX = 0f
     private var startBoundary = 0f
     private var endBoundary = 0f
     private var acceptBoundary = 0f
+    var swipeDisabled = false
+        set(value) {
+            binding.swipeButton.alpha = if (value) {
+                0.4f
+            } else {
+                1f
+            }
+            field = value
+        }
     var swipeListener: SwipeListener? = null
 
     interface SwipeListener {
         fun onSwipeAccept()
         fun onSwipeStarted()
+    }
+
+    fun resetSwipeLayout() {
+        swipeAccepted = false
+        swipeStarted = false
+        animationInProgress = false
+        binding.swipeButton.x = this.x - (binding.swipeButton.width/2)
     }
 
     constructor(context: Context) : super(context) { init(context, null) }
@@ -39,34 +56,41 @@ class SwipeAcceptLayout : ConstraintLayout, View.OnTouchListener {
     ) { init(context, attrs) }
 
     override fun onTouch(view: View, e: MotionEvent): Boolean {
-        val x = e.x - (binding.swipeButton.width/2)
-        if (x>startBoundary && x<endBoundary && !animationInProgress && swipeStarted)
-            binding.swipeButton.x = x
+        if (!swipeDisabled) {
+            val x = e.x - (binding.swipeButton.width / 2)
+            if (x > startBoundary && x < endBoundary && !animationInProgress && swipeStarted)
+                binding.swipeButton.x = x
 
-        when (e.action) {
-            MotionEvent.ACTION_DOWN -> {
-                if (x<startX+binding.swipeButton.width) {
-                    swipeListener?.onSwipeStarted()
-                    swipeStarted = true
-                    if(x>startBoundary)
-                        binding.swipeButton.x = x
-                } else {
-                    swipeStarted = false
+            when (e.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    if (x < startX + binding.swipeButton.width) {
+                        swipeListener?.onSwipeStarted()
+                        swipeStarted = true
+                        if (x > startBoundary)
+                            binding.swipeButton.x = x
+                    } else {
+                        swipeStarted = false
+                    }
                 }
-            }
-            MotionEvent.ACTION_UP -> {
-                animationInProgress = true
-                swipeStarted = false
-                if (binding.swipeButton.x>acceptBoundary) {
-                    swipeListener?.onSwipeAccept()
-                    binding.swipeButton.animate().x(endBoundary-5.toPx()).setDuration(400).withEndAction { animationInProgress = false }.start()
+                MotionEvent.ACTION_UP -> {
+                    if (!swipeAccepted) {
+                        animationInProgress = true
+                        swipeStarted = false
+                        if (binding.swipeButton.x > acceptBoundary) {
+                            swipeListener?.onSwipeAccept()
+                            swipeAccepted = true
+                            binding.swipeButton.animate().x(endBoundary - 5.toPx()).setDuration(400)
+                                .withEndAction { animationInProgress = false }.start()
 
-                } else {
-                    binding.swipeButton.animate().x(startX).setDuration(400).withEndAction { animationInProgress = false }.start()
+                        } else {
+                            binding.swipeButton.animate().x(startX).setDuration(400)
+                                .withEndAction { animationInProgress = false }.start()
+                        }
+                    }
                 }
-            }
-            else -> {
+                else -> {
 
+                }
             }
         }
         return true
@@ -91,6 +115,8 @@ class SwipeAcceptLayout : ConstraintLayout, View.OnTouchListener {
         }
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.SwipeAcceptLayout, 0, 0)
+
+        swipeDisabled = a.getBoolean(R.styleable.SwipeAcceptLayout_swipeDisabled, false)
 
         a.recycle()
     }
