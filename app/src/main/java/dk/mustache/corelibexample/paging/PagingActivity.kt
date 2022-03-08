@@ -2,8 +2,10 @@ package dk.mustache.corelibexample.paging
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ObservableInt
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mustache.corelib.paging.Paging
@@ -17,8 +19,8 @@ import dk.test.pagingadaptertest.network.PassengersResponse
 const val BASE_URL: String = "https://api.instantwebtools.net/v1/"
 
 class PagingActivity : AppCompatActivity() {
-    private val api: RetrofitApi = RetrofitClient().createRetrofitClient(BASE_URL)
-    private val pagingLib = Paging<PassengersResponse>()
+    private val viewModel: PagingViewModel by viewModels()
+
     private val adapter =
         PagingAdapter(R.layout.paging_demo_passenger_item, R.layout.paging_demo_loading_item)
 
@@ -26,6 +28,8 @@ class PagingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_paging)
         initializeAdapter()
+
+        viewModel.actions.observe(this, ::onAction)
     }
 
     private fun initializeAdapter() {
@@ -36,47 +40,13 @@ class PagingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        configurePagingListener()
+        viewModel.configurePagingListener()
     }
 
-    @SuppressLint("CheckResult")
-    private fun configurePagingListener() {
-        pagingLib.listener = object : Paging.PagingActionListener<PassengersResponse> {
-            override fun onTotalHitsResolved(response: PassengersResponse): Int {
-                val totalHits = response.totalPages.toInt()
-                adapter.createLoadingItems(totalHits)
-                return totalHits
-            }
-
-            override fun onPageDownloaded(pageNumber: Int, response: PassengersResponse?) {
-                response?.data?.let {
-                    it.forEach { it.page = pageNumber }
-                    updateList(it)
-                }
-            }
-
-            override fun onFinished(pageNumber: Int, response: PassengersResponse?) {
-                response?.data?.let {
-                    it.forEach { it.page = pageNumber }
-                    updateList(it)
-                }
-            }
-
-            override fun onError(errorMessage: String) {}
-
-            override fun onCancel() {}
+    private fun onAction(action: PagingViewModel.Actions) {
+        when(action) {
+            is PagingViewModel.Actions.CreateLoadingItems -> adapter.createLoadingItems(action.totalHits)
+            is PagingViewModel.Actions.UpDateList -> adapter.replaceLoadingItems(action.items)
         }
-        performRequest()
-    }
-
-    private fun performRequest() {
-        pagingLib.cancel()
-        pagingLib.pagedRetrofitCall(
-            retrofitCall = api::fetchPage, startPage = 0, pageSize = 10, totalNumberOfHits = 0
-        )
-    }
-
-    private fun updateList(list: List<Passenger>) {
-        adapter.replaceLoadingItems(list)
     }
 }

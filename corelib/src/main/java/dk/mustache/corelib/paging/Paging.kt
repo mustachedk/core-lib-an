@@ -5,9 +5,9 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class Paging<T>() {
+class Paging<U, T : Paging.PagingResponse<*>>(private val mapper: (T) -> List<U>) {
 
-    lateinit var listener: PagingActionListener<T>
+    lateinit var listener: PagingActionListener<U>
     lateinit var disposableObserver: DisposableObserver<T>
 
     fun cancel() {
@@ -137,16 +137,17 @@ class Paging<T>() {
             override fun onNext(response: T) {
                 disposableObserver.dispose()
                 val totalHits = if (currentPage == 0) {
-                    listener.onTotalHitsResolved(response)
+                    listener.onTotalPagesAcquired(response.totalPages)
+                    response.totalPages
                 } else {
                     totalNumberOfHits
                 }
 
                 if (totalHits > 0) {
                     if ((currentPage + 1) * pageSize >= totalHits) { // If we are on the last page
-                        listener.onFinished(currentPage, response)
+                        listener.onFinished(currentPage, mapper(response))
                     } else { // If we are on a page before the last page
-                        listener.onPageDownloaded(currentPage, response)
+                        listener.onPageDownloaded(currentPage, mapper(response))
                         onDataReturned(totalHits)
                     }
                 } else { // If there are no items
@@ -156,10 +157,15 @@ class Paging<T>() {
         }
     }
 
+    interface PagingResponse<T> {
+        val totalPages: Int
+        val data: List<T>
+    }
+
     interface PagingActionListener<T> {
-        fun onTotalHitsResolved(response: T): Int
-        fun onPageDownloaded(pageNumber: Int, response: T?)
-        fun onFinished(pageNumber: Int, response: T?)
+        fun onTotalPagesAcquired(totalPages: Int)
+        fun onPageDownloaded(pageNumber: Int, items: List<T>?)
+        fun onFinished(pageNumber: Int, items: List<T>?)
         fun onError(errorMessage: String)
         fun onCancel()
     }

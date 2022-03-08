@@ -1,5 +1,6 @@
 package dk.mustache.corelibexample.testdata
 
+import dk.mustache.corelib.paging.Paging
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.Dispatchers
@@ -25,8 +26,8 @@ class PokemonTestRepo() {
 
     private fun getData(page: Int, pageSize: Int): PokemonResponse {
         val from = page * pageSize
-        val to = (page + 1) * pageSize -1
-        return PokemonResponse((from until to).map { getPokemon(it) }, 898)
+        val to = (page + 1) * pageSize - 1
+        return PokemonResponse((from until to).map { getPokemon(it) }, 850)
     }
 
     private fun getPokemon(position: Int): PokemonDTO {
@@ -34,12 +35,15 @@ class PokemonTestRepo() {
         return PokemonDTO(
             id = idFloor + position,
             name = name,
-            attack = (position + 2) % 5,
-            defense = (position) % 4
+            attack = (position * 7) % 5,
+            defense = (position * 3 + 2) % 4
         )
     }
 
-    data class PokemonResponse(val items: List<PokemonDTO>, val totalPages: Int)
+    data class PokemonResponse(
+        override val data: List<PokemonDTO>,
+        override val totalPages: Int
+    ) : Paging.PagingResponse<PokemonDTO>
 
     data class PokemonDTO(val id: Int, val name: String, val attack: Int, val defense: Int)
 

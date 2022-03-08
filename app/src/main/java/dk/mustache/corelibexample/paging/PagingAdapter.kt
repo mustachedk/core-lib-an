@@ -1,17 +1,16 @@
 package dk.mustache.corelibexample.paging
 
 import dk.mustache.corelib.paging.GenericPagingAdapter
-import dk.test.pagingadaptertest.network.Passenger
 
 class PagingAdapter(viewResource: Int, loadingResource: Int) :
-    GenericPagingAdapter<Passenger>(viewResource, loadingResource) {
+    GenericPagingAdapter<PokePagingItem>(viewResource, loadingResource) {
 
     override fun onBindViewHolder(
-        holder: GenericPagingAdapterViewHolder<Passenger>,
+        holder: GenericPagingAdapterViewHolder<PokePagingItem>,
         position: Int
     ) {
-        if (items[position] is Passenger) {
-            holder.bindViewModel(items[position] as Passenger)
+        if (items[position] is PokePagingItem) {
+            holder.bindViewModel(items[position] as PokePagingItem)
         }
         super.onBindViewHolder(holder, position)
     }
