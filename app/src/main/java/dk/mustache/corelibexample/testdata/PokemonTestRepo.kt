@@ -2,14 +2,13 @@ package dk.mustache.corelibexample.testdata
 
 import dk.mustache.corelib.paging.Paging
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import java.lang.Thread.sleep
 import java.util.*
+import java.util.concurrent.TimeUnit
 
-class PokemonTestRepo() {
+class PokemonTestRepo {
 
     suspend fun getDataAsyncCo(page: Int, pageSize: Int): PokemonResponse {
         var data: PokemonResponse
@@ -21,7 +20,8 @@ class PokemonTestRepo() {
     }
 
     fun getDataAsyncRx(page: Int, pageSize: Int): Observable<PokemonResponse> {
-        return Observable.just(getData(page, pageSize))
+        return Observable.timer(1, TimeUnit.SECONDS)
+            .map { getData(page, pageSize) }
     }
 
     private fun getData(page: Int, pageSize: Int): PokemonResponse {
@@ -47,7 +47,7 @@ class PokemonTestRepo() {
 
     data class PokemonDTO(val id: Int, val name: String, val attack: Int, val defense: Int)
 
-    val idFloor = Random().nextInt(1000)
+    private val idFloor = Random().nextInt(1000)
 
     val pokeNames = listOf(
         "Bulbasaur",

@@ -8,11 +8,14 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import dk.mustache.corelib.BR
 
-@SuppressLint("NotifyDataSetChanged")
-abstract class GenericPagingAdapter<T: GenericPagingAdapter.PagingAdapterItem>(
+abstract class GenericPagingAdapter<
+        T : Paging.PagingResponse<*>,
+        U : GenericPagingAdapter.PagingAdapterItem
+        >(
     private val viewResource: Int,
-    private val loadingResource: Int
-) : RecyclerView.Adapter<GenericPagingAdapter.GenericPagingAdapterViewHolder<T>>() {
+    private val loadingResource: Int,
+    pagingLib: Paging<U, T>
+) : RecyclerView.Adapter<GenericPagingAdapter.GenericPagingAdapterViewHolder<U>>() {
     var layoutInflater: LayoutInflater? = null
 
     val items: MutableList<PagingAdapterItem> = mutableListOf()
@@ -20,18 +23,43 @@ abstract class GenericPagingAdapter<T: GenericPagingAdapter.PagingAdapterItem>(
     var awaitingLoadingItems = true
     private var replaceItemsIndex = 0
 
+    init {
+        pagingLib.addPagingActionListener(object : Paging.PagingActionListener<U> {
+            override fun onTotalPagesAcquired(totalPages: Int) {
+                createLoadingItems(totalPages)
+            }
+
+            override fun onPageDownloaded(pageNumber: Int, items: List<U>?) {
+                items?.let {
+                    replaceLoadingItems(items)
+                }
+            }
+
+            override fun onFinished(pageNumber: Int, items: List<U>?) {
+                items?.let {
+                    replaceLoadingItems(items)
+                }
+            }
+
+            override fun onError(errorMessage: String) {}
+
+            override fun onCancel() {}
+        })
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     fun createLoadingItems(totalItemCount: Int) {
         if (awaitingLoadingItems) {
             awaitingLoadingItems = false
             for (i in 0..totalItemCount) {
-                val pagingItem = PagingAdapterItem(true)
+                val pagingItem = LoadingItem()
                 items.add(pagingItem)
             }
             notifyDataSetChanged()
         }
     }
 
-    fun replaceLoadingItems(i: List<T>) {
+    fun replaceLoadingItems(i: List<U>) {
         val startIndex = replaceItemsIndex
         i.forEach {
             if (replaceItemsIndex < items.size) {
@@ -42,31 +70,35 @@ abstract class GenericPagingAdapter<T: GenericPagingAdapter.PagingAdapterItem>(
         notifyItemRangeChanged(startIndex, replaceItemsIndex - startIndex)
     }
 
-    fun getLoadedItem(position: Int): T? {
-        try {
-            return items[position] as T
+    @Suppress("UNCHECKED_CAST")
+    fun getLoadedItem(position: Int): U? {
+        return if(items[position] is LoadingItem) {
+            null
         }
-        catch (e: ClassCastException) {
-            return null
+        else {
+            items[position] as U
         }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): GenericPagingAdapterViewHolder<T> {
+    ): GenericPagingAdapterViewHolder<U> {
         if (layoutInflater == null) {
             layoutInflater = LayoutInflater.from(parent.context)
         }
-        val binding: ViewDataBinding = if (viewType == 0) {
-            DataBindingUtil.inflate(layoutInflater!!, loadingResource, parent, false)
+        return if (viewType == 0) {
+            val binding: ViewDataBinding =
+                DataBindingUtil.inflate(layoutInflater!!, loadingResource, parent, false)
+            LoadingViewHolder(binding)
         } else {
-            DataBindingUtil.inflate(layoutInflater!!, viewResource, parent, false)
+            val binding: ViewDataBinding =
+                DataBindingUtil.inflate(layoutInflater!!, viewResource, parent, false)
+            LoadedViewHolder(binding)
         }
-        return GenericPagingAdapterViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: GenericPagingAdapterViewHolder<T>, position: Int) {}
+    override fun onBindViewHolder(holder: GenericPagingAdapterViewHolder<U>, position: Int) {}
 
     override fun getItemCount(): Int {
         return items.size
@@ -76,7 +108,15 @@ abstract class GenericPagingAdapter<T: GenericPagingAdapter.PagingAdapterItem>(
         return if (items[position].isLoadingItem) 0 else 1
     }
 
-    class GenericPagingAdapterViewHolder<T>(private val binding: ViewDataBinding) :
+    class LoadingViewHolder<T>(binding: ViewDataBinding) :
+        GenericPagingAdapterViewHolder<T>(binding)
+
+    class LoadedViewHolder<T>(binding: ViewDataBinding) :
+        GenericPagingAdapterViewHolder<T>(binding)
+
+    abstract class GenericPagingAdapterViewHolder<T>(
+        private val binding: ViewDataBinding
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindViewModel(itemViewModel: T) {
             binding.setVariable(BR.viewModel, itemViewModel)
@@ -84,5 +124,6 @@ abstract class GenericPagingAdapter<T: GenericPagingAdapter.PagingAdapterItem>(
         }
     }
 
-    open class PagingAdapterItem(var isLoadingItem: Boolean = false)
+    class LoadingItem: PagingAdapterItem(true)
+    abstract class PagingAdapterItem(var isLoadingItem: Boolean = false)
 }

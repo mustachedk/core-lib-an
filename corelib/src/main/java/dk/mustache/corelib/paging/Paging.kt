@@ -5,18 +5,29 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class Paging<U, T : Paging.PagingResponse<*>>(private val mapper: (T) -> List<U>) {
 
-    lateinit var listener: PagingActionListener<U>
+    private val listeners = mutableListOf<PagingActionListener<U>>()
     lateinit var disposableObserver: DisposableObserver<T>
+
+    fun addPagingActionListener(listener: PagingActionListener<U>) {
+        listeners.add(listener)
+    }
+
+    fun removePagingActionListener(listener: PagingActionListener<U>) {
+        listeners.remove(listener)
+    }
+
+    fun clearPagingActionListeners() {
+        listeners.clear()
+    }
 
     fun cancel() {
         if (this::disposableObserver.isInitialized) {
             disposableObserver.dispose()
         }
-        if (this::listener.isInitialized) {
-            listener.onCancel()
-        }
+        listeners.forEach { it.onCancel() }
     }
 
     fun pagedRetrofitCall(
@@ -131,13 +142,13 @@ class Paging<U, T : Paging.PagingResponse<*>>(private val mapper: (T) -> List<U>
             }
 
             override fun onError(e: Throwable) {
-                listener.onError(e.localizedMessage ?: "")
+                listeners.forEach { it.onError(e.localizedMessage ?: "") }
             }
 
             override fun onNext(response: T) {
                 disposableObserver.dispose()
                 val totalHits = if (currentPage == 0) {
-                    listener.onTotalPagesAcquired(response.totalPages)
+                    listeners.forEach { it.onTotalPagesAcquired(response.totalPages) }
                     response.totalPages
                 } else {
                     totalNumberOfHits
@@ -145,13 +156,13 @@ class Paging<U, T : Paging.PagingResponse<*>>(private val mapper: (T) -> List<U>
 
                 if (totalHits > 0) {
                     if ((currentPage + 1) * pageSize >= totalHits) { // If we are on the last page
-                        listener.onFinished(currentPage, mapper(response))
+                        listeners.forEach { it.onFinished(currentPage, mapper(response)) }
                     } else { // If we are on a page before the last page
-                        listener.onPageDownloaded(currentPage, mapper(response))
+                        listeners.forEach { it.onPageDownloaded(currentPage, mapper(response)) }
                         onDataReturned(totalHits)
                     }
                 } else { // If there are no items
-                    listener.onFinished(currentPage, null)
+                    listeners.forEach { it.onFinished(currentPage, null) }
                 }
             }
         }
