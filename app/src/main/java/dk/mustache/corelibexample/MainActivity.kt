@@ -1,6 +1,7 @@
 package dk.mustache.corelibexample
 
 import android.app.Application
+import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -35,6 +36,7 @@ import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.model.MockResponse
+import dk.mustache.corelibexample.paging.PagingActivity
 import dk.mustache.corelibexample.toolbar_expandable_test.CoursesFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
@@ -74,6 +76,10 @@ class MainActivity : BeaconScanActivity(),
             this,
             R.layout.activity_main
         )
+
+        binding.btnPaging.setOnClickListener {
+            startActivity(Intent(this, PagingActivity::class.java))
+        }
 
 //        binding.mainEmptystate.clickListener = this
 
