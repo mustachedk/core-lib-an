@@ -37,7 +37,8 @@ import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.mdate.MdateActivity
 import dk.mustache.corelibexample.model.MockResponse
-import dk.mustache.corelibexample.paging.PagingActivity
+import dk.mustache.corelibexample.paging.ExtendedPagingActivity
+import dk.mustache.corelibexample.paging.SimplePagingActivity
 import dk.mustache.corelibexample.toolbar_expandable_test.CoursesFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
@@ -81,7 +82,7 @@ class MainActivity : BeaconScanActivity(),
         )
 
         binding.btnPaging.setOnClickListener {
-            startActivity(Intent(this, PagingActivity::class.java))
+            startActivity(Intent(this, ExtendedPagingActivity::class.java))
         }
 
         binding.btnMdate.setOnClickListener {

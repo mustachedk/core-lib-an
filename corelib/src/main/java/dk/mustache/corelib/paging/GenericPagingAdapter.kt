@@ -8,68 +8,17 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import dk.mustache.corelib.BR
 import dk.mustache.corelib.paging.GenericPagingAdapter.GenericPagingAdapterViewHolder
-import io.reactivex.rxjava3.core.Observable
 
-abstract class GenericPagingAdapter<
-        T : Paging.PagingResponse<*>,
-        U : GenericPagingAdapter.PagingAdapterItem
-        >(
+open class GenericPagingAdapter<T : GenericPagingAdapter.PagingAdapterItem>(
     private val viewResource: Int,
-    private val loadingResource: Int,
-    private val pagingLib: Paging<U, T>
-) : RecyclerView.Adapter<GenericPagingAdapterViewHolder<U>>() {
+    private val loadingResource: Int
+) : RecyclerView.Adapter<GenericPagingAdapterViewHolder<T>>() {
     lateinit var layoutInflater: LayoutInflater
 
     val items: MutableList<PagingAdapterItem> = mutableListOf()
 
     var awaitingLoadingItems = true
     private var replaceItemsIndex = 0
-
-    init {
-        pagingLib.addPagingActionListener(object : Paging.PagingActionListener<U> {
-            override fun onTotalPagesAcquired(totalPages: Int) {
-                createLoadingItems(totalPages)
-            }
-
-            override fun onPageDownloaded(pageNumber: Int, items: List<U>?) {
-                items?.let {
-                    replaceLoadingItems(items)
-                }
-            }
-
-            override fun onFinished(pageNumber: Int, items: List<U>?) {
-                items?.let {
-                    replaceLoadingItems(items)
-                }
-            }
-
-            override fun onError(errorMessage: String) {}
-
-            override fun onCancel() {}
-        })
-    }
-
-    fun startLoading(
-        call: (page: Int, pageSize: Int) -> Observable<T>,
-        startPage: Int = 0,
-        pageSize: Int = 10
-    ) {
-        pagingLib.cancel()
-        pagingLib.loadContinuous(
-            call, startPage, pageSize
-        )
-    }
-
-    fun startLoading(
-        call: (page: Int) -> Observable<T>,
-        startPage: Int = 0,
-        pageSize: Int = 10
-    ) {
-        pagingLib.cancel()
-        pagingLib.loadContinuous(
-            call, startPage, pageSize
-        )
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun createLoadingItems(totalItemCount: Int) {
@@ -83,7 +32,7 @@ abstract class GenericPagingAdapter<
         }
     }
 
-    fun replaceLoadingItems(i: List<U>) {
+    fun replaceLoadingItems(i: List<T>) {
         val startIndex = replaceItemsIndex
         i.forEach {
             if (replaceItemsIndex < items.size) {
@@ -95,18 +44,18 @@ abstract class GenericPagingAdapter<
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun getLoadedItem(position: Int): U? {
+    fun getLoadedItem(position: Int): T? {
         return if (items[position] is LoadingItem) {
             null
         } else {
-            items[position] as U
+            items[position] as T
         }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): GenericPagingAdapterViewHolder<U> {
+    ): GenericPagingAdapterViewHolder<T> {
         if (!this::layoutInflater.isInitialized) {
             layoutInflater = LayoutInflater.from(parent.context)
         }
@@ -128,7 +77,11 @@ abstract class GenericPagingAdapter<
         }
     }
 
-    override fun onBindViewHolder(holder: GenericPagingAdapterViewHolder<U>, position: Int) {}
+    override fun onBindViewHolder(holder: GenericPagingAdapterViewHolder<T>, position: Int) {
+        if(holder is LoadedViewHolder) {
+            holder.bindViewModel(items[position] as T)
+        }
+    }
 
     override fun getItemCount(): Int {
         return items.size

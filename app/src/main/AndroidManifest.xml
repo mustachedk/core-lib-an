@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".paging.PagingActivity"
+            android:name=".paging.SimplePagingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".paging.ExtendedPagingActivity"
             android:exported="false" />
         <activity
             android:name=".mdate.MdateActivity"

@@ -1,6 +1,7 @@
 package dk.mustache.corelibexample.testdata
 
-import dk.mustache.corelib.paging.Paging
+import dk.mustache.corelib.paging.GenericPagingAdapter
+import dk.mustache.corelib.paging.Pager
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -33,7 +34,7 @@ class PokemonTestRepo {
     private fun getPokemon(position: Int): PokemonItem {
         val name = pokeNames[position]
         return PokemonItem(
-            id = idFloor + position,
+            id = position + 1,
             name = name,
             attack = (position * 7) % 5,
             defense = (position * 3 + 2) % 4
@@ -43,11 +44,12 @@ class PokemonTestRepo {
     data class PokemonResponse(
         override val data: List<PokemonItem>,
         override val totalPages: Int
-    ) : Paging.PagingResponse<PokemonItem>
+    ) : Pager.PagingResponse<PokemonItem>
 
-    data class PokemonItem(val id: Int, val name: String, val attack: Int, val defense: Int)
-
-    private val idFloor = Random().nextInt(1000)
+    data class PokemonItem(val id: Int, val name: String, val attack: Int, val defense: Int) :
+        GenericPagingAdapter.PagingAdapterItem() {
+        val text = "$id: $name (att: $attack, def: $defense)"
+    }
 
     val pokeNames = listOf(
         "Bulbasaur",

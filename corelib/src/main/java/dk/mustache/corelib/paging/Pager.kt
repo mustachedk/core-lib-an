@@ -6,10 +6,10 @@ import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
-class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) {
+class Pager<R : Pager.PagingResponse<*>, I>(mapper: ((R) -> List<I>)? = null) {
 
-    private lateinit var mapper: (T) -> List<U>
-    fun setMapper(mapper: (T) -> List<U>) {
+    private var mapper: (R) -> List<I> = { response -> response.data as List<I>}
+    fun setMapper(mapper: (R) -> List<I>) {
         this.mapper = mapper
     }
 
@@ -19,14 +19,14 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
         }
     }
 
-    private val listeners = mutableListOf<PagingActionListener<U>>()
-    lateinit var disposableObserver: DisposableObserver<T>
+    private val listeners = mutableListOf<PagingActionListener<I>>()
+    lateinit var disposableObserver: DisposableObserver<R>
 
-    fun addPagingActionListener(listener: PagingActionListener<U>) {
+    fun addPagingActionListener(listener: PagingActionListener<I>) {
         listeners.add(listener)
     }
 
-    fun removePagingActionListener(listener: PagingActionListener<U>) {
+    fun removePagingActionListener(listener: PagingActionListener<I>) {
         listeners.remove(listener)
     }
 
@@ -42,7 +42,7 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
     }
 
     fun loadFirst(
-        call: (page: Int, pageSize: Int) -> Observable<T>,
+        call: (page: Int, pageSize: Int) -> Observable<R>,
         startPage: Int = 0,
         pageSize: Int = 10,
     ) {
@@ -50,7 +50,7 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
     }
 
     fun loadFirst(
-        call: (page: Int) -> Observable<T>,
+        call: (page: Int) -> Observable<R>,
         startPage: Int = 0,
         pageSize: Int = 10,
     ) {
@@ -58,7 +58,7 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
     }
 
     fun loadPage(
-        call: (page: Int, pageSize: Int) -> Observable<T>,
+        call: (page: Int, pageSize: Int) -> Observable<R>,
         page: Int,
         pageSize: Int = 10,
     ) {
@@ -66,7 +66,7 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
     }
 
     fun loadPage(
-        call: (page: Int) -> Observable<T>,
+        call: (page: Int) -> Observable<R>,
         page: Int,
         pageSize: Int = 10,
     ) {
@@ -74,7 +74,7 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
     }
 
     fun loadContinuous(
-        retrofitCall: (page: Int, pageSize: Int) -> Observable<T>,
+        retrofitCall: (page: Int, pageSize: Int) -> Observable<R>,
         startPage: Int = 0,
         pageSize: Int = 10,
         predefinedTotalPages: Int? = null
@@ -88,7 +88,7 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
     }
 
     fun loadContinuous(
-        call: (page: Int) -> Observable<T>,
+        call: (page: Int) -> Observable<R>,
         startPage: Int = 0,
         pageSize: Int = 10,
         predefinedTotalPages: Int? = null
@@ -104,7 +104,7 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
     }
 
     private fun loadContinuousLoop(
-        call: (page: Int) -> Observable<T>,
+        call: (page: Int) -> Observable<R>,
         page: Int,
         pageSize: Int,
         totalPages: Int
@@ -117,7 +117,7 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
     }
 
     private fun rxCall(
-        observable: Observable<T>,
+        observable: Observable<R>,
         startPage: Int,
         pageSize: Int,
         totalNumberOfHits: Int? = null,
@@ -135,21 +135,17 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
         totalPages: Int?,
         onDataReturned: ((totalHits: Int) -> Unit)? = null
     ) {
-        disposableObserver = object : DisposableObserver<T>() {
+        disposableObserver = object : DisposableObserver<R>() {
 
             override fun onComplete() {
 
             }
 
             override fun onError(e: Throwable) {
-                listeners.forEach { it.onError(e.localizedMessage ?: "") }
+                listeners.forEach { it.onError(e) }
             }
 
-            override fun onNext(response: T) {
-                if (!this@Paging::mapper.isInitialized) {
-                    throw IllegalStateException("data mapper was not set before date was returned")
-                }
-
+            override fun onNext(response: R) {
                 disposableObserver.dispose()
                 val actualTotalPages = totalPages ?: response.totalPages
 
@@ -176,11 +172,11 @@ class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) 
         val data: List<T>
     }
 
-    interface PagingActionListener<T> {
-        fun onTotalPagesAcquired(totalPages: Int)
-        fun onPageDownloaded(pageNumber: Int, items: List<T>?)
-        fun onFinished(pageNumber: Int, items: List<T>?)
-        fun onError(errorMessage: String)
-        fun onCancel()
+    abstract class PagingActionListener<T> {
+        open fun onTotalPagesAcquired(totalPages: Int) {}
+        open fun onPageDownloaded(pageNumber: Int, items: List<T>?) {}
+        open fun onFinished(pageNumber: Int, items: List<T>?) {}
+        open fun onError(e: Throwable) {}
+        open fun onCancel() {}
     }
 }

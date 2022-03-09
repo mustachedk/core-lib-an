@@ -15,15 +15,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <!-- TODO set android:visibility="visible" to test EmptyStateView -->
         <Button android:id="@+id/btnPaging"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnMdate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="4dp"
             android:text="Paging"/>
+
+        <!-- TODO set android:visibility="visible" to test EmptyStateView -->
         <dk.mustache.corelib.views.EmptyStateView
             android:id="@+id/main_emptystate"
             android:layout_width="match_parent"
