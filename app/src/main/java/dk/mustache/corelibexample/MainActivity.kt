@@ -35,6 +35,7 @@ import dk.mustache.corelib.utils.*
 import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
+import dk.mustache.corelibexample.mdate.MdateActivity
 import dk.mustache.corelibexample.model.MockResponse
 import dk.mustache.corelibexample.paging.PagingActivity
 import dk.mustache.corelibexample.toolbar_expandable_test.CoursesFragment
@@ -61,6 +62,8 @@ class MainActivity : BeaconScanActivity(),
 
         MustacheCoreLib.init(applicationContext as Application)
 
+
+
         locationUtil = LocationUtil(this)
         locationUtil?.registerLocationListener(this)
 //        requestPermissionWithRationale(
@@ -79,6 +82,10 @@ class MainActivity : BeaconScanActivity(),
 
         binding.btnPaging.setOnClickListener {
             startActivity(Intent(this, PagingActivity::class.java))
+        }
+
+        binding.btnMdate.setOnClickListener {
+            startActivity(Intent(this, MdateActivity::class.java))
         }
 
 //        binding.mainEmptystate.clickListener = this
@@ -305,10 +312,10 @@ class MainActivity : BeaconScanActivity(),
     }
 
     private fun setFragment(fragment: Fragment) {
-            val t: FragmentTransaction =
-                supportFragmentManager.beginTransaction()
-            t.replace(R.id.test_headerlist_fragment_container, fragment)
-            t.commit()
+        val t: FragmentTransaction =
+            supportFragmentManager.beginTransaction()
+        t.replace(R.id.test_headerlist_fragment_container, fragment)
+        t.commit()
     }
 
 //    @SuppressLint("MissingSuperCall")
