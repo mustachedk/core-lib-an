@@ -7,6 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import dk.mustache.corelib.BR
+import dk.mustache.corelib.paging.GenericPagingAdapter.GenericPagingAdapterViewHolder
+import io.reactivex.rxjava3.core.Observable
 
 abstract class GenericPagingAdapter<
         T : Paging.PagingResponse<*>,
@@ -14,9 +16,9 @@ abstract class GenericPagingAdapter<
         >(
     private val viewResource: Int,
     private val loadingResource: Int,
-    pagingLib: Paging<U, T>
-) : RecyclerView.Adapter<GenericPagingAdapter.GenericPagingAdapterViewHolder<U>>() {
-    var layoutInflater: LayoutInflater? = null
+    private val pagingLib: Paging<U, T>
+) : RecyclerView.Adapter<GenericPagingAdapterViewHolder<U>>() {
+    lateinit var layoutInflater: LayoutInflater
 
     val items: MutableList<PagingAdapterItem> = mutableListOf()
 
@@ -47,6 +49,28 @@ abstract class GenericPagingAdapter<
         })
     }
 
+    fun startLoading(
+        call: (page: Int, pageSize: Int) -> Observable<T>,
+        startPage: Int = 0,
+        pageSize: Int = 10
+    ) {
+        pagingLib.cancel()
+        pagingLib.loadContinuous(
+            call, startPage, pageSize
+        )
+    }
+
+    fun startLoading(
+        call: (page: Int) -> Observable<T>,
+        startPage: Int = 0,
+        pageSize: Int = 10
+    ) {
+        pagingLib.cancel()
+        pagingLib.loadContinuous(
+            call, startPage, pageSize
+        )
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     fun createLoadingItems(totalItemCount: Int) {
         if (awaitingLoadingItems) {
@@ -72,10 +96,9 @@ abstract class GenericPagingAdapter<
 
     @Suppress("UNCHECKED_CAST")
     fun getLoadedItem(position: Int): U? {
-        return if(items[position] is LoadingItem) {
+        return if (items[position] is LoadingItem) {
             null
-        }
-        else {
+        } else {
             items[position] as U
         }
     }
@@ -84,16 +107,23 @@ abstract class GenericPagingAdapter<
         parent: ViewGroup,
         viewType: Int
     ): GenericPagingAdapterViewHolder<U> {
-        if (layoutInflater == null) {
+        if (!this::layoutInflater.isInitialized) {
             layoutInflater = LayoutInflater.from(parent.context)
         }
         return if (viewType == 0) {
-            val binding: ViewDataBinding =
-                DataBindingUtil.inflate(layoutInflater!!, loadingResource, parent, false)
+            val binding: ViewDataBinding = DataBindingUtil.inflate(
+                layoutInflater,
+                loadingResource,
+                parent,
+                false
+            )
             LoadingViewHolder(binding)
         } else {
-            val binding: ViewDataBinding =
-                DataBindingUtil.inflate(layoutInflater!!, viewResource, parent, false)
+            val binding: ViewDataBinding = DataBindingUtil.inflate(
+                layoutInflater,
+                viewResource,
+                parent,
+                false)
             LoadedViewHolder(binding)
         }
     }
@@ -108,10 +138,10 @@ abstract class GenericPagingAdapter<
         return if (items[position].isLoadingItem) 0 else 1
     }
 
-    class LoadingViewHolder<T>(binding: ViewDataBinding) :
+    protected class LoadingViewHolder<T>(binding: ViewDataBinding) :
         GenericPagingAdapterViewHolder<T>(binding)
 
-    class LoadedViewHolder<T>(binding: ViewDataBinding) :
+    protected class LoadedViewHolder<T>(binding: ViewDataBinding) :
         GenericPagingAdapterViewHolder<T>(binding)
 
     abstract class GenericPagingAdapterViewHolder<T>(
@@ -124,6 +154,6 @@ abstract class GenericPagingAdapter<
         }
     }
 
-    class LoadingItem: PagingAdapterItem(true)
+    private class LoadingItem : PagingAdapterItem(true)
     abstract class PagingAdapterItem(var isLoadingItem: Boolean = false)
 }

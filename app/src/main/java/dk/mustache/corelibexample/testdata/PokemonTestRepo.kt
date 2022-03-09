@@ -26,13 +26,13 @@ class PokemonTestRepo {
 
     private fun getData(page: Int, pageSize: Int): PokemonResponse {
         val from = page * pageSize
-        val to = (page + 1) * pageSize - 1
+        val to = (page + 1) * pageSize
         return PokemonResponse((from until to).map { getPokemon(it) }, 850)
     }
 
-    private fun getPokemon(position: Int): PokemonDTO {
+    private fun getPokemon(position: Int): PokemonItem {
         val name = pokeNames[position]
-        return PokemonDTO(
+        return PokemonItem(
             id = idFloor + position,
             name = name,
             attack = (position * 7) % 5,
@@ -41,11 +41,11 @@ class PokemonTestRepo {
     }
 
     data class PokemonResponse(
-        override val data: List<PokemonDTO>,
+        override val data: List<PokemonItem>,
         override val totalPages: Int
-    ) : Paging.PagingResponse<PokemonDTO>
+    ) : Paging.PagingResponse<PokemonItem>
 
-    data class PokemonDTO(val id: Int, val name: String, val attack: Int, val defense: Int)
+    data class PokemonItem(val id: Int, val name: String, val attack: Int, val defense: Int)
 
     private val idFloor = Random().nextInt(1000)
 

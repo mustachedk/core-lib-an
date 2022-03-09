@@ -6,7 +6,18 @@ import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
-class Paging<U, T : Paging.PagingResponse<*>>(private val mapper: (T) -> List<U>) {
+class Paging<U, T : Paging.PagingResponse<*>>(mapper: ((T) -> List<U>)? = null) {
+
+    private lateinit var mapper: (T) -> List<U>
+    fun setMapper(mapper: (T) -> List<U>) {
+        this.mapper = mapper
+    }
+
+    init {
+        if (mapper != null) {
+            this.mapper = mapper
+        }
+    }
 
     private val listeners = mutableListOf<PagingActionListener<U>>()
     lateinit var disposableObserver: DisposableObserver<T>
@@ -30,89 +41,78 @@ class Paging<U, T : Paging.PagingResponse<*>>(private val mapper: (T) -> List<U>
         listeners.forEach { it.onCancel() }
     }
 
-    fun pagedRetrofitCall(
-        retrofitCall: (startPage: Int, pageSize: Int) -> Observable<T>,
-        startPage: Int,
-        pageSize: Int,
-        totalNumberOfHits: Int = 0
+    fun loadFirst(
+        call: (page: Int, pageSize: Int) -> Observable<T>,
+        startPage: Int = 0,
+        pageSize: Int = 10,
     ) {
-        rxCall(retrofitCall(startPage, pageSize), startPage, pageSize, totalNumberOfHits) {
-            pagedRetrofitCall(
-                retrofitCall,
-                startPage + 1,
-                pageSize,
-                if (it > 0) it else totalNumberOfHits
-            )
-        }
+        loadFirst({ page -> call(page, pageSize) }, startPage, pageSize)
     }
 
-    fun pagedRetrofitCall(
-        text: String,
-        retrofitCall: (str: String, startPage: Int, pageSize: Int) -> Observable<T>,
-        startPage: Int,
-        pageSize: Int,
-        totalNumberOfHits: Int = 0
+    fun loadFirst(
+        call: (page: Int) -> Observable<T>,
+        startPage: Int = 0,
+        pageSize: Int = 10,
     ) {
-        rxCall(retrofitCall(text, startPage, pageSize), startPage, pageSize, totalNumberOfHits) {
-            pagedRetrofitCall(
-                text,
-                retrofitCall,
-                startPage + 1,
-                pageSize,
-                if (it > 0) it else totalNumberOfHits
-            )
-        }
+        rxCall(call(startPage), startPage, pageSize)
     }
 
-    fun pagedRetrofitCall(
-        text: String,
-        text2: String,
-        retrofitCall: (str: String, str2: String, startPage: Int, pageSize: Int) -> Observable<T>,
-        startPage: Int,
-        pageSize: Int,
-        totalNumberOfHits: Int = 0
+    fun loadPage(
+        call: (page: Int, pageSize: Int) -> Observable<T>,
+        page: Int,
+        pageSize: Int = 10,
     ) {
-        rxCall(
-            retrofitCall(text, text2, startPage, pageSize),
+        loadPage({ page -> call(page, pageSize) }, page, pageSize)
+    }
+
+    fun loadPage(
+        call: (page: Int) -> Observable<T>,
+        page: Int,
+        pageSize: Int = 10,
+    ) {
+        rxCall(call(page), page, pageSize)
+    }
+
+    fun loadContinuous(
+        retrofitCall: (page: Int, pageSize: Int) -> Observable<T>,
+        startPage: Int = 0,
+        pageSize: Int = 10,
+        predefinedTotalPages: Int? = null
+    ) {
+        loadContinuous(
+            { page -> retrofitCall(page, pageSize) },
             startPage,
             pageSize,
-            totalNumberOfHits
-        ) {
-            pagedRetrofitCall(
-                text,
-                text2,
-                retrofitCall,
+            predefinedTotalPages
+        )
+    }
+
+    fun loadContinuous(
+        call: (page: Int) -> Observable<T>,
+        startPage: Int = 0,
+        pageSize: Int = 10,
+        predefinedTotalPages: Int? = null
+    ) {
+        rxCall(call(startPage), startPage, pageSize, predefinedTotalPages) { totalPagesFromCall ->
+            loadContinuousLoop(
+                call,
                 startPage + 1,
                 pageSize,
-                if (it > 0) it else totalNumberOfHits
+                predefinedTotalPages ?: totalPagesFromCall
             )
         }
     }
 
-    private fun pagedRetrofitCall(
-        text: String,
-        text2: String,
-        text3: String,
-        retrofitCall: (str: String, str2: String, str3: String, startPage: Int, pageSize: Int) -> Observable<T>,
-        startPage: Int,
+    private fun loadContinuousLoop(
+        call: (page: Int) -> Observable<T>,
+        page: Int,
         pageSize: Int,
-        totalNumberOfHits: Int = 0
+        totalPages: Int
     ) {
-        rxCall(
-            retrofitCall(text, text2, text3, startPage, pageSize),
-            startPage,
-            pageSize,
-            totalNumberOfHits
-        ) {
-            pagedRetrofitCall(
-                text,
-                text2,
-                text3,
-                retrofitCall,
-                startPage + 1,
-                pageSize,
-                if (it > 0) it else totalNumberOfHits
-            )
+        rxCall(call(page), page, pageSize, totalPages) {
+            // disposableObserver only sends a callback if there are more pages, so this loop
+            // will automatically end when disposableObserver doesn't send a callback
+            loadContinuous(call, page + 1, pageSize, totalPages)
         }
     }
 
@@ -120,8 +120,8 @@ class Paging<U, T : Paging.PagingResponse<*>>(private val mapper: (T) -> List<U>
         observable: Observable<T>,
         startPage: Int,
         pageSize: Int,
-        totalNumberOfHits: Int,
-        onDataReturned: (totalHits: Int) -> Unit
+        totalNumberOfHits: Int? = null,
+        onDataReturned: ((totalHits: Int) -> Unit)? = null
     ) {
         createNewDisposableObserver(startPage, pageSize, totalNumberOfHits, onDataReturned)
         observable.subscribeOn(Schedulers.io())
@@ -132,8 +132,8 @@ class Paging<U, T : Paging.PagingResponse<*>>(private val mapper: (T) -> List<U>
     private fun createNewDisposableObserver(
         currentPage: Int,
         pageSize: Int,
-        totalNumberOfHits: Int,
-        onDataReturned: (totalHits: Int) -> Unit
+        totalPages: Int?,
+        onDataReturned: ((totalHits: Int) -> Unit)? = null
     ) {
         disposableObserver = object : DisposableObserver<T>() {
 
@@ -146,20 +146,23 @@ class Paging<U, T : Paging.PagingResponse<*>>(private val mapper: (T) -> List<U>
             }
 
             override fun onNext(response: T) {
-                disposableObserver.dispose()
-                val totalHits = if (currentPage == 0) {
-                    listeners.forEach { it.onTotalPagesAcquired(response.totalPages) }
-                    response.totalPages
-                } else {
-                    totalNumberOfHits
+                if (!this@Paging::mapper.isInitialized) {
+                    throw IllegalStateException("data mapper was not set before date was returned")
                 }
 
-                if (totalHits > 0) {
-                    if ((currentPage + 1) * pageSize >= totalHits) { // If we are on the last page
+                disposableObserver.dispose()
+                val actualTotalPages = totalPages ?: response.totalPages
+
+                if (currentPage == 0) {
+                    listeners.forEach { it.onTotalPagesAcquired(actualTotalPages) }
+                }
+
+                if (actualTotalPages > 0) {
+                    if ((currentPage + 1) * pageSize >= actualTotalPages) { // If we are on the last page
                         listeners.forEach { it.onFinished(currentPage, mapper(response)) }
                     } else { // If we are on a page before the last page
                         listeners.forEach { it.onPageDownloaded(currentPage, mapper(response)) }
-                        onDataReturned(totalHits)
+                        onDataReturned?.invoke(actualTotalPages)
                     }
                 } else { // If there are no items
                     listeners.forEach { it.onFinished(currentPage, null) }

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="dk.mustache.corelibexample.paging.PokePagingItem" />
+            type="dk.mustache.corelibexample.paging.PokemonPagingItem" />
 
         <import type="android.view.View" />
     </data>
@@ -22,7 +22,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="@{viewModel.name + ` (att: ` + viewModel.attack + `, def: ` + viewModel.defense + `)`}"
+            android:text="@{viewModel.text}"
             android:textColor="#000"
             android:textSize="16sp"
             android:textStyle="bold"

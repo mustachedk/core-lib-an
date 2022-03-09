@@ -17,7 +17,7 @@ class PagingActivity : AppCompatActivity() {
     }
 
     private fun initializeAdapter() {
-        val recyclerView = findViewById<RecyclerView>(R.id.airlines_recycler)
+        val recyclerView = findViewById<RecyclerView>(R.id.pokemon_recycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = viewModel.adapter
     }
