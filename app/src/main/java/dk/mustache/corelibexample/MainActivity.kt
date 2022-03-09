@@ -1,6 +1,7 @@
 package dk.mustache.corelibexample
 
 import android.app.Application
+import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -34,6 +35,7 @@ import dk.mustache.corelib.utils.*
 import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
+import dk.mustache.corelibexample.mdate.MdateActivity
 import dk.mustache.corelibexample.model.MockResponse
 import dk.mustache.corelibexample.toolbar_expandable_test.CoursesFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -59,6 +61,8 @@ class MainActivity : BeaconScanActivity(),
 
         MustacheCoreLib.init(applicationContext as Application)
 
+
+
         locationUtil = LocationUtil(this)
         locationUtil?.registerLocationListener(this)
 //        requestPermissionWithRationale(
@@ -74,6 +78,10 @@ class MainActivity : BeaconScanActivity(),
             this,
             R.layout.activity_main
         )
+
+        binding.btnMdate.setOnClickListener {
+            startActivity(Intent(this, MdateActivity::class.java))
+        }
 
 //        binding.mainEmptystate.clickListener = this
 
@@ -299,10 +307,10 @@ class MainActivity : BeaconScanActivity(),
     }
 
     private fun setFragment(fragment: Fragment) {
-            val t: FragmentTransaction =
-                supportFragmentManager.beginTransaction()
-            t.replace(R.id.test_headerlist_fragment_container, fragment)
-            t.commit()
+        val t: FragmentTransaction =
+            supportFragmentManager.beginTransaction()
+        t.replace(R.id.test_headerlist_fragment_container, fragment)
+        t.commit()
     }
 
 //    @SuppressLint("MissingSuperCall")
