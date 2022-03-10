@@ -29,6 +29,10 @@ class ExtendedPagingViewModel: ContinuousPagingViewModel<PokemonResponse, Pokemo
                 }
             }
 
+            override fun onFinished(pageNumber: Int, items: List<PokemonPagingItem>?) {
+                actions.value = Actions.FinishedLoading
+            }
+
             override fun onError(e: Throwable) {
                 actions.value = Actions.OnError(e)
             }

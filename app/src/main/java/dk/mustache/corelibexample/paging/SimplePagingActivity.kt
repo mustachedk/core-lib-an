@@ -37,7 +37,6 @@ class SimplePagingActivity : AppCompatActivity() {
             R.layout.paging_demo_loading_item
         )
         val recyclerView = findViewById<RecyclerView>(R.id.pokemon_recycler)
-        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
         viewModel.hookupLoader(adapter::createLoadingItems, adapter::replaceLoadingItems)
     }

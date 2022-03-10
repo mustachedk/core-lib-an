@@ -29,7 +29,6 @@ class ExtendedPagingActivity : AppCompatActivity() {
     private fun initializeAdapter() {
         adapter = ExtendedPagingAdapter()
         val recyclerView = findViewById<RecyclerView>(R.id.pokemon_recycler)
-        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
         viewModel.hookupLoader(adapter::createLoadingItems, adapter::replaceLoadingItems)
     }

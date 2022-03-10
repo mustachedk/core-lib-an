@@ -5,10 +5,9 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-@Suppress("MemberVisibilityCanBePrivate", "unused")
 class Pager<R : Pager.PagingResponse<*>, I>(mapper: ((R) -> List<I>)? = null) {
 
-    private var mapper: (R) -> List<I> = { response -> response.data as List<I>}
+    private var mapper: (R) -> List<I> = { response -> response.data as List<I> }
     fun setMapper(mapper: (R) -> List<I>) {
         this.mapper = mapper
     }
@@ -55,6 +54,27 @@ class Pager<R : Pager.PagingResponse<*>, I>(mapper: ((R) -> List<I>)? = null) {
         pageSize: Int = 10,
     ) {
         rxCall(call(startPage), startPage, pageSize)
+    }
+
+    fun loadUntilPage(
+        call: (page: Int, pageSize: Int) -> Observable<R>,
+        startPage: Int = 0,
+        untilPage: Int = 1,
+        pageSize: Int = 10,
+    ) {
+        rxCall(
+            call(startPage, pageSize),
+            startPage,
+            pageSize,
+            (untilPage + 1) * pageSize
+        ) { totalPagesFromCall ->
+            loadContinuousLoop(
+                { page -> call(page, pageSize) },
+                startPage + 1,
+                pageSize,
+                totalPagesFromCall
+            )
+        }
     }
 
     fun loadPage(

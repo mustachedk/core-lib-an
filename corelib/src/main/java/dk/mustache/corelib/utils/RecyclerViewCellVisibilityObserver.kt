@@ -1,13 +1,15 @@
 package dk.mustache.corelib.utils
 
+import android.util.Log
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 
 class RecyclerViewCellVisibilityObserver(private val recyclerView: RecyclerView) {
 
-    fun observeCellVisible(targetPosition: Int, callback: (view: View) -> Unit) {
+    fun observeCellVisible(targetPosition: Int, cellIsVisible: (position: Int) -> Unit) {
         val observer = object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -19,7 +21,7 @@ class RecyclerViewCellVisibilityObserver(private val recyclerView: RecyclerView)
                     val lastPosition = layoutManager.findLastVisibleItemPosition()
 
                     if(targetPosition in firstPosition..lastPosition) {
-                        callback(recyclerView.getChildAt(targetPosition))
+                        cellIsVisible(targetPosition)
                     }
                 }
             }
@@ -27,7 +29,26 @@ class RecyclerViewCellVisibilityObserver(private val recyclerView: RecyclerView)
         recyclerView.addOnScrollListener(observer)
     }
 
-    fun observeBottomCellVisible(offset: Int = 0, callback: (position: Int, view: View) -> Unit) {
+    fun observeLastVisibleCellIsPast(targetPosition: Int, lastCellVisible: (position: Int) -> Unit) {
+        val observer = object : OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val itemCount = recyclerView.adapter?.itemCount ?: 0
+                if (itemCount != 0) {
+                    val layoutManager = (recyclerView.layoutManager as LinearLayoutManager)
+                    val lastPosition = layoutManager.findLastVisibleItemPosition()
+
+                    if(lastPosition >= targetPosition) {
+                        lastCellVisible(lastPosition)
+                    }
+                }
+            }
+        }
+        recyclerView.addOnScrollListener(observer)
+    }
+
+    fun observeBottomCellVisible(offset: Int = 0, cellIsVisible: (position: Int) -> Unit) {
         val observer = object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -40,7 +61,8 @@ class RecyclerViewCellVisibilityObserver(private val recyclerView: RecyclerView)
                     val lastPosition = layoutManager.findLastVisibleItemPosition()
 
                     if(lastPosition >= targetPosition) {
-                        callback(targetPosition, recyclerView.getChildAt(targetPosition))
+                        Log.wtf("test", "$lastPosition is past $targetPosition")
+                        cellIsVisible(targetPosition)
                     }
                 }
             }
