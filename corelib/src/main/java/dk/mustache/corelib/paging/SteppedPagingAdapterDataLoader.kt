@@ -1,7 +1,5 @@
 package dk.mustache.corelib.paging
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.core.Observable
 
 class SteppedPagingAdapterDataLoader<
@@ -11,11 +9,10 @@ class SteppedPagingAdapterDataLoader<
     private val pager: Pager<R, P>,
     private val addLoadingItemsCallback: (totalItemCount: Int) -> Unit,
     private val onNextCallback: (i: List<P>) -> Unit,
+    private val afterNextCallback: (page: Int) -> Unit,
     call: ((page: Int, pageSize: Int) -> Observable<R>)? = null
 ) {
     private lateinit var call: (page: Int, pageSize: Int) -> Observable<R>
-
-    val update = MutableLiveData<Int>()
 
     private var activePage = 0
     private var pageSize = 0
@@ -45,7 +42,7 @@ class SteppedPagingAdapterDataLoader<
                     }
                     onNextCallback(items)
                     addLoadingItemsCallback(numberLoadingItems)
-                    update.value = pageNumber
+                    afterNextCallback(pageNumber)
                 }
             }
 
@@ -77,7 +74,6 @@ class SteppedPagingAdapterDataLoader<
     }
 
     fun loadMore() {
-        Log.wtf("test", "Loading Page: $activePage")
         pager.loadPage(call, activePage, pageSize)
         activePage++
     }

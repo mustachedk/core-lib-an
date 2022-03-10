@@ -14,6 +14,8 @@ class ExtendedPagingViewModel: ContinuousPagingViewModel<PokemonResponse, Pokemo
     val actions = MutableLiveData<Actions>()
     var totalNumberPages: Int = -1
 
+    private val PAGE_SIZE = 8
+
     init {
         pager.addPagingActionListener(object : Pager.PagingActionListener<PokemonPagingItem>() {
             override fun onTotalPagesAcquired(totalPages: Int) {
@@ -21,7 +23,7 @@ class ExtendedPagingViewModel: ContinuousPagingViewModel<PokemonResponse, Pokemo
             }
 
             override fun onPageDownloaded(pageNumber: Int, items: List<PokemonPagingItem>?) {
-                if(pageNumber < 3 && (pageNumber + 1) * 10 < totalNumberPages) {
+                if(pageNumber < 3 && (pageNumber + 1) * PAGE_SIZE < totalNumberPages) {
                     actions.value = Actions.IsLoading
                 }
                 else {
@@ -48,7 +50,7 @@ class ExtendedPagingViewModel: ContinuousPagingViewModel<PokemonResponse, Pokemo
     }
 
     private fun getData(page: Int, pageSize: Int): Observable<PokemonResponse> {
-        return api.getDataAsyncRx(page, 8)
+        return api.getDataAsyncRx(page, PAGE_SIZE)
     }
 
     interface Actions {

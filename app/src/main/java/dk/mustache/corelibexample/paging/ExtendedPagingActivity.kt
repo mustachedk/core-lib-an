@@ -17,10 +17,6 @@ class ExtendedPagingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_paging)
-    }
-
-    override fun onResume() {
-        super.onResume()
         initializeAdapter()
         viewModel.actions.observe(this, ::onAction)
         viewModel.startLoading()

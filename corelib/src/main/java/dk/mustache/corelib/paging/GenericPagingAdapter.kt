@@ -17,7 +17,7 @@ open class GenericPagingAdapter<T : GenericPagingAdapter.PagingAdapterItem>(
 
     val items: MutableList<PagingAdapterItem> = mutableListOf()
 
-    var awaitingLoadingItems = true
+    private var awaitingLoadingItems = true
     private var addItemsIndex = 0
 
     @SuppressLint("NotifyDataSetChanged")
@@ -35,7 +35,7 @@ open class GenericPagingAdapter<T : GenericPagingAdapter.PagingAdapterItem>(
             val pagingItem = LoadingItem()
             items.add(pagingItem)
         }
-        for(i in startIndex until lastIndex) {
+        for (i in startIndex until lastIndex) {
             notifyItemInserted(i)
         }
     }
@@ -50,20 +50,6 @@ open class GenericPagingAdapter<T : GenericPagingAdapter.PagingAdapterItem>(
         }
         notifyItemRangeChanged(startIndex, addItemsIndex - startIndex)
     }
-
-//    fun addOrReplaceItems(i: List<T>) {
-//        val startIndex = addItemsIndex
-//        i.forEach {
-//            if (addItemsIndex < items.size) {
-//                items[addItemsIndex] = it
-//                addItemsIndex++
-//            } else {
-//                items.add(it)
-//                addItemsIndex++
-//            }
-//        }
-//        notifyItemRangeChanged(startIndex, addItemsIndex - startIndex)
-//    }
 
     @Suppress("UNCHECKED_CAST")
     fun getLoadedItem(position: Int): T? {
@@ -100,6 +86,7 @@ open class GenericPagingAdapter<T : GenericPagingAdapter.PagingAdapterItem>(
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: GenericPagingAdapterViewHolder<T>, position: Int) {
         if (holder is LoadedViewHolder) {
             holder.bindViewModel(items[position] as T)

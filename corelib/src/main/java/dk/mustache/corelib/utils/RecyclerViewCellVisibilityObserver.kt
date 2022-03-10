@@ -1,8 +1,5 @@
 package dk.mustache.corelib.utils
 
-import android.util.Log
-import android.view.View
-import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
@@ -61,7 +58,6 @@ class RecyclerViewCellVisibilityObserver(private val recyclerView: RecyclerView)
                     val lastPosition = layoutManager.findLastVisibleItemPosition()
 
                     if(lastPosition >= targetPosition) {
-                        Log.wtf("test", "$lastPosition is past $targetPosition")
                         cellIsVisible(targetPosition)
                     }
                 }

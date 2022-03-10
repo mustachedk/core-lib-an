@@ -6,4 +6,9 @@ class PageCalc(private val pageSize: Int) {
     fun numberItemsIncluding(page: Int): Int {
         return page + 1 * pageSize
     }
+
+    /** Index for the last item in the given page */
+    fun lastIndexIn(page: Int): Int {
+        return numberItemsIncluding(page) - 1
+    }
 }

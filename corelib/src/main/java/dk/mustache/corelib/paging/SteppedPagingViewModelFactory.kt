@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import io.reactivex.rxjava3.core.Observable
 
-class PagingViewModelFactory<
+class SteppedPagingViewModelFactory<
         R : Pager.PagingResponse<*>,
         P : GenericPagingAdapter.PagingAdapterItem
         >(
@@ -13,6 +13,6 @@ class PagingViewModelFactory<
     private val startPage: Int = 0
 ): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return ContinuousPagingViewModel<R, P>(call, pageSize, startPage) as T
+        return SteppedPagingViewModel<R, P>(call, pageSize, startPage) as T
     }
 }

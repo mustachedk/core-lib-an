@@ -36,6 +36,6 @@ open class ContinuousPagingViewModel<
         if(call != null) {
             this.call = call
         }
-        loader.startLoading(call, startPage, pageSize)
+        loader.startLoading(this.call, startPage, pageSize)
     }
 }
