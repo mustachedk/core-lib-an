@@ -24,7 +24,7 @@ class ExtendedPagingAdapter : GenericPagingAdapter<PokemonPagingItem>(
 }
 
 data class PokemonPagingItem(val id: Int, val name: String, val attack: Int, val defense: Int) :
-    GenericPagingAdapter.PagingAdapterItem() {
+    GenericPagingAdapter.PagingAdapterItem {
 
     val text = "$id: $name (att: $attack, def: $defense)"
 }

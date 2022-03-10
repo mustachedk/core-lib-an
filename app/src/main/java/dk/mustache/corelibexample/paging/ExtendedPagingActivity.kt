@@ -2,31 +2,33 @@ package dk.mustache.corelibexample.paging
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.mustache.corelibexample.R
 import dk.mustache.corelibexample.paging.ExtendedPagingViewModel.Actions.*
 
 class ExtendedPagingActivity : AppCompatActivity() {
     private val viewModel: ExtendedPagingViewModel by viewModels()
-    lateinit var adapter: ExtendedPagingAdapter
+    private lateinit var adapter: ExtendedPagingAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_paging)
         initializeAdapter()
         viewModel.actions.observe(this, ::onAction)
-        viewModel.startLoading()
+        startDataLoading()
     }
 
     private fun initializeAdapter() {
         adapter = ExtendedPagingAdapter()
         val recyclerView = findViewById<RecyclerView>(R.id.pokemon_recycler)
         recyclerView.adapter = adapter
-        viewModel.hookupLoader(adapter::createLoadingItems, adapter::replaceLoadingItems)
+    }
+
+    private fun startDataLoading() {
+        viewModel.startLoading()
+        viewModel.hookupLoader(adapter::createLoadingItems, adapter::addItems)
     }
 
     private fun onAction(action: ExtendedPagingViewModel.Actions) {

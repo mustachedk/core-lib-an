@@ -33,7 +33,7 @@ class SteppedPagingAdapterDataLoader<
 
             override fun onPageDownloaded(pageNumber: Int, items: List<P>?) {
                 items?.let {
-                    val pagesLoaded = calc.numberItemsIncluding(pageNumber)
+                    val pagesLoaded = calc.itemCountIncluding(pageNumber)
                     val numberLoadingItems = if(pagesLoaded + pageSize > totalPages) {
                         totalPages - pagesLoaded
                     }
@@ -68,7 +68,7 @@ class SteppedPagingAdapterDataLoader<
             this.call = call
         }
         pager.cancel()
-        pager.loadFirst(this.call, startPage, pageSize)
+        pager.loadPage(this.call, startPage, pageSize)
         activePage = startPage + 1
         this.pageSize = pageSize
     }

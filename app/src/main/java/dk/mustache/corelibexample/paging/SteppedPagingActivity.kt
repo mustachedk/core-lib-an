@@ -23,7 +23,7 @@ class SteppedPagingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_paging)
         initializeAdapter()
-        viewModel.startLoading()
+        startDataLoading()
     }
 
     private fun initializeAdapter() {
@@ -34,14 +34,13 @@ class SteppedPagingActivity : AppCompatActivity() {
         ) {
             viewModel.continueLoading()
         }
-
         val recyclerView = findViewById<RecyclerView>(R.id.pokemon_recycler)
         adapter.setRecyclerview(recyclerView)
         recyclerView.adapter = adapter
-        viewModel.hookupLoader(
-            adapter::addLoadingItems,
-            adapter::replaceLoadingItems,
-            adapter::addLastItemObserver
-        )
+    }
+
+    private fun startDataLoading() {
+        viewModel.hookupLoader(adapter)
+        viewModel.startLoading()
     }
 }

@@ -1,7 +1,6 @@
 package dk.mustache.corelib.paging
 
 import io.reactivex.rxjava3.core.Observable
-import java.lang.Exception
 
 class ContinuousPagingAdapterDataLoader<
         R : Pager.PagingResponse<*>,

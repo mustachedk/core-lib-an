@@ -83,7 +83,7 @@ class MainActivity : BeaconScanActivity(),
         )
 
         binding.btnPaging.setOnClickListener {
-            startActivity(Intent(this, ExtendedPagingActivity::class.java))
+            startActivity(Intent(this, SteppedPagingActivity::class.java))
         }
 
         binding.btnMdate.setOnClickListener {

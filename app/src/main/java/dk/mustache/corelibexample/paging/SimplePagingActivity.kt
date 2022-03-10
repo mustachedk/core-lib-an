@@ -17,13 +17,13 @@ class SimplePagingActivity : AppCompatActivity() {
         val api = PokemonTestRepo()
         ContinuousPagingViewModelFactory<PokemonResponse, PokemonItem>(api::getDataAsyncRx)
     }
-    lateinit var adapter: GenericPagingAdapter<PokemonItem>
+    private lateinit var adapter: GenericPagingAdapter<PokemonItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_paging)
         initializeAdapter()
-        viewModel.startLoading()
+        startDataLoading()
     }
 
     private fun initializeAdapter() {
@@ -33,6 +33,10 @@ class SimplePagingActivity : AppCompatActivity() {
         )
         val recyclerView = findViewById<RecyclerView>(R.id.pokemon_recycler)
         recyclerView.adapter = adapter
-        viewModel.hookupLoader(adapter::createLoadingItems, adapter::replaceLoadingItems)
+    }
+
+    private fun startDataLoading() {
+        viewModel.hookupLoader(adapter)
+        viewModel.startLoading()
     }
 }
