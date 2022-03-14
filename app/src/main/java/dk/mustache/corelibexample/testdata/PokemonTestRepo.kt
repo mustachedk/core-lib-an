@@ -47,7 +47,7 @@ class PokemonTestRepo {
     ) : Pager.PagingResponse<PokemonItem>
 
     data class PokemonItem(val id: Int, val name: String, val attack: Int, val defense: Int) :
-        GenericPagingAdapter.PagingAdapterItem() {
+        GenericPagingAdapter.PagingAdapterItem {
         val text = "$id: $name (att: $attack, def: $defense)"
     }
 
