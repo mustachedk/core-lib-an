@@ -46,7 +46,7 @@ open class SteppedPagingViewModel<
      */
     open fun hookupLoader(adapter: SteppedPagingAdapter<P>) {
         hookupLoader(
-            adapter::createLoadingItems,
+            adapter::addLoadingItems,
             adapter::addItems,
             adapter::addLastItemObserver
         )
