@@ -27,8 +27,8 @@ class ExtendedPagingActivity : AppCompatActivity() {
     }
 
     private fun startDataLoading() {
-        viewModel.startLoading()
         viewModel.hookupLoader(adapter::createLoadingItems, adapter::addItems)
+        viewModel.startLoading()
     }
 
     private fun onAction(action: ExtendedPagingViewModel.Actions) {
