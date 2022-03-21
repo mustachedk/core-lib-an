@@ -15,6 +15,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <Button android:id="@+id/btnSynViews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="SyncViews Demo"
+            app:layout_constraintTop_toBottomOf="@id/btnMdate"
+            app:layout_constraintStart_toStartOf="parent"/>
+
         <!-- TODO set android:visibility="visible" to test EmptyStateView -->
         <dk.mustache.corelib.views.EmptyStateView
             android:id="@+id/main_emptystate"

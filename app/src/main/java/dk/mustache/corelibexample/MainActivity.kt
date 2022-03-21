@@ -37,6 +37,7 @@ import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.ActivityMainBinding
 import dk.mustache.corelibexample.mdate.MdateActivity
 import dk.mustache.corelibexample.model.MockResponse
+import dk.mustache.corelibexample.syncviews.SyncViewsActivity
 import dk.mustache.corelibexample.toolbar_expandable_test.CoursesFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
@@ -81,6 +82,10 @@ class MainActivity : BeaconScanActivity(),
 
         binding.btnMdate.setOnClickListener {
             startActivity(Intent(this, MdateActivity::class.java))
+        }
+
+        binding.btnSynViews.setOnClickListener {
+            startActivity(Intent(this, SyncViewsActivity::class.java))
         }
 
 //        binding.mainEmptystate.clickListener = this

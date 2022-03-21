@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".syncviews.SyncViewsActivity"
+            android:exported="false" />
+        <activity
             android:name=".mdate.MdateActivity"
             android:exported="false" />
         <activity
