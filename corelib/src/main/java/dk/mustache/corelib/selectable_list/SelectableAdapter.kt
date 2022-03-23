@@ -2,6 +2,7 @@ package dk.mustache.corelib.selectable_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
@@ -18,7 +19,7 @@ import dk.mustache.corelib.utils.toPx
 abstract class SelectableAdapter<T : SelectableItem>(val items: List<T>, val onItemSelectionToggled: (item: T, selected: Boolean) -> Unit, val settings: SelectableAdapterSettings) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private var layoutInflater: LayoutInflater? = null
 
-    inner class SelectableListItemViewHolder(val itemSelectablePickerBinding: ItemSelectablePickerBinding, val customResBinding: ViewDataBinding) : RecyclerView.ViewHolder(itemSelectablePickerBinding.root) {
+    inner class SelectableListItemViewHolder(val itemSelectablePickerBinding: ItemSelectablePickerBinding, val binding: ViewDataBinding) : RecyclerView.ViewHolder(itemSelectablePickerBinding.root) {
 
     }
 
@@ -37,49 +38,12 @@ abstract class SelectableAdapter<T : SelectableItem>(val items: List<T>, val onI
 
         if (holder is SelectableAdapter<*>.SelectableListItemViewHolder) {
 
-            val childLayoutBinding = holder.customResBinding
+            val childLayoutBinding = holder.binding
 
-            val parentLayout: ConstraintLayout = holder.itemSelectablePickerBinding.selectableItemLayout
+            val parentLayout: FrameLayout = holder.itemSelectablePickerBinding.selectableItemLayout
             parentLayout.removeView(childLayoutBinding.root)
-            val set = ConstraintSet()
 
             parentLayout.addView(childLayoutBinding.root, 0)
-
-            set.clone(parentLayout)
-
-            set.connect(
-                childLayoutBinding.root.id,
-                ConstraintSet.TOP,
-                parentLayout.id,
-                ConstraintSet.TOP,
-                0
-            )
-
-            set.connect(
-                childLayoutBinding.root.id,
-                ConstraintSet.BOTTOM,
-                parentLayout.id,
-                ConstraintSet.BOTTOM,
-                0
-            )
-
-            set.connect(
-                childLayoutBinding.root.id,
-                ConstraintSet.START,
-                parentLayout.id,
-                ConstraintSet.START,
-                0
-            )
-
-            set.connect(
-                childLayoutBinding.root.id,
-                ConstraintSet.END,
-                parentLayout.id,
-                ConstraintSet.END,
-                0
-            )
-
-            set.applyTo(parentLayout)
 
             val params = holder.itemSelectablePickerBinding.checkedImage.layoutParams as ConstraintLayout.LayoutParams
             params.marginEnd = settings.endMargin.toPx()

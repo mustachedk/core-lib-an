@@ -14,7 +14,6 @@
         android:id="@+id/selectable_item_layout"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:background="@color/white"
         >
 
         <TextView

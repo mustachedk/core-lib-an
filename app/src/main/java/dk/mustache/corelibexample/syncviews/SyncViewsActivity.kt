@@ -2,14 +2,12 @@ package dk.mustache.corelibexample.syncviews
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import dk.mustache.corelib.selectable_list.SelectableAdapterSettings
 import dk.mustache.corelib.syncviews.PositionSyncConductor
 import dk.mustache.corelib.syncviews.RecyclerViewSyncHandler
-import dk.mustache.corelib.syncviews.SyncConductor
 import dk.mustache.corelib.syncviews.ViewPagerSyncHandler
 import dk.mustache.corelibexample.R
 
@@ -54,8 +52,10 @@ class SyncViewsActivity : AppCompatActivity() {
                 Item(4, false),
                 Item(5, false)
             ),
-            {item, selected -> if(selected) {listHandler.onItemSelected(item.index) }},
-            SelectableAdapterSettings(true, R.layout.item_tall)
+            {
+                    item, selected -> if(selected) {listHandler.onItemSelected(item.index) }
+            },
+            SelectableAdapterSettings(singleSelection = true, layoutResId = R.layout.item_tall)
         )
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerview.adapter = listAdapter
