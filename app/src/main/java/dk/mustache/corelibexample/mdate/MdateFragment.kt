@@ -1,22 +1,29 @@
 package dk.mustache.corelibexample.mdate
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
 import dk.mustache.corelib.utils.CaseType
 import dk.mustache.corelib.utils.MDate
-import dk.mustache.corelib.utils.MDateFormat.*
+import dk.mustache.corelib.utils.MDateFormat
 import dk.mustache.corelibexample.R
 import java.util.*
 
-class MdateActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mdate)
+class MdateFragment: Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_mdate, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setupDateManipulation()
         setupTimeManipulation()
@@ -28,128 +35,128 @@ class MdateActivity : AppCompatActivity() {
         val txtDate = findViewById<TextView>(R.id.txtDemoDate)
         val date = createMdate()
         txtDate.text = "+2 months, +15 days:\n" +
-                date.show(DATE_YEAR_REVERSE) + " to " +
-                date.plusDate(months = 2, days = 15).show(DATE_YEAR_REVERSE)
+                date.show(MDateFormat.DATE_YEAR_REVERSE) + " to " +
+                date.plusDate(months = 2, days = 15).show(MDateFormat.DATE_YEAR_REVERSE)
 
         val txtYear = findViewById<TextView>(R.id.txtDemoYear)
         val date2 = createMdate()
         txtYear.text = "-3 years:\n" +
-                date2.show(DATE_YEAR_REVERSE) + " to " +
-                date2.plusDate(years = -3).show(DATE_YEAR_REVERSE)
+                date2.show(MDateFormat.DATE_YEAR_REVERSE) + " to " +
+                date2.plusDate(years = -3).show(MDateFormat.DATE_YEAR_REVERSE)
 
         val txtMonths = findViewById<TextView>(R.id.txtDemoMonth)
         val date3 = createMdate()
         txtMonths.text = "+11 months:\n" +
-                date3.show(DATE_YEAR_REVERSE) + " to " +
-                date3.plusMonths(11).show(DATE_YEAR_REVERSE)
+                date3.show(MDateFormat.DATE_YEAR_REVERSE) + " to " +
+                date3.plusMonths(11).show(MDateFormat.DATE_YEAR_REVERSE)
 
         val txtDays = findViewById<TextView>(R.id.txtDemoDay)
         val date4 = createMdate()
         txtDays.text = "-20 days:\n" +
-                date4.show(DATE_YEAR) + " to " +
-                date4.plusDays(-20).show(DATE_YEAR)
+                date4.show(MDateFormat.DATE_YEAR) + " to " +
+                date4.plusDays(-20).show(MDateFormat.DATE_YEAR)
     }
 
     private fun setupTimeManipulation() {
         val txtTime = findViewById<TextView>(R.id.txtDemoTime)
         val date5 = createMdate()
         txtTime.text = "+6 hours, +30 minutes:\n" +
-                date5.show(TIME) + " to " +
-                date5.plusTime(hours = 6, minutes = 30).show(TIME)
+                date5.show(MDateFormat.TIME) + " to " +
+                date5.plusTime(hours = 6, minutes = 30).show(MDateFormat.TIME)
 
         val txtHour = findViewById<TextView>(R.id.txtDemoHour)
         val date6 = createMdate()
         val date6b = date6.plusHours(21)
         txtHour.text = "+21 hours:\n" +
-                date6.show(DATE) + " - " + date6.show(TIME) + " to " +
-                date6b.show(DATE) + " - " + date6b.show(TIME)
+                date6.show(MDateFormat.DATE) + " - " + date6.show(MDateFormat.TIME) + " to " +
+                date6b.show(MDateFormat.DATE) + " - " + date6b.show(MDateFormat.TIME)
 
         val txtMinute = findViewById<TextView>(R.id.txtDemoMinute)
         val date7 = createMdate()
         txtMinute.text = "-55 minutes:\n" +
-                date7.show(TIME) + " to " +
-                date7.plusMinutes(-55).show(TIME)
+                date7.show(MDateFormat.TIME) + " to " +
+                date7.plusMinutes(-55).show(MDateFormat.TIME)
 
         val txtSecond = findViewById<TextView>(R.id.txtDemoSecond)
         val date8 = createMdate()
         txtSecond.text = "+30 seconds:\n" +
-                date8.show(TIME_SECONDS) + " to " +
-                date8.plusSeconds(30).show(TIME_SECONDS)
+                date8.show(MDateFormat.TIME_SECONDS) + " to " +
+                date8.plusSeconds(30).show(MDateFormat.TIME_SECONDS)
     }
 
     private fun setupShowDates() {
         val date = createMdate()
         val txtDemoShowDateYear = findViewById<TextView>(R.id.txtDemoShowDateYear)
-        txtDemoShowDateYear.text = "DATE_YEAR:\n" + date.show(DATE_YEAR)
+        txtDemoShowDateYear.text = "DATE_YEAR:\n" + date.show(MDateFormat.DATE_YEAR)
 
         val txtDemoShowDateYearShort = findViewById<TextView>(R.id.txtDemoShowDateYearShort)
-        txtDemoShowDateYearShort.text = "DATE_YEAR_SHORT:\n" + date.show(DATE_YEAR_SHORT)
+        txtDemoShowDateYearShort.text = "DATE_YEAR_SHORT:\n" + date.show(MDateFormat.DATE_YEAR_SHORT)
 
         val txtShowDate = findViewById<TextView>(R.id.txtShowDate)
-        txtShowDate.text = "DATE:\n" + date.show(DATE)
+        txtShowDate.text = "DATE:\n" + date.show(MDateFormat.DATE)
 
         val txtDemoShowPrettyDateYearLong =
             findViewById<TextView>(R.id.txtDemoShowPrettyDateYearLong)
         txtDemoShowPrettyDateYearLong.text =
-            "PRETTYDATE_YEAR_LONG:\n" + date.show(PRETTYDATE_YEAR_LONG)
+            "PRETTYDATE_YEAR_LONG:\n" + date.show(MDateFormat.PRETTYDATE_YEAR_LONG)
 
         val txtDemoShowPrettyDateYearShort =
             findViewById<TextView>(R.id.txtDemoShowPrettyDateYearShort)
         txtDemoShowPrettyDateYearShort.text =
-            "PRETTYDATE_YEAR_SHORT:\n" + date.show(PRETTYDATE_YEAR_SHORT)
+            "PRETTYDATE_YEAR_SHORT:\n" + date.show(MDateFormat.PRETTYDATE_YEAR_SHORT)
 
         val txtDemoShowPrettyDateYearVeryShort =
             findViewById<TextView>(R.id.txtDemoShowPrettyDateYearVeryShort)
         txtDemoShowPrettyDateYearVeryShort.text =
             "PRETTYDATE_YEAR_VERYSHORT (Uppercase):\n" +
-                    date.show(PRETTYDATE_YEAR_VERYSHORT, CaseType.UpperCase)
+                    date.show(MDateFormat.PRETTYDATE_YEAR_VERYSHORT, CaseType.UpperCase)
 
         val txtDemoShowPrettyDateLong = findViewById<TextView>(R.id.txtDemoShowPrettyDateLong)
         txtDemoShowPrettyDateLong.text =
-            "PRETTYDATE_LONG:\n" + date.show(PRETTYDATE_LONG)
+            "PRETTYDATE_LONG:\n" + date.show(MDateFormat.PRETTYDATE_LONG)
 
         val txtDemoShowPrettyDateShort = findViewById<TextView>(R.id.txtDemoShowPrettyDateShort)
         txtDemoShowPrettyDateShort.text =
-            "PRETTYDATE_SHORT:\n" + date.show(PRETTYDATE_SHORT)
+            "PRETTYDATE_SHORT:\n" + date.show(MDateFormat.PRETTYDATE_SHORT)
 
         val txtDemoShowPrettyDateVeryShort =
             findViewById<TextView>(R.id.txtDemoShowPrettyDateVeryShort)
         txtDemoShowPrettyDateVeryShort.text =
             "PRETTYDATE_VERYSHORT (Uppercase):\n" +
-                    date.show(PRETTYDATE_VERYSHORT, CaseType.UpperCase)
+                    date.show(MDateFormat.PRETTYDATE_VERYSHORT, CaseType.UpperCase)
     }
 
     private fun setupOther() {
         val isoWeek1 = MDate.BuilderDk().date(year = 2020, month = 1, day = 1).build()
         val txtDemoShowIsoWeek1 = findViewById<TextView>(R.id.txtDemoShowIsoWeek1)
         txtDemoShowIsoWeek1.text =
-            "ISOWEEK_TWODIGIT(" + isoWeek1.show(DATE_YEAR) + "):\n" +
-                    isoWeek1.show(ISOWEEK_TWODIGIT)
+            "ISOWEEK_TWODIGIT(" + isoWeek1.show(MDateFormat.DATE_YEAR) + "):\n" +
+                    isoWeek1.show(MDateFormat.ISOWEEK_TWODIGIT)
 
         val isoWeek2 = MDate.BuilderDk().date(year = 2020, month = 1, day = 1).build()
         val txtDemoShowIsoWeek2 = findViewById<TextView>(R.id.txtDemoShowIsoWeek2)
         txtDemoShowIsoWeek2.text =
-            "ISOWEEK_NATURAL (" + isoWeek2.show(DATE_YEAR) + "):\n" +
-                    isoWeek2.show(ISOWEEK_NATURAL)
+            "ISOWEEK_NATURAL (" + isoWeek2.show(MDateFormat.DATE_YEAR) + "):\n" +
+                    isoWeek2.show(MDateFormat.ISOWEEK_NATURAL)
 
         val isoWeek3 = MDate.BuilderDk().date(year = 2022, month = 1, day = 1).build()
         val txtDemoShowIsoWeek3 = findViewById<TextView>(R.id.txtDemoShowIsoWeek3)
         txtDemoShowIsoWeek3.text =
-            "ISOWEEK_NATURAL (" + isoWeek3.show(DATE_YEAR) + " / edgecase; " +
+            "ISOWEEK_NATURAL (" + isoWeek3.show(MDateFormat.DATE_YEAR) + " / edgecase; " +
                     "first couple of days belong to week-year 2021):\n" +
-                    isoWeek3.show(ISOWEEK_NATURAL)
+                    isoWeek3.show(MDateFormat.ISOWEEK_NATURAL)
 
         val dateda = MDate.BuilderDk().date(year = 2022, month = 3, day = 1).build()
         val txtDemoDanish = findViewById<TextView>(R.id.txtDemoDanish)
-        txtDemoDanish.text = "Danish Localization:\n" + dateda.show(PRETTYDATE_LONG)
+        txtDemoDanish.text = "Danish Localization:\n" + dateda.show(MDateFormat.PRETTYDATE_LONG)
 
         val datede = MDate.BuilderDe().date(year = 2022, month = 3, day = 1).build()
         val txtDemoGerman = findViewById<TextView>(R.id.txtDemoGerman)
-        txtDemoGerman.text = "German Localization:\n" + datede.show(PRETTYDATE_LONG)
+        txtDemoGerman.text = "German Localization:\n" + datede.show(MDateFormat.PRETTYDATE_LONG)
 
         val dateuk = MDate.BuilderGb().date(year = 2022, month = 3, day = 1).build()
         val txtDemoEnglish = findViewById<TextView>(R.id.txtDemoEnglish)
-        txtDemoEnglish.text = "English/UK Localization:\n" + dateuk.show(PRETTYDATE_LONG)
+        txtDemoEnglish.text = "English/UK Localization:\n" + dateuk.show(MDateFormat.PRETTYDATE_LONG)
     }
 
     private fun createMdate(): MDate {
@@ -164,5 +171,9 @@ class MdateActivity : AppCompatActivity() {
             .date(year, month, day)
             .time(hour, minute, second)
             .build()
+    }
+
+    private fun <T:View?> findViewById(@IdRes id: Int): T {
+        return requireView().findViewById(id)
     }
 }
