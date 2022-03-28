@@ -3,6 +3,7 @@ package dk.mustache.corelib.syncviews
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import dk.mustache.corelib.selectable_list.SelectableAdapter
 import kotlin.reflect.KFunction2
 
 class RecyclerViewSyncHandler(
@@ -71,6 +72,11 @@ class RecyclerViewSyncHandler(
         }
         else {
             layoutManager.scrollToPositionWithOffset(position, 0)
+        }
+
+        val adapter = recyclerView.adapter
+        if(adapter is SelectableAdapter<*>) {
+            adapter.select(position)
         }
     }
 }
