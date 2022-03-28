@@ -66,10 +66,10 @@ open class StandardDialogFragment <T: Enum<T>> : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = when (dialogSetup.dialogType) {
             DialogTypeEnum.ALERT  -> {
-                DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, R.layout.fragment_alert_dialog, container, false)
+                DataBindingUtil.inflate(layoutInflater, R.layout.fragment_alert_dialog, container, false)
             }
             else -> {
-                DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, dialogSetup.alternativeLayout, container, false)
+                DataBindingUtil.inflate(layoutInflater, dialogSetup.alternativeLayout, container, false)
             }
         }
 
@@ -141,9 +141,11 @@ open class StandardDialogFragment <T: Enum<T>> : DialogFragment() {
         if(listener != null) {
             return
         }
-        val cardDetailsListener = parentFragment
-        if (cardDetailsListener is BaseDialogFragmentListener<*>)
-            listener = cardDetailsListener as BaseDialogFragmentListener<T>
+        if(this is BaseDialogFragmentListener<*>) {
+            listener = this as BaseDialogFragmentListener<T>
+        }
+        else if (parentFragment is BaseDialogFragmentListener<*>)
+            listener = parentFragment as BaseDialogFragmentListener<T>
         else if (activity is BaseDialogFragmentListener<*>){
             listener = activity as BaseDialogFragmentListener<T>
         } else
