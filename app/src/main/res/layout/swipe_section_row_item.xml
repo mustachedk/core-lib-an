@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="dk.mustache.corelibexample.swipe_recyclerview_item_example.SwipeSectionExampleItem" />
+            type="dk.mustache.corelibexample.sandbox.swipe_recyclerview_item_example.SwipeSectionExampleItem" />
     </data>
 
     <dk.mustache.corelib.swipe_recyclerview_item.SwipeListItemLayout

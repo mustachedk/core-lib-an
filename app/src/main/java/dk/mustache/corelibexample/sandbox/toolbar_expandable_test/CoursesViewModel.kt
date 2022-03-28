@@ -1,10 +1,10 @@
-package dk.mustache.corelibexample.toolbar_expandable_test
+package dk.mustache.corelibexample.sandbox.toolbar_expandable_test
 
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import dk.mustache.corelibexample.model.MockResponse
+import dk.mustache.corelibexample.sandbox.model.MockResponse
 
 class CoursesViewModel : ViewModel() {
     var listener: Listener? = null

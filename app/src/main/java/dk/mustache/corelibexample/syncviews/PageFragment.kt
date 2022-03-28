@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import dk.mustache.corelibexample.R
+import dk.mustache.corelibexample.databinding.FragmentPageBinding
 
 class PageFragment : Fragment() {
     private var pageNum: String? = null
+
+    lateinit var binding: FragmentPageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,14 +24,15 @@ class PageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_page, container, false)
+    ): View {
+        binding = FragmentPageBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
 
-        view?.findViewById<TextView>(R.id.txtPageNum)?.text = pageNum
+        binding.txtPageNum.text = pageNum
     }
 
     companion object {

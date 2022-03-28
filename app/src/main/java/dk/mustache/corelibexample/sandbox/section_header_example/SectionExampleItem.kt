@@ -1,4 +1,4 @@
-package dk.mustache.corelibexample.section_header_example
+package dk.mustache.corelibexample.sandbox.section_header_example
 
 import dk.mustache.corelib.section_header_list.SectionItem
 

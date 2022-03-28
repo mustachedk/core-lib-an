@@ -1,4 +1,4 @@
-package dk.mustache.corelibexample
+package dk.mustache.corelibexample.sandbox
 
 import android.os.Bundle
 import android.os.Handler
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dk.mustache.corelib.list_header_viewpager.GenericPagerFragment
-import dk.mustache.corelib.list_header_viewpager.PageData
 import dk.mustache.corelibexample.databinding.FragmentListHeaderPagerBinding
 
 open class Pager2Fragment : GenericPagerFragment() {

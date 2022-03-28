@@ -1,4 +1,4 @@
-package dk.mustache.corelibexample.standard_dialog_example
+package dk.mustache.corelibexample.standard_dialog
 
 import android.os.Bundle
 import android.view.View

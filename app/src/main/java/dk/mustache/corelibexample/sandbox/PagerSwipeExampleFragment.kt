@@ -1,4 +1,4 @@
-package dk.mustache.corelibexample
+package dk.mustache.corelibexample.sandbox
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +13,10 @@ import dk.mustache.corelib.sticky_header_decoration.StickyHeaderItemDecoration
 import dk.mustache.corelib.swipe_recyclerview_item.LockableLayoutManager
 import dk.mustache.corelib.swipe_recyclerview_item.SwipeSettingsEnum
 import dk.mustache.corelibexample.databinding.FragmentListHeaderPagerBinding
-import dk.mustache.corelibexample.section_header_example.SectionHeaderExampleViewModel
+import dk.mustache.corelibexample.sandbox.section_header_example.SectionHeaderExampleViewModel
 import dk.mustache.corelib.swipe_recyclerview_item.SwipeListAdapter
-import dk.mustache.corelibexample.swipe_recyclerview_item_example.SwipeSectionExampleItem
+import dk.mustache.corelibexample.R
+import dk.mustache.corelibexample.sandbox.swipe_recyclerview_item_example.SwipeSectionExampleItem
 
 open class PagerSwipeExampleFragment : Fragment() {
 
@@ -78,7 +79,10 @@ open class PagerSwipeExampleFragment : Fragment() {
 //        })
 //
 //
-        val adapter = SwipeListAdapter(list, viewModel2, SwipeSettingsEnum.BOTH, R.layout.swipe_section_row_item, R.layout.swipe_section_row_item, R.layout.section_header_item, {
+        val adapter = SwipeListAdapter(list, viewModel2, SwipeSettingsEnum.BOTH,
+            R.layout.swipe_section_row_item,
+            R.layout.swipe_section_row_item,
+            R.layout.section_header_item, {
             //onClick
         }, { swipeLayout, swipeDirection, swipeItem ->
             //swiped
@@ -88,7 +92,8 @@ open class PagerSwipeExampleFragment : Fragment() {
             lockScroll(doLockScroll)
         }
 
-        val stickyDecoration = StickyHeaderItemDecoration(binding.offerTypeList, R.layout.section_header_item, adapter)
+        val stickyDecoration = StickyHeaderItemDecoration(binding.offerTypeList,
+            R.layout.section_header_item, adapter)
         binding.offerTypeList.addItemDecoration(stickyDecoration)
 
         (binding.offerTypeList.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false

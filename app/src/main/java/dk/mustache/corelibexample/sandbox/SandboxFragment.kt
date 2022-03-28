@@ -1,6 +1,5 @@
 package dk.mustache.corelibexample.sandbox
 
-import android.app.Application
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -9,15 +8,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
-import androidx.annotation.IdRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.Observable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import dk.mustache.corelib.MustacheCoreLib
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetDoublePicker
 import dk.mustache.corelib.bottomsheet_picker.BottomSheetPicker
 import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
@@ -37,9 +33,8 @@ import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.*
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
 import dk.mustache.corelibexample.databinding.FragmentSandboxBinding
-import dk.mustache.corelibexample.model.MockResponse
-import dk.mustache.corelibexample.syncviews.SyncViewsFragment
-import dk.mustache.corelibexample.toolbar_expandable_test.CoursesFragment
+import dk.mustache.corelibexample.sandbox.model.MockResponse
+import dk.mustache.corelibexample.sandbox.toolbar_expandable_test.CoursesFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable

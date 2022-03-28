@@ -14,8 +14,11 @@ import dk.mustache.corelib.syncviews.PositionSyncConductor
 import dk.mustache.corelib.syncviews.RecyclerViewSyncHandler
 import dk.mustache.corelib.syncviews.ViewPagerSyncHandler
 import dk.mustache.corelibexample.R
+import dk.mustache.corelibexample.databinding.FragmentSyncviewsBinding
 
-class SyncViewsFragment: Fragment() {
+class SyncViewsFragment : Fragment() {
+    private lateinit var binding: FragmentSyncviewsBinding
+
     private val conductor = PositionSyncConductor()
     private lateinit var titleSyncHandler: TitleSyncHandler
     private lateinit var buttonsSyncHandler: ButtonsSyncHandler
@@ -29,27 +32,28 @@ class SyncViewsFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_syncviews, container, false)
+    ): View {
+        binding = FragmentSyncviewsBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
+        val viewPager = binding.viewPager
         pageAdapter = SyncedViewPagerAdapter(requireActivity(), 6)
         viewPager.adapter = pageAdapter
 
-        val recyclerview = findViewById<RecyclerView>(R.id.recyclerView)
+        val recyclerview = binding.recyclerView
 
-        titleSyncHandler = TitleSyncHandler(findViewById(R.id.txtTitle), conductor)
+        titleSyncHandler = TitleSyncHandler(binding.txtTitle, conductor)
         buttonsSyncHandler = ButtonsSyncHandler(
-            findViewById(R.id.btn1),
-            findViewById(R.id.btn2),
-            findViewById(R.id.btn3),
-            findViewById(R.id.btn4),
-            findViewById(R.id.btn5),
-            findViewById(R.id.btn6),
+            binding.btn1,
+            binding.btn2,
+            binding.btn3,
+            binding.btn4,
+            binding.btn5,
+            binding.btn6,
             conductor
         )
         viewPagerHandler = ViewPagerSyncHandler(viewPager, conductor)
@@ -64,14 +68,14 @@ class SyncViewsFragment: Fragment() {
                 Item(4, false),
                 Item(5, false)
             ),
-            {item, selected -> if(selected) {listHandler.onItemSelected(item.index) }},
+            { item, selected ->
+                if (selected) {
+                    listHandler.onItemSelected(item.index)
+                }
+            },
             SelectableAdapterSettings(true, R.layout.item_tall)
         )
         recyclerview.layoutManager = LinearLayoutManager(requireActivity())
         recyclerview.adapter = listAdapter
-    }
-
-    private fun <T:View?> findViewById(@IdRes id: Int): T {
-        return requireView().findViewById(id)
     }
 }

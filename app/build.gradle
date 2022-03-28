@@ -8,6 +8,10 @@ android {
         enabled = true
     }
 
+    viewBinding {
+        enabled = true
+    }
+
     compileSdkVersion 31
     defaultConfig {
         applicationId "dk.mustache.corelibexample"

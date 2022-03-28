@@ -1,12 +1,10 @@
-package dk.mustache.corelibexample.toolbar_expandable_test
+package dk.mustache.corelibexample.sandbox.toolbar_expandable_test
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.Observable
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dk.mustache.corelib.list_header_viewpager.GenericPagerFragment
 import dk.mustache.corelibexample.R

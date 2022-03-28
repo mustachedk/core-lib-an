@@ -1,4 +1,4 @@
-package dk.mustache.corelibexample.toolbar_expandable_test
+package dk.mustache.corelibexample.sandbox.toolbar_expandable_test
 
 import android.content.Context
 import android.util.AttributeSet

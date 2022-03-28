@@ -1,4 +1,4 @@
-package dk.mustache.corelibexample.model
+package dk.mustache.corelibexample.sandbox.model
 
 import com.google.gson.annotations.SerializedName
 

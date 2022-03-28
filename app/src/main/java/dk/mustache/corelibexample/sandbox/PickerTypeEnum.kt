@@ -1,4 +1,4 @@
-package dk.mustache.corelibexample
+package dk.mustache.corelibexample.sandbox
 
 enum class PickerTypeEnum {
     NUMBER_PICKER,

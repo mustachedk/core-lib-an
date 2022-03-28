@@ -1,4 +1,4 @@
-package dk.mustache.corelibexample.swipe_recyclerview_item_example
+package dk.mustache.corelibexample.sandbox.swipe_recyclerview_item_example
 
 import dk.mustache.corelib.section_header_list.SwipeSectionItem
 import dk.mustache.corelib.swipe_recyclerview_item.SwipeDirectionEnum

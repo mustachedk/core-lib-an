@@ -1,4 +1,4 @@
-package dk.mustache.corelibexample.selectable_list_example
+package dk.mustache.corelibexample.sandbox.selectable_list_example
 
 import dk.mustache.corelib.selectable_list.SelectableItem
 
