@@ -85,7 +85,7 @@ class SandboxFragment : Fragment(),
 
         //region HeaderListViewPager testdata
 
-        val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
+        val viewModel = ViewModelProvider(requireActivity()).get(HeaderListViewPagerViewModel::class.java)
 
         val t1 = SpecialData("t1", Pager2Fragment::class.java, "test1 testtkhjgsklfgh;k ")
         val t2 = SpecialData(
@@ -152,7 +152,7 @@ class SandboxFragment : Fragment(),
         Handler(Looper.getMainLooper()).postDelayed({
 
             //test of data update
-            val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
+            val viewModel = ViewModelProvider(requireActivity()).get(HeaderListViewPagerViewModel::class.java)
             viewModel.updatePageDataList(listOf(t4, t7, t6, t1, t2, t3, t8))
 //            viewModel.updatePageDataList(listOf(t4, t7, t6, t1))
             viewModel.selectedIndexObservable.set(4)
@@ -173,14 +173,14 @@ class SandboxFragment : Fragment(),
 //
 //        Handler(Looper.getMainLooper()).postDelayed({
 //            //test of data update
-//            val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
+//            val viewModel = ViewModelProvider(requireActivity()).get(HeaderListViewPagerViewModel::class.java)
 //            viewModel.updatePageDataList(listOf(t1, t2, t3, t4))
 //            viewModel.selectedIndexObservable.set(3)
 //        }, 10000)
 //
 //        Handler(Looper.getMainLooper()).postDelayed({
 //            //test of data update
-//            val viewModel = ViewModelProvider(this).get(HeaderListViewPagerViewModel::class.java)
+//            val viewModel = ViewModelProvider(requireActivity()).get(HeaderListViewPagerViewModel::class.java)
 //            viewModel.updatePageDataList(listOf(t8, t7))
 //            viewModel.selectedIndexObservable.set(1)
 //        }, 15000)
@@ -221,20 +221,6 @@ class SandboxFragment : Fragment(),
 //            "HEADER TEST",
 //            R.color.light_gray_background)
 //        picker.show(supportFragmentManager, picker.tag)
-
-        //BaseDialogFragment
-//        val dialog = StandardDialogExampleFragment.newInstance(FragmentDialogSetup(
-//            header = "Header",
-//            text = "Text",
-//            positiveButtonText = "Custom text",
-//            negativeButtonText = "test",
-//            dialogType = DialogTypeEnum.CUSTOM,
-//            alternativeLayout = R.layout.fragment_dialog_custom,
-//            alternativeStyle = R.style.FragmentDialogStyle,
-//            showNegativeButton = true,
-//            setAlternativeStyleIfProvided = true
-//        ))
-//        dialog.show(supportFragmentManager, "FragmentDialog")
 
 //        testRetroFit()
         //endRegion

@@ -11,6 +11,7 @@ import android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import dk.mustache.corelibexample.R
+import dk.mustache.corelibexample.headerlistviewpager.HeaderListViewPagerDemoFragment
 import dk.mustache.corelibexample.mdate.MdateFragment
 import dk.mustache.corelibexample.sandbox.SandboxFragment
 import dk.mustache.corelibexample.standard_dialog.StandardDialogDemoFragment
@@ -20,6 +21,7 @@ import dk.mustache.corelibexample.syncviews.SyncViewsFragment
 class FrontFragment : Fragment() {
 
     val demos = listOf<Pair<String, Fragment>>(
+        "HeaderListViewPager Demo" to HeaderListViewPagerDemoFragment(),
         "MDate Demo" to MdateFragment(),
         "Standard Dialog Demo" to StandardDialogDemoFragment(),
         "SyncViews Demo" to SyncViewsFragment(),
