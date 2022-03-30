@@ -18,7 +18,7 @@ import dk.mustache.corelibexample.R
 class SyncViewsFragment: Fragment() {
     private val conductor = PositionSyncConductor()
     private lateinit var titleSyncHandler: TitleSyncHandler
-    private lateinit var buttonsSyncHandler: ButtonsSyncHandler
+    private lateinit var buttonsSyncHandler: ButtonsViewSync
     private lateinit var viewPagerHandler: ViewPagerSyncHandler
     private lateinit var listHandler: RecyclerViewSyncHandler
 
@@ -43,7 +43,7 @@ class SyncViewsFragment: Fragment() {
         val recyclerview = findViewById<RecyclerView>(R.id.recyclerView)
 
         titleSyncHandler = TitleSyncHandler(findViewById(R.id.txtTitle), conductor)
-        buttonsSyncHandler = ButtonsSyncHandler(
+        buttonsSyncHandler = ButtonsViewSync(
             findViewById(R.id.btn1),
             findViewById(R.id.btn2),
             findViewById(R.id.btn3),
