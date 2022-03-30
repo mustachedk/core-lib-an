@@ -13,6 +13,12 @@
         <attr name="sneakPeakDistance" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="SyncViewsLayout">
+        <attr name="syncValue1" format="dimension" />
+        <attr name="syncValue2" format="dimension" />
+        <attr name="syncValue3" format="dimension" />
+    </declare-styleable>
+
     <declare-styleable name="EmptystateLayout">
         <attr name="buttonTextColor" format="string" />
         <attr name="titleText" format="string" />

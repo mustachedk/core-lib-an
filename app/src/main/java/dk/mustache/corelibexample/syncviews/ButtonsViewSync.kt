@@ -11,7 +11,7 @@ import kotlin.reflect.KFunction2
  * Created primarily to demonstrate a SyncHandler that isn't based on a list. Even
  * though this totally could be.
  */
-class ButtonsSyncHandler(
+class ButtonsViewSync(
     private val btn1: Button,
     private val btn2: Button,
     private val btn3: Button,

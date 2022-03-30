@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <dk.mustache.corelib.syncviews.SyncViewsParentFrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/sync_views_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <dk.mustache.corelib.syncviews.SyncButtonViewsChildConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".syncviews.SyncViewsActivity">
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:text="Page 1"/>
+            <LinearLayout
+                android:id="@+id/lnrButtons"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtTitle"
+                app:layout_constraintEnd_toEndOf="parent">
+                <Button
+                    android:id="@+id/btn1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/sync_selectedbutton"
+                    android:text="Page 1"/>
+                <Button
+                    android:id="@+id/btn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/sync_normalbutton"
+                    android:text="Page 2"/>
+                <Button
+                    android:id="@+id/btn3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/sync_normalbutton"
+                    android:text="Page 3"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lnrButtons2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lnrButtons"
+                app:layout_constraintEnd_toEndOf="parent">
+                <Button
+                    android:id="@+id/btn4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/sync_normalbutton"
+                    android:text="Page 4"/>
+                <Button
+                    android:id="@+id/btn5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/sync_normalbutton"
+                    android:text="Page 5"/>
+                <Button
+                    android:id="@+id/btn6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/sync_normalbutton"
+                    android:text="Page 6"/>
+            </LinearLayout>
+            <dk.mustache.corelib.syncviews.SyncViewPagerChildFrameLayout
+                android:id="@+id/viewPagerSync"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/lnrButtons2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/recyclerView"
+                >
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/ticket_shadow_gray"/>
+            </dk.mustache.corelib.syncviews.SyncViewPagerChildFrameLayout>
+            <dk.mustache.corelib.syncviews.SyncChildRecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/light_gray_background"
+                app:layout_constraintTop_toBottomOf="@id/viewPagerSync"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:listitem="@layout/item_tall"
+                tools:itemCount="3"/>
+        </dk.mustache.corelib.syncviews.SyncButtonViewsChildConstraintLayout>
+    </dk.mustache.corelib.syncviews.SyncViewsParentFrameLayout>
+</layout>
