@@ -3,6 +3,7 @@ package dk.mustache.corelib.syncviews
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.children
@@ -30,9 +31,23 @@ open class EventSyncParentView: FrameLayout {
         return viewGroups
     }
 
+    fun findTopViewGroup(view: View): ViewGroup? {
+        var v : View? = view
+        do {
+            val p = v?.parent
+            if (p!=null && p is ViewGroup) {
+                v = p
+            } else {
+                return v as ViewGroup
+            }
+        } while (v!=null)
+        return v
+    }
+
     inline fun <reified T> findViewsOfType(viewGroup: ViewGroup): List<T> {
         val tList = mutableListOf<T>()
-        val viewGroups = findAllViewGroups(viewGroup)
+        val topViewGroup = findTopViewGroup(viewGroup) as ViewGroup
+        val viewGroups = findAllViewGroups(topViewGroup)
         viewGroups.forEach {
             val children = it.children
             children.forEach { childView ->

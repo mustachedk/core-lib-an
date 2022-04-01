@@ -26,7 +26,11 @@ class SyncViewsParentFrameLayout : EventSyncParentView {
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        findSyncViews(this)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        findSyncViews((this.parent as View?)?:this)
     }
 
     fun findSyncViews(view: View) {
