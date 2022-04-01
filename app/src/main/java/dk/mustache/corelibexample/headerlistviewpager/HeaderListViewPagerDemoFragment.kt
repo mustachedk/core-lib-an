@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
+import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
+import dk.mustache.corelib.utils.toPx
+import dk.mustache.corelibexample.R
 import dk.mustache.corelibexample.databinding.FragmentHeaderListViewpagerDemoBinding
 
 class HeaderListViewPagerDemoFragment : Fragment() {
@@ -28,10 +32,25 @@ class HeaderListViewPagerDemoFragment : Fragment() {
 
         viewModel =
             ViewModelProvider(this).get(HeaderListViewPagerDemoViewModel::class.java)
-        headerListViewModel =
-            ViewModelProvider(requireActivity()).get(HeaderListViewPagerViewModel::class.java)
+        headerListViewModel = HeaderListViewPagerViewModel.getInstance(requireActivity())
 
-        viewModel.setup(headerListViewModel)
-        viewModel.updateData(headerListViewModel)
+        headerListViewModel.settings.set(
+            HeaderListViewPagerSettings(
+                type = HeaderListViewPagerTypeEnum.SCROLL,
+                filterBackgroundColor = R.color.colorPrimaryDark,
+                paddingBetweenItems = 8.toPx(),
+                firstItemPaddingStart = 8.toPx(),
+                lastItemPaddingEnd = 8.toPx(),
+                snapCenter = true,
+                swipeSensitivity = 4
+            )
+        )
+        headerListViewModel.currentShownPage = 0
+
+        viewModel.acquireData { data ->
+            headerListViewModel.updatePageDataList(data)
+        }
+
+
     }
 }

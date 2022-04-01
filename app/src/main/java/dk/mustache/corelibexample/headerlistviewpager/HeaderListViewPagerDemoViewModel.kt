@@ -1,11 +1,16 @@
 package dk.mustache.corelibexample.headerlistviewpager
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerSettings
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerTypeEnum
 import dk.mustache.corelib.list_header_viewpager.HeaderListViewPagerViewModel
 import dk.mustache.corelib.utils.toPx
 import dk.mustache.corelibexample.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HeaderListViewPagerDemoViewModel: ViewModel() {
     val data = listOf(
@@ -25,21 +30,12 @@ class HeaderListViewPagerDemoViewModel: ViewModel() {
         DemoPageData("Page 6 Header", "Page 6 Content", DemoPagerFragment::class.java, "Page 6 Demo")
     )
 
-    fun setup(headerListViewModel: HeaderListViewPagerViewModel) {
-        headerListViewModel.settings.set(
-            HeaderListViewPagerSettings(
-                type = HeaderListViewPagerTypeEnum.SCROLL,
-                filterBackgroundColor = R.color.colorPrimaryDark,
-                paddingBetweenItems = 8.toPx(),
-                firstItemPaddingStart = 8.toPx(),
-                lastItemPaddingEnd = 8.toPx(),
-                snapCenter = true,
-                swipeSensitivity = 4
-            )
-        )
-    }
-
-    fun updateData(headerListViewModel: HeaderListViewPagerViewModel) {
-        headerListViewModel.updatePageDataList(data)
+    fun acquireData(callback: (data: List<DemoPageData<*>>) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            delay(500)
+            withContext(Dispatchers.Main) {
+                callback(data)
+            }
+        }
     }
 }
