@@ -143,8 +143,8 @@ class MainActivity : BeaconScanActivity(),
 //                compatibilityModePreVersion123 = false
 //            )
 //        )
-        val fragment = HeaderListViewPagerFragment.newInstance()
-//        val fragment = PagerSwipeExampleFragment()
+//        val fragment = HeaderListViewPagerFragment.newInstance()
+        val fragment = PagerSwipeExampleFragment()
 
         //Uncomment to start HeaderListViewPagerFragment
         setFragment(fragment)
