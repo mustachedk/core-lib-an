@@ -303,6 +303,8 @@ class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale:
  *
  * Use build() to acquire an MDate instance matching the given values.
  *
+ * Use now() without any setters to acquire an MDate instance with the current datetime
+ *
  * @property locale The localization that should be used by the MDate
  *     instance. Defaults to the device's default locale.
  */
@@ -373,6 +375,13 @@ class MDateBuilder(private val locale: Locale = Locale.getDefault()) {
     fun second(second: Int): MDateBuilder {
         this.second = second
         return this
+    }
+
+    fun now(): MDate {
+        val currentDateTime = System.currentTimeMillis()
+        val calendar = Calendar.getInstance(locale)
+        calendar.timeInMillis = currentDateTime
+        return MDate(calendar, locale)
     }
 
     fun build(): MDate {
