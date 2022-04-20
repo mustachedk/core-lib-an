@@ -82,6 +82,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
+        <dk.mustache.corelib.price_layout.PriceLayout
+            android:id="@+id/price_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:kr="@{1100}"
+            app:ore="@{45}"
+            app:krTextSize="32"
+            app:oreTextSize="10"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

@@ -31,6 +31,7 @@ import dk.mustache.corelib.network.AccessToken
 import dk.mustache.corelib.network.AuthorizationRepository
 import dk.mustache.corelib.network.AuthorizationType
 import dk.mustache.corelib.network.RetroClient
+import dk.mustache.corelib.price_layout.PriceConfigurationItem
 import dk.mustache.corelib.utils.*
 import dk.mustache.corelib.views.EmptyStateView
 import dk.mustache.corelibexample.bottomsheets.BottomSheetMenuFragment
@@ -78,6 +79,13 @@ class MainActivity : BeaconScanActivity(),
             this,
             R.layout.activity_main
         )
+
+        binding.priceLayout.priceConfigurationItem = PriceConfigurationItem(
+                100.0,
+                10000.0,
+                20.0,
+                10.0,
+                0)
 
         binding.btnMdate.setOnClickListener {
             startActivity(Intent(this, MdateActivity::class.java))
