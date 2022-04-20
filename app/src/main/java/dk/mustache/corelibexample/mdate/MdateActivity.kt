@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.TextView
 import dk.mustache.corelib.utils.CaseType
 import dk.mustache.corelib.utils.MDate
+import dk.mustache.corelib.utils.MDateBuilder
 import dk.mustache.corelib.utils.MDateFormat.*
 import dk.mustache.corelibexample.R
 import java.util.*
@@ -17,6 +18,11 @@ class MdateActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        val txtDateNow = findViewById<TextView>(R.id.txtDemoDateNow)
+        val date = MDate.BuilderDk().now()
+        txtDateNow.text = "Date Now:\n" +
+                date.show(DATE_YEAR_REVERSE) + " " + date.show(TIME_SECONDS)
 
         setupDateManipulation()
         setupTimeManipulation()
