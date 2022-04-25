@@ -65,9 +65,10 @@ class PriceLayout : ConstraintLayout {
         binding.priceText.setTextColor(ContextCompat.getColor(context, R.color.app_price_background_color))
         binding.oreText.setTextColor(ContextCompat.getColor(context, R.color.app_price_background_color))
         setPrice(priceConfigurationItem?.discountPrice?: -1.0)
-        val oldPrice = SpannableString(priceConfigurationItem?.price.toString())
+        val oldPriceString = String.format(Locale.GERMAN,"%,.2f",priceConfigurationItem?.price)
+        val oldPrice = SpannableString(oldPriceString)
         oldPrice.setSpan(StrikethroughSpan(), 0, oldPrice.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        binding.oldPrice.text = String.format(Locale.GERMAN,"%,.2f",oldPrice)
+        binding.oldPrice.text = oldPrice
         binding.oldPrice.visibility = View.VISIBLE
     }
 
