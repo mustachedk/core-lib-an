@@ -91,6 +91,8 @@ class MainActivity : BeaconScanActivity(),
             startActivity(Intent(this, MdateActivity::class.java))
         }
 
+        Toast.makeText(this, "" + DeviceLocationState.checkIfLocationIsEnabled(this), Toast.LENGTH_LONG).show()
+
 //        binding.mainEmptystate.clickListener = this
 
 //        Handler(Looper.getMainLooper()).postDelayed({
