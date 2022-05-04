@@ -97,6 +97,10 @@ class OneClickButtonWithLoadingIndicator : ConstraintLayout {
         a.recycle()
     }
 
+    fun setText(text: String?) {
+        binding.oneClickButton2.text = text
+    }
+
     fun setShowLoadingIndicator(showLoadingIndicator: Boolean) {
         if (showLoadingIndicator) {
             this.isClickable = false
