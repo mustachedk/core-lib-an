@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:1.3.0'
+  implementation 'com.github.mustachedk:core-lib-an:1.3.1'
 }
 ```
 ###### Initialize corelib in the custom Application context
