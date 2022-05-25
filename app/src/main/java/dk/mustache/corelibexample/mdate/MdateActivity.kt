@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.TextView
 import dk.mustache.corelib.utils.CaseType
 import dk.mustache.corelib.utils.MDate
-import dk.mustache.corelib.utils.MDateBuilder
 import dk.mustache.corelib.utils.MDateFormat.*
 import dk.mustache.corelibexample.R
 import java.util.*
@@ -28,6 +27,7 @@ class MdateActivity : AppCompatActivity() {
         setupTimeManipulation()
         setupShowDates()
         setupOther()
+        setupConvenienceMethods()
     }
 
     private fun setupDateManipulation() {
@@ -156,6 +156,27 @@ class MdateActivity : AppCompatActivity() {
         val dateuk = MDate.BuilderGb().date(year = 2022, month = 3, day = 1).build()
         val txtDemoEnglish = findViewById<TextView>(R.id.txtDemoEnglish)
         txtDemoEnglish.text = "English/UK Localization:\n" + dateuk.show(PRETTYDATE_LONG)
+    }
+
+    private fun setupConvenienceMethods() {
+        val propdate = createMdate()
+        val txtProperties = findViewById<TextView>(R.id.txtProperties)
+        txtProperties.text = propdate.show(DATE_YEAR) + " " + propdate.show(TIME_SECONDS) +
+                ": Year: ${propdate.year} Mon: ${propdate.month} Day: ${propdate.day} " +
+                "Hour: ${propdate.hour} Min: ${propdate.minute} Sec: ${propdate.second}"
+
+        val dateToRound = createMdate()
+        val roundedDate = dateToRound.roundToDate()
+        val txtRoundtodate = findViewById<TextView>(R.id.txtRoundToDate)
+        txtRoundtodate.text = dateToRound.show(DATE_YEAR) + " " + dateToRound.show(TIME_SECONDS) +
+                " converts to " + roundedDate.show(DATE_YEAR) + " " + roundedDate.show(TIME_SECONDS)
+
+        val compareDate1 = createMdate()
+        val compareDate2 = createMdate()
+        val txtCompareTo = findViewById<TextView>(R.id.txtCompareTo)
+        txtCompareTo.text = compareDate1.show(DATE_YEAR) + " " + compareDate1.show(TIME_SECONDS) +
+                " <= " + compareDate2.show(DATE_YEAR) + " " + compareDate2.show(TIME_SECONDS) + " = " +
+                (compareDate1 <= compareDate2)
     }
 
     private fun createMdate(): MDate {
