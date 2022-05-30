@@ -58,8 +58,6 @@ enum class MDateFormat(val pattern: String) {
     TIME ("HH:mm")
 }
 
-enum class MDatePrettyFormat
-
 /**
  * Convenience class allowing the easy manipulation and string
  * formatting of a java Calendar instance.
@@ -74,7 +72,14 @@ enum class MDatePrettyFormat
  * @property calendar The calendar to encapsulate
  * @property locale The locale to use for formatting
  */
-class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale: Locale) {
+class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale: Locale): Comparable<MDate> {
+
+    val year get() = calendar.get(Calendar.YEAR)
+    val month get() = calendar.get(Calendar.MONTH)+1
+    val day get() = calendar.get(Calendar.DAY_OF_MONTH)
+    val hour get() = calendar.get(Calendar.HOUR_OF_DAY)
+    val minute get() = calendar.get(Calendar.MINUTE)
+    val second get() = calendar.get(Calendar.SECOND)
 
     /**
      * Show date or time according to provided format. Only PrettyDate
@@ -248,6 +253,15 @@ class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale:
         return add(Calendar.SECOND, seconds)
     }
 
+    fun roundToDate(): MDate {
+        val newCal = calendar.clone() as Calendar
+        newCal.set(Calendar.HOUR_OF_DAY, 0)
+        newCal.set(Calendar.MINUTE, 0)
+        newCal.set(Calendar.SECOND, 0)
+        newCal.set(Calendar.MILLISECOND, 0)
+        return MDate(newCal, locale)
+    }
+
     private fun add(field: Int, value: Int): MDate {
         val newCal = calendar.clone() as Calendar
         newCal.add(field, value)
@@ -293,6 +307,11 @@ class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale:
             return MDateBuilder(Locale.getDefault())
         }
     }
+
+    override fun compareTo(other: MDate): Int {
+        val result = ((this.calendar.timeInMillis - other.calendar.timeInMillis) / 1000).toInt()
+        return result
+    }
 }
 
 /**
@@ -302,6 +321,8 @@ class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale:
  * Setters: dateTime, date, time, year, month, day, hour, minute, second
  *
  * Use build() to acquire an MDate instance matching the given values.
+ *
+ * Use now() without any setters to acquire an MDate instance with the current datetime
  *
  * @property locale The localization that should be used by the MDate
  *     instance. Defaults to the device's default locale.
@@ -373,6 +394,13 @@ class MDateBuilder(private val locale: Locale = Locale.getDefault()) {
     fun second(second: Int): MDateBuilder {
         this.second = second
         return this
+    }
+
+    fun now(): MDate {
+        val currentDateTime = System.currentTimeMillis()
+        val calendar = Calendar.getInstance(locale)
+        calendar.timeInMillis = currentDateTime
+        return MDate(calendar, locale)
     }
 
     fun build(): MDate {

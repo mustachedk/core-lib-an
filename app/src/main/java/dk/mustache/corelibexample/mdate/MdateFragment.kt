@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import dk.mustache.corelib.utils.CaseType
 import dk.mustache.corelib.utils.MDate
 import dk.mustache.corelib.utils.MDateFormat
+import dk.mustache.corelib.utils.MDateFormat.*
 import dk.mustache.corelibexample.databinding.FragmentMdateBinding
 import java.util.*
 
@@ -31,6 +32,7 @@ class MdateFragment: Fragment() {
         setupTimeManipulation()
         setupShowDates()
         setupOther()
+        setupConvenienceMethods()
     }
 
     private fun setupDateManipulation() {
@@ -51,8 +53,8 @@ class MdateFragment: Fragment() {
 
         val date4 = createRandomMdate()
         binding.txtDemoDay.text = "-20 days:\n" +
-                date4.show(MDateFormat.DATE_YEAR) + " to " +
-                date4.plusDays(-20).show(MDateFormat.DATE_YEAR)
+                date4.show(DATE_YEAR) + " to " +
+                date4.plusDays(-20).show(DATE_YEAR)
     }
 
     private fun setupTimeManipulation() {
@@ -80,7 +82,7 @@ class MdateFragment: Fragment() {
 
     private fun setupShowDates() {
         val date = createRandomMdate()
-        binding.txtDemoShowDateYear.text = "DATE_YEAR:\n" + date.show(MDateFormat.DATE_YEAR)
+        binding.txtDemoShowDateYear.text = "DATE_YEAR:\n" + date.show(DATE_YEAR)
 
         binding.txtDemoShowDateYearShort.text = "DATE_YEAR_SHORT:\n" + date.show(MDateFormat.DATE_YEAR_SHORT)
 
@@ -110,17 +112,17 @@ class MdateFragment: Fragment() {
     private fun setupOther() {
         val isoWeek1 = MDate.BuilderDk().date(year = 2020, month = 1, day = 1).build()
         binding.txtDemoShowIsoWeek1.text =
-            "ISOWEEK_TWODIGIT(" + isoWeek1.show(MDateFormat.DATE_YEAR) + "):\n" +
+            "ISOWEEK_TWODIGIT(" + isoWeek1.show(DATE_YEAR) + "):\n" +
                     isoWeek1.show(MDateFormat.ISOWEEK_TWODIGIT)
 
         val isoWeek2 = MDate.BuilderDk().date(year = 2020, month = 1, day = 1).build()
         binding.txtDemoShowIsoWeek2.text =
-            "ISOWEEK_NATURAL (" + isoWeek2.show(MDateFormat.DATE_YEAR) + "):\n" +
+            "ISOWEEK_NATURAL (" + isoWeek2.show(DATE_YEAR) + "):\n" +
                     isoWeek2.show(MDateFormat.ISOWEEK_NATURAL)
 
         val isoWeek3 = MDate.BuilderDk().date(year = 2022, month = 1, day = 1).build()
         binding.txtDemoShowIsoWeek3.text =
-            "ISOWEEK_NATURAL (" + isoWeek3.show(MDateFormat.DATE_YEAR) + " / edgecase; " +
+            "ISOWEEK_NATURAL (" + isoWeek3.show(DATE_YEAR) + " / edgecase; " +
                     "first couple of days belong to week-year 2021):\n" +
                     isoWeek3.show(MDateFormat.ISOWEEK_NATURAL)
 
@@ -132,6 +134,26 @@ class MdateFragment: Fragment() {
 
         val dateuk = MDate.BuilderGb().date(year = 2022, month = 3, day = 1).build()
         binding.txtDemoEnglish.text = "English/UK Localization:\n" + dateuk.show(MDateFormat.PRETTYDATE_LONG)
+    }
+
+    private fun setupConvenienceMethods() {
+        val propdate = createRandomMdate()
+        binding.txtProperties.text = propdate.show(DATE_YEAR) + " " + propdate.show(
+            TIME_SECONDS
+        ) +
+                ": Year: ${propdate.year} Mon: ${propdate.month} Day: ${propdate.day} " +
+                "Hour: ${propdate.hour} Min: ${propdate.minute} Sec: ${propdate.second}"
+
+        val dateToRound = createRandomMdate()
+        val roundedDate = dateToRound.roundToDate()
+        binding.txtRoundToDate.text = dateToRound.show(DATE_YEAR) + " " + dateToRound.show(TIME_SECONDS) +
+                " converts to " + roundedDate.show(DATE_YEAR) + " " + roundedDate.show(TIME_SECONDS)
+
+        val compareDate1 = createRandomMdate()
+        val compareDate2 = createRandomMdate()
+        binding.txtCompareTo.text = compareDate1.show(DATE_YEAR) + " " + compareDate1.show(TIME_SECONDS) +
+                " <= " + compareDate2.show(DATE_YEAR) + " " + compareDate2.show(TIME_SECONDS) + " = " +
+                (compareDate1 <= compareDate2)
     }
 
     private fun createRandomMdate(): MDate {

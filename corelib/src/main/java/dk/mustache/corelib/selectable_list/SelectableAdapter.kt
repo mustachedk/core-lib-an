@@ -98,6 +98,30 @@ abstract class SelectableAdapter<T : SelectableItem>(val items: List<T>, val onI
         }
     }
 
+    fun select(position: Int, notifyToggle: Boolean = true) {
+        if(settings.singleSelection) {
+            items.mapIndexed { index, item -> index to item }
+                .filter{ pair -> pair.second.selected }
+                .forEach { pair ->
+                    if(pair.first != position) {
+                        pair.second.selected = false
+                        notifyItemChanged(pair.first)
+                    }
+                }
+        }
+
+        items[position].selected = true
+        notifyItemChanged(position)
+
+        if(notifyToggle) {
+            onItemSelectionToggled(items[position], true)
+        }
+    }
+
+    fun select(predicate: (T) -> Boolean) {
+        select(items.indexOfFirst(predicate))
+    }
+
     fun toggleAllSelection() {
         if (isAllSelected()) {
             deselectAll()

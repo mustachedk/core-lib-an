@@ -25,6 +25,10 @@
             android:padding="8dp"
             android:textColor="@color/colorPrimary"
             android:background="@color/white"/>
+        <TextView android:id="@+id/txtDemoDateNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -141,6 +145,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CONVENIENCE METHODS"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white"/>
+        <TextView android:id="@+id/txtProperties"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"/>
+        <TextView android:id="@+id/txtRoundToDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"/>
+        <TextView android:id="@+id/txtCompareTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"/>
+
     </LinearLayout>
 
 

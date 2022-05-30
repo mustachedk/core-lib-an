@@ -15,13 +15,18 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.PssPriceLayoutBinding
+import java.util.*
 
 class PriceLayout : ConstraintLayout {
 
     lateinit var binding: PssPriceLayoutBinding
+    var showThousandSeparators = false
     var kr: Int = 0
         set(value) {
-            binding.priceText.text = value.toString()
+            binding.priceText.text = if (showThousandSeparators)
+                                        String.format("%,d", value)
+                                     else
+                                        value.toString()
             field = value
         }
     var ore: Int = 0
@@ -60,7 +65,8 @@ class PriceLayout : ConstraintLayout {
         binding.priceText.setTextColor(ContextCompat.getColor(context, R.color.app_price_background_color))
         binding.oreText.setTextColor(ContextCompat.getColor(context, R.color.app_price_background_color))
         setPrice(priceConfigurationItem?.discountPrice?: -1.0)
-        val oldPrice = SpannableString(priceConfigurationItem?.price.toString())
+        val oldPriceString = String.format(Locale.GERMAN,"%,.2f",priceConfigurationItem?.price)
+        val oldPrice = SpannableString(oldPriceString)
         oldPrice.setSpan(StrikethroughSpan(), 0, oldPrice.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.oldPrice.text = oldPrice
         binding.oldPrice.visibility = View.VISIBLE

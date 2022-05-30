@@ -3,7 +3,6 @@ package dk.mustache.corelib.swipe_recyclerview_item;
 import android.content.Context
 import android.graphics.Rect
 import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -37,6 +36,7 @@ class SwipeListItemLayout : ConstraintLayout {
     var lockClick = false
     var startClickTime = 0L
     var sneakPeakDistance = 50f
+    //Set to false to auto release if maxSwipeDistance is reached
     var onlyAcceptOnTouchRelease = true
     lateinit var handlerBelowSneak : Handler
 
@@ -61,6 +61,14 @@ class SwipeListItemLayout : ConstraintLayout {
         swipeSettingsEnum = swipeSettings
     }
 
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        val foregroundView = getChildAt(1)
+        foregroundView.elevation = 2f
+        val leftView = getChildAt(2)
+        val rightView = getChildAt(3)
+    }
+
     fun close(animated: Boolean = true) {
         currentTranslation = 0f
         endTranslation = 0f
@@ -75,12 +83,6 @@ class SwipeListItemLayout : ConstraintLayout {
         } else {
             childToSwipe.translationX = 0f
         }
-    }
-
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        val view = getChildAt(1)
-        view.elevation = 1f
-        super.onSizeChanged(w, h, oldw, oldh)
     }
 
     fun setSwipedLeftToRight(animated: Boolean = true, activateListener: Boolean = true) {
@@ -144,7 +146,7 @@ class SwipeListItemLayout : ConstraintLayout {
         when (swipeDirection) {
             SwipeDirectionEnum.LEFT_TO_RIGHT -> {
                 //If below sneak peak then wait and swipe back after time
-                if (abs(currentTranslation)<=sneakPeakDistance) {
+                if (abs(currentTranslation)<=sneakPeakDistance && swipePosition != SwipePositionEnum.SWIPED_RIGHT_TO_LEFT) {
                     handlerBelowSneak.postDelayed(belowSneakRunnable,200)
                 } else {
                     if (swipePosition == SwipePositionEnum.SWIPED_RIGHT_TO_LEFT) {
@@ -156,7 +158,7 @@ class SwipeListItemLayout : ConstraintLayout {
                 }
             }
             SwipeDirectionEnum.RIGHT_TO_LEFT -> {
-                if (abs(currentTranslation)<=sneakPeakDistance) {
+                if (abs(currentTranslation)<=sneakPeakDistance && swipePosition != SwipePositionEnum.SWIPED_LEFT_TO_RIGHT) {
                     handlerBelowSneak.postDelayed(belowSneakRunnable,200)
                 } else if(swipePosition==SwipePositionEnum.SWIPED_LEFT_TO_RIGHT) {
                     close()
@@ -276,6 +278,16 @@ class SwipeListItemLayout : ConstraintLayout {
                                     val dy = abs(currentY - startY)
                                     scrollLocked = dx > dy
                                     listener?.onLockScroll(scrollLocked)
+
+                                    val leftView = getChildAt(2)
+                                    val rightView = getChildAt(3)
+                                    if (currentTranslation>0) {
+                                        leftView.elevation = 0f
+                                        rightView.elevation = 1f
+                                    } else {
+                                        leftView.elevation = 1f
+                                        rightView.elevation = 0f
+                                    }
                                 }
 
                             }
@@ -289,10 +301,10 @@ class SwipeListItemLayout : ConstraintLayout {
                 MotionEvent.ACTION_CANCEL,
                 MotionEvent.ACTION_UP -> {
                     //TODO hack to prevent misfiring ACTION_CANCEL
-                        val currentX = e.x
-                        val currentY = e.y
-                        determineStateAndAnimate(currentX)
-                        reset(e)
+                    val currentX = e.x
+                    val currentY = e.y
+                    determineStateAndAnimate(currentX)
+                    reset(e)
                 }
             }
         }

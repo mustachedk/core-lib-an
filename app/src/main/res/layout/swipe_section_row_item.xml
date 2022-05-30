@@ -17,6 +17,7 @@
         app:swipeDistanceRight="200dp"
         app:sneakPeakDistance="150dp">
 
+        <!--Swipe layout-->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -43,59 +44,56 @@
 
         </FrameLayout>
 
+        <!--Layout right to left swipe-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@color/test_blue"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+            <dk.mustache.corelib.views.OneClickButton
+                android:id="@+id/add_button"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@color/test_blue"
+                android:text="kjkkjg"
+                android:paddingEnd="50dp"
+                android:gravity="end|center_vertical"
+                android:textColor="@color/white"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                >
-                <dk.mustache.corelib.views.OneClickButton
-                    android:id="@+id/add_button"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:text="kjkkjg"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="100dp"
+        <!--Layout left to right swipe-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <dk.mustache.corelib.views.OneClickButton
+                android:id="@+id/remove_button"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@color/white"
+                android:paddingStart="50dp"
+                android:text="kjljlfgh"
+                android:gravity="start|center_vertical"
+                android:textColor="@color/black"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                >
-
-                <dk.mustache.corelib.views.OneClickButton
-                    android:id="@+id/remove_button"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:text="kjljlfgh"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </dk.mustache.corelib.swipe_recyclerview_item.SwipeListItemLayout>
