@@ -35,11 +35,13 @@ class ValidationDatePicker : ValidationTextView {
         return viewModel?.date
     }
 
-    fun setDate(newValue: MDate?) {
+    fun setDate(newValue: MDate?, doValidationAfter: Boolean = true) {
         viewModel?.apply { date = newValue }
-        val validateResult = viewModel?.validate()
-        if (validateResult != null && validateResult.triggerCallbacks) {
-            triggerOnValidationChangedListener(validateResult.value)
+        if(doValidationAfter) {
+            val validateResult = viewModel?.validate()
+            if (validateResult != null && validateResult.triggerCallbacks) {
+                triggerOnValidationChangedListener(validateResult.value)
+            }
         }
     }
 
@@ -59,6 +61,9 @@ class ValidationDatePicker : ValidationTextView {
     @Suppress("UNUSED_PARAMETER")
     override fun init(context: Context, attrs: AttributeSet?) {
         super.init(context, attrs)
+        if(id != NO_ID) {
+            viewId = id.toString()
+        }
 
         setOnClickListener {
             datePickerDialog?.show()
@@ -132,14 +137,16 @@ class ValidationDatePicker : ValidationTextView {
         onValidationChangedListeners.add(listener)
     }
 
-    fun setValidationType(validationType: Int?) {
-        if (validationType != null && viewModel != null) {
-            requireNotNull(viewModel).setValidationType(validationType)
-        }
-    }
-
     @Suppress("unused")
     companion object {
+        @BindingAdapter("validationType")
+        @JvmStatic
+        fun setValidationType(view: ValidationDatePicker, newValue: Int?) {
+            if (newValue != null && view.viewModel != null) {
+                requireNotNull(view.viewModel).setValidationType(newValue)
+            }
+        }
+
         @InverseBindingAdapter(attribute = "date")
         @JvmStatic
         fun getDate(view: ValidationDatePicker): MDate? {
@@ -150,7 +157,7 @@ class ValidationDatePicker : ValidationTextView {
         @JvmStatic
         fun setDate(view: ValidationDatePicker, newValue: MDate?) {
             if (newValue != view.getDate()) {
-                view.setDate(newValue)
+                view.setDate(newValue, false)
             }
         }
 

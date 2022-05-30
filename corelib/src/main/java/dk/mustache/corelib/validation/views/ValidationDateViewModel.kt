@@ -30,10 +30,15 @@ class ValidationDateViewModel: ViewModel() {
     }
 
     fun validate(): ValidationResult {
-        val newIsValid = validator.validate(date)
-        val reply = ValidationResult(newIsValid, isValid != newIsValid)
-        isValid = newIsValid
-        return reply
+        if(this::validator.isInitialized) {
+            val newIsValid = validator.validate(date)
+            val reply = ValidationResult(newIsValid, isValid != newIsValid)
+            isValid = newIsValid
+            return reply
+        }
+        else {
+            return ValidationResult(false, false)
+        }
     }
 
     data class ValidationResult(val value: Boolean, val triggerCallbacks: Boolean)

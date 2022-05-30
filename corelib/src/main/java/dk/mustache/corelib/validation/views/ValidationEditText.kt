@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import dk.mustache.corelib.R
 import dk.mustache.corelib.utils.StyleUiHelper
+import dk.mustache.corelib.validation.validators.ValidationType
 
 class ValidationEditText : AppCompatEditText, ValidationView {
     private val onValidationChangedListeners: MutableList<(Boolean) -> Unit> = mutableListOf()
@@ -44,6 +45,10 @@ class ValidationEditText : AppCompatEditText, ValidationView {
 
     @Suppress("UNUSED_PARAMETER")
     fun init(context: Context, attrs: AttributeSet?) {
+        if(id != NO_ID) {
+            viewId = id.toString()
+        }
+
         background = StyleUiHelper.getXmlBackgroundValue(
             context,
             attrs,
@@ -93,12 +98,6 @@ class ValidationEditText : AppCompatEditText, ValidationView {
         onValidationChangedListeners.add(listener)
     }
 
-    fun setValidationType(validationType: Int?) {
-        if (validationType != null && viewModel != null) {
-            requireNotNull(viewModel).setValidationType(validationType)
-        }
-    }
-
     // Adds state_invalid to drawableState if isValid is false, allowing drawables and other
     // state-aware decorations to read the state
     override fun onCreateDrawableState(extraSpace: Int): IntArray {
@@ -114,6 +113,14 @@ class ValidationEditText : AppCompatEditText, ValidationView {
     }
 
     companion object {
+        @BindingAdapter("validationType")
+        @JvmStatic
+        fun setValidationType(view: ValidationEditText, newValue: Int?) {
+            if (newValue != null && view.viewModel != null) {
+                requireNotNull(view.viewModel).setValidationType(newValue)
+            }
+        }
+
         @InverseBindingAdapter(attribute = "isValid")
         @JvmStatic
         fun getIsValid(view: ValidationEditText): Boolean? {

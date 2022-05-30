@@ -8,13 +8,18 @@ open class ValidationStringViewModel: ViewModel() {
     private lateinit var validator: Validator<String>
 
     var isValid: Boolean? = null
+    // null indicates that the view has not yet been validated. This allows the view to show the
+    // standard (valid==true) ui, but other views can identify that the view has not yet been
+    // validated and thus identify the form as a whole as invalid
 
     fun setValidationType(validationType: Int) {
         validator = when(validationType) {
-            ValidationType.Always -> AlwaysStringValidator()
+            ValidationType.Always -> {
+                isValid = true // set true immediately so user doesn't need to interact with view before it validates as true
+                AlwaysStringValidator()
+            }
             ValidationType.NotEmpty -> NotEmptyValidator()
             ValidationType.Phone -> DkPhoneValidator()
-            ValidationType.Password -> TODO()
             ValidationType.NullOrNotEmpty -> NullOrNotEmptyValidator()
             else -> throw NotImplementedError("No validationType of the given index is implemented")
         }

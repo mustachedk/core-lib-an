@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <corners android:radius="8dp" />
-    <solid android:color="?android:solidColor" />
-    <stroke
-        android:width="1dp"
-        android:color="?android:strokeColor" />
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:constantSize="true">
+    <item app:state_invalid="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="8dp" />
+            <solid android:color="@android:color/holo_red_light" />
+            <stroke android:width="1dp" android:color="@android:color/holo_red_light" />
+        </shape>
+    </item>
+    <item app:state_invalid="false">
+        <shape
+            android:shape="rectangle">
+            <corners android:radius="8dp" />
+            <solid android:color="?android:solidColor" />
+            <stroke
+                android:width="1dp"
+                android:color="?android:strokeColor" />
+        </shape>
+    </item>
+</selector>

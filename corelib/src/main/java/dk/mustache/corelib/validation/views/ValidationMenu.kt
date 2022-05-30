@@ -45,6 +45,9 @@ class ValidationMenu : ValidationTextView {
     @Suppress("UNUSED_PARAMETER")
     override fun init(context: Context, attrs: AttributeSet?) {
         super.init(context, attrs)
+        if(id != NO_ID) {
+            viewId = id.toString()
+        }
 
         setOnClickListener {
             if (this::popupMenu.isInitialized) {
@@ -111,13 +114,15 @@ class ValidationMenu : ValidationTextView {
         onValidationChangedListeners.add(listener)
     }
 
-    fun setValidationType(validationType: Int?) {
-        if(validationType != null && viewModel != null){
-            requireNotNull(viewModel).setValidationType(validationType)
-        }
-    }
-
     companion object {
+        @BindingAdapter("validationType")
+        @JvmStatic
+        fun setValidationType(view: ValidationMenu, newValue: Int?) {
+            if (newValue != null && view.viewModel != null) {
+                requireNotNull(view.viewModel).setValidationType(newValue)
+            }
+        }
+
         @InverseBindingAdapter(attribute = "isValid")
         @JvmStatic
         fun getViewIsValid(view: ValidationMenu): Boolean? {
