@@ -16,7 +16,6 @@ import dk.mustache.corelibexample.mdate.MdateFragment
 import dk.mustache.corelibexample.sandbox.SandboxFragment
 import dk.mustache.corelibexample.selectablelist.SelectableListFragment
 import dk.mustache.corelibexample.standard_dialog.StandardDialogDemoFragment
-import dk.mustache.corelibexample.syncviews.SyncViewsFragment
 import dk.mustache.corelibexample.validation.ValidationFragment
 
 
@@ -27,9 +26,8 @@ class FrontFragment : Fragment() {
         "MDate Demo" to MdateFragment(),
         "SelectableList" to SelectableListFragment(),
         "Standard Dialog Demo" to StandardDialogDemoFragment(),
-        "SyncViews Demo" to SyncViewsFragment(),
-        "Sandbox (test your libs here)" to SandboxFragment(),
-        "Validation" to ValidationFragment()
+        "Validation" to ValidationFragment(),
+        "Sandbox (test your libs here)" to SandboxFragment()
     )
 
     override fun onCreateView(
