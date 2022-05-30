@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="dk.mustache.corelibexample.section_header_example.SectionHeaderItemExampleViewModel"/>
+            type="dk.mustache.corelibexample.sandbox.section_header_example.SectionHeaderItemExampleViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

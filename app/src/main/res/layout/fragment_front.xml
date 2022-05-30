@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".front.FrontFragment">
+    <LinearLayout android:id="@+id/buttonList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CoreLib Demos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--    <Button android:id="@+id/btnMdate"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_margin="4dp"-->
+        <!--        android:text="MDate Demo"-->
+        <!--        app:layout_constraintTop_toBottomOf="@id/txtTitle"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"/>-->
+
+        <!--    <Button android:id="@+id/btnSynViews"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_margin="4dp"-->
+        <!--        android:text="SyncViews Demo"-->
+        <!--        app:layout_constraintTop_toBottomOf="@id/btnMdate"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"/>-->
+
+        <!--    <Button android:id="@+id/btnSandbox"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_margin="4dp"-->
+        <!--        android:text="Sandbox (test your libs here)"-->
+        <!--        app:layout_constraintTop_toBottomOf="@id/btnSynViews"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"/>-->
+
+    </LinearLayout>
+</ScrollView>
