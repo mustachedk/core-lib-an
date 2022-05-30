@@ -1,7 +1,10 @@
 package dk.mustache.corelib.list_header_viewpager
 
+import android.app.Activity
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import dk.mustache.corelib.viewmodels.ObservableBaseViewModel
 
 open class HeaderListViewPagerViewModel : ObservableBaseViewModel() {
@@ -19,6 +22,12 @@ open class HeaderListViewPagerViewModel : ObservableBaseViewModel() {
     fun <T : PageData<U>, U : GenericPagerFragment> getGenericPageList(): List<T>? {
         return pageDataListObservable.get()?.map {
             it as T
+        }
+    }
+
+    companion object {
+        fun getInstance(activity: FragmentActivity): HeaderListViewPagerViewModel {
+            return ViewModelProvider(activity).get(HeaderListViewPagerViewModel::class.java)
         }
     }
 }

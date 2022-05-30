@@ -8,19 +8,16 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import dk.mustache.corelib.BR
 import dk.mustache.corelib.R
 import dk.mustache.corelib.databinding.FragmentAlertDialogBinding
-import dk.mustache.corelib.fragment_dialog.DialogTypeEnum
-import dk.mustache.corelib.fragment_dialog.FragmentDialogSetup
 
 open class StandardDialogFragment <T: Enum<T>> : DialogFragment() {
 
-    var mListener: BaseDialogFragmentListener<T>? = null
+    var listener: BaseDialogFragmentListener<T>? = null
     lateinit var dialogSetup: FragmentDialogSetup<T>
     lateinit var binding: ViewDataBinding
 
@@ -69,10 +66,10 @@ open class StandardDialogFragment <T: Enum<T>> : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = when (dialogSetup.dialogType) {
             DialogTypeEnum.ALERT  -> {
-                DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, R.layout.fragment_alert_dialog, container, false)
+                DataBindingUtil.inflate(layoutInflater, R.layout.fragment_alert_dialog, container, false)
             }
             else -> {
-                DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, dialogSetup.alternativeLayout, container, false)
+                DataBindingUtil.inflate(layoutInflater, dialogSetup.alternativeLayout, container, false)
             }
         }
 
@@ -92,16 +89,16 @@ open class StandardDialogFragment <T: Enum<T>> : DialogFragment() {
                 dialogBinding.dialogText1.text = Html.fromHtml(dialogSetup.text)
 
                 dialogBinding.dialogText1.setOnClickListener {
-                    mListener?.dialogButtonClicked(TEXT_CLICKED, dialogSetup.dialogType)
+                    listener?.dialogButtonClicked(TEXT_CLICKED, dialogSetup.dialogType)
                 }
 
                 dialogBinding.buttonOk.setOnClickListener {
                     dismiss()
-                    mListener?.dialogButtonClicked(BUTTON_OK, dialogSetup.dialogType)
+                    listener?.dialogButtonClicked(BUTTON_OK, dialogSetup.dialogType)
                 }
                 dialogBinding.buttonNo.setOnClickListener {
                     dismiss()
-                    mListener?.dialogButtonClicked(BUTTON_CANCEL, dialogSetup.dialogType)
+                    listener?.dialogButtonClicked(BUTTON_CANCEL, dialogSetup.dialogType)
                 }
             }
             else -> {
@@ -141,18 +138,23 @@ open class StandardDialogFragment <T: Enum<T>> : DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        val cardDetailsListener = parentFragment
-        if (cardDetailsListener is BaseDialogFragmentListener<*>)
-            mListener = cardDetailsListener as BaseDialogFragmentListener<T>
+        if(listener != null) {
+            return
+        }
+        if(this is BaseDialogFragmentListener<*>) {
+            listener = this as BaseDialogFragmentListener<T>
+        }
+        else if (parentFragment is BaseDialogFragmentListener<*>)
+            listener = parentFragment as BaseDialogFragmentListener<T>
         else if (activity is BaseDialogFragmentListener<*>){
-            mListener = activity as BaseDialogFragmentListener<T>
+            listener = activity as BaseDialogFragmentListener<T>
         } else
             throw RuntimeException(parentFragment?.tag + " must implement BaseDialogFragmentListener")
     }
 
     override fun onDetach() {
         super.onDetach()
-        mListener?.nothingSelected()
-        mListener = null
+        listener?.nothingSelected()
+        listener = null
     }
 }

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="pageData"
-            type="dk.mustache.corelibexample.SpecialData"/>
+            type="dk.mustache.corelibexample.sandbox.SpecialData"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

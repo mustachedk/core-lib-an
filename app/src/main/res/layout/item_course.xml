@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="dk.mustache.corelibexample.model.MockResponse" />
+            type="dk.mustache.corelibexample.sandbox.model.MockResponse" />
 
         <import type="android.view.View" />
     </data>
