@@ -73,7 +73,6 @@ enum class MDateFormat(val pattern: String) {
  * @property locale The locale to use for formatting
  */
 class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale: Locale): Comparable<MDate> {
-
     val year get() = calendar.get(Calendar.YEAR)
     val month get() = calendar.get(Calendar.MONTH)+1
     val day get() = calendar.get(Calendar.DAY_OF_MONTH)
@@ -308,8 +307,14 @@ class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale:
         }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if(other !is MDate)
+                return false
+        return compareTo(other) == 0
+    }
+
     override fun compareTo(other: MDate): Int {
-        val result = ((this.calendar.timeInMillis - other.calendar.timeInMillis) / 1000).toInt()
+        val result = ((this.calendar.timeInMillis - other.calendar.timeInMillis) / 2000).toInt() // Divide by 2000 to ignore millisecond differences up to 2 seconds
         return result
     }
 }
@@ -328,12 +333,12 @@ class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale:
  *     instance. Defaults to the device's default locale.
  */
 class MDateBuilder(private val locale: Locale = Locale.getDefault()) {
-    private var year: Int = -1
-    private var month: Int = -1
-    private var day: Int = -1
-    private var hour: Int = -1
-    private var minute: Int = -1
-    private var second: Int = -1
+    private var year: Int = 2000
+    private var month: Int = 1
+    private var day: Int = 1
+    private var hour: Int = 0
+    private var minute: Int = 0
+    private var second: Int = 0
 
     fun dateTime(
         year: Int = 2000,
@@ -405,7 +410,7 @@ class MDateBuilder(private val locale: Locale = Locale.getDefault()) {
 
     fun build(): MDate {
         val calendar = Calendar.getInstance(locale)
-        calendar.set(year, month - 1, day + 1, hour, minute, second)
+        calendar.set(year, month - 1, day, hour, minute, second)
         return MDate(calendar, locale)
     }
 }
