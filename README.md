@@ -14,7 +14,7 @@ allprojects {
 ###### Add this to your root build.gradle
 ```bash
 dependencies {
-  implementation 'com.github.mustachedk:core-lib-an:1.3.1'
+  implementation 'com.github.mustachedk:core-lib-an:1.3.2'
 }
 ```
 ###### Initialize corelib in the custom Application context
@@ -45,6 +45,7 @@ class YourApplication : Application() {
 * Bluetooth enable and isEnabled
 * Beacon
 * BarcodeBitmapCreator
+* KeyboardUtil: Contains functions to hide and show the soft keyboard.
 * MDate: Convenience class allowing the easy manipulation and string formatting of a datetime.
 
 ##### Views
