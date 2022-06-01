@@ -314,7 +314,7 @@ class MDate(val calendar: Calendar = Calendar.getInstance(), private val locale:
     }
 
     override fun compareTo(other: MDate): Int {
-        val result = ((this.calendar.timeInMillis - other.calendar.timeInMillis) / 2000).toInt() // Divide by 2000 to ignore millisecond differences up to 2 seconds
+        val result = ((this.calendar.timeInMillis - other.calendar.timeInMillis) / 1000).toInt()
         return result
     }
 }
@@ -411,6 +411,7 @@ class MDateBuilder(private val locale: Locale = Locale.getDefault()) {
     fun build(): MDate {
         val calendar = Calendar.getInstance(locale)
         calendar.set(year, month - 1, day, hour, minute, second)
+        calendar.set(Calendar.MILLISECOND, 0)
         return MDate(calendar, locale)
     }
 }
