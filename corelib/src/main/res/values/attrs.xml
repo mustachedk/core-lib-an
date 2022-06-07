@@ -159,4 +159,9 @@
         <attr name="priceTextColor" format="color" />
     </declare-styleable>
 
+    <!-- For Validation -->
+    <declare-styleable name="ValidationState">
+        <attr name="state_invalid" format="boolean" />
+    </declare-styleable>
+
 </resources>

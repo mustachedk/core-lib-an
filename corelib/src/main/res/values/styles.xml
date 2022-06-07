@@ -95,4 +95,10 @@
     <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorControlNormal">@color/light_gray_background</item>
     </style>
+
+    <style name="Validation.EditText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@drawable/validation_standard_textcolor</item>
+        <item name="android:hint">@drawable/validation_standard_hintcolor</item>
+    </style>
+
 </resources>

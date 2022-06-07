@@ -8,7 +8,7 @@ import dk.mustache.corelib.utils.ViewUtil
 
 private const val RESET_DURATION = 500L
 
-class OneClickButton : androidx.appcompat.widget.AppCompatTextView {
+open class OneClickButton : androidx.appcompat.widget.AppCompatTextView {
 
     constructor(context: Context) : super(context) { init(context, null) }
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { init(
@@ -21,8 +21,8 @@ class OneClickButton : androidx.appcompat.widget.AppCompatTextView {
         defStyleAttr
     ) { init(context, attrs) }
 
-    fun init (context: Context, attrs: AttributeSet?) {
-//        gravity = TextView.TEXT_ALIGNMENT_CENTER
+    open fun init (context: Context, attrs: AttributeSet?) {
+
     }
 
     override fun setOnClickListener(l: OnClickListener?) {

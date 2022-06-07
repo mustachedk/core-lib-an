@@ -16,6 +16,7 @@ import dk.mustache.corelibexample.mdate.MdateFragment
 import dk.mustache.corelibexample.sandbox.SandboxFragment
 import dk.mustache.corelibexample.selectablelist.SelectableListFragment
 import dk.mustache.corelibexample.standard_dialog.StandardDialogDemoFragment
+import dk.mustache.corelibexample.validation.ValidationFragment
 
 
 class FrontFragment : Fragment() {
@@ -25,6 +26,7 @@ class FrontFragment : Fragment() {
         "MDate Demo" to MdateFragment(),
         "SelectableList" to SelectableListFragment(),
         "Standard Dialog Demo" to StandardDialogDemoFragment(),
+        "Validation" to ValidationFragment(),
         "Sandbox (test your libs here)" to SandboxFragment()
     )
 
