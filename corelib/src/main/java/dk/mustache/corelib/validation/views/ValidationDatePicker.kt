@@ -3,6 +3,7 @@ package dk.mustache.corelib.validation.views
 import android.app.DatePickerDialog
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
@@ -13,7 +14,7 @@ import dk.mustache.corelib.utils.MDateFormat
 
 class ValidationDatePicker : ValidationTextView {
     private val onDateChangedListeners: MutableList<(MDate?) -> Unit> = mutableListOf()
-    private val onValidationChangedListeners: MutableList<(Boolean) -> Unit> = mutableListOf()
+    private val onValidationChangedListeners: MutableList<(Boolean, Int?) -> Unit> = mutableListOf()
 
     private var viewModel: ValidationDateViewModel? = null
     private lateinit var viewId: String
@@ -38,10 +39,7 @@ class ValidationDatePicker : ValidationTextView {
     fun setDate(newValue: MDate?, doValidationAfter: Boolean = true) {
         viewModel?.apply { date = newValue }
         if(doValidationAfter) {
-            val validateResult = viewModel?.validate()
-            if (validateResult != null && validateResult.triggerCallbacks) {
-                triggerOnValidationChangedListener(validateResult.value)
-            }
+            validate()
         }
     }
 
@@ -83,10 +81,7 @@ class ValidationDatePicker : ValidationTextView {
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 val mDate = MDate.BuilderDk().year(year).month(month + 1).day(dayOfMonth).build()
                 viewModel?.date = mDate
-                val validateResult = viewModel?.validate()
-                if (validateResult != null && validateResult.triggerCallbacks) {
-                    triggerOnValidationChangedListener(validateResult.value)
-                }
+                validate()
             }
 
         datePickerDialog = DatePickerDialog(
@@ -96,6 +91,13 @@ class ValidationDatePicker : ValidationTextView {
             currentDate.month - 1,
             currentDate.day
         )
+    }
+
+    private fun validate() {
+        val validateResult = viewModel?.validate()
+        if (validateResult != null && validateResult.triggerCallbacks) {
+            triggerOnValidationChangedListener(validateResult.isValid, validateResult.message)
+        }
     }
 
     private fun onValueChanged(value: MDate?) {
@@ -129,11 +131,11 @@ class ValidationDatePicker : ValidationTextView {
         onDateChangedListeners.add(listener)
     }
 
-    private fun triggerOnValidationChangedListener(newValue: Boolean) {
-        onValidationChangedListeners.forEach { it.invoke(newValue) }
+    private fun triggerOnValidationChangedListener(newValue: Boolean, @StringRes validationMessage: Int?) {
+        onValidationChangedListeners.forEach { it.invoke(newValue, validationMessage) }
     }
 
-    override fun addOnValidationChangedListener(listener: (Boolean) -> Unit) {
+    override fun addOnValidationChangedListener(listener: (Boolean, Int?) -> Unit) {
         onValidationChangedListeners.add(listener)
     }
 
@@ -184,7 +186,7 @@ class ValidationDatePicker : ValidationTextView {
         @BindingAdapter("app:isValidAttrChanged")
         @JvmStatic
         fun setIsValidListeners(view: ValidationDatePicker, attrChange: InverseBindingListener) {
-            view.addOnValidationChangedListener { attrChange.onChange() }
+            view.addOnValidationChangedListener { _, _ -> attrChange.onChange() }
         }
     }
 }

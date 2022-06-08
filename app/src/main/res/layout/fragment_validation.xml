@@ -1,121 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-<data>
-    <import type="dk.mustache.corelib.validation.validators.ValidationType" />
-    <variable
-        name="viewModel"
-        type="dk.mustache.corelibexample.validation.ValidationViewModel" />
-</data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+
+    <data>
+
+        <import type="dk.mustache.corelib.validation.validators.ValidationType" />
+
+        <variable
+            name="viewModel"
+            type="dk.mustache.corelibexample.validation.ValidationViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textColor="@color/colorPrimary"
-        android:background="@color/white"
-        android:textAllCaps="true"
-        android:text="EditTexts"/>
-    <dk.mustache.corelib.validation.views.ValidationEditText
-        style="@style/Validation.EditText"
-        android:id="@+id/txtAlwaysTrue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Always Validates True"
-        android:text="@={viewModel.alwaysTrue}"
-        app:validationType="@{ValidationType.Always}"/>
-    <dk.mustache.corelib.validation.views.ValidationEditText
-        style="@style/Validation.EditText"
-        android:id="@+id/txtNotEmpty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Validates True if not empty"
-        android:text="@={viewModel.notEmpty}"
-        app:validationType="@{ValidationType.NotEmpty}"/>
-    <dk.mustache.corelib.validation.views.ValidationEditText
-        style="@style/Validation.EditText"
-        android:id="@+id/txtPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Validates True if danish phone number"
-        android:text="@={viewModel.phone}"
-        app:validationType="@{ValidationType.Phone}"/>
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white"
+            android:textAllCaps="true"
+            android:text="EditTexts" />
+
+        <dk.mustache.corelib.validation.views.ValidationEditText
+            style="@style/Validation.EditText"
+            android:id="@+id/txtAlwaysTrue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="Always Validates True"
+            android:text="@={viewModel.alwaysTrue}"
+            app:validationType="@{ValidationType.Always}" />
+
+        <dk.mustache.corelib.validation.views.ValidationControlLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:text_default="There should be text here"
+            app:always_use_text_default="true"
+            app:failure_view_valid_visibility="invisible">
+
+            <dk.mustache.corelib.validation.views.ValidationEditText
+                style="@style/Validation.EditText"
+                android:id="@+id/txtNotEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Validates True if not empty"
+                android:text="@={viewModel.notEmpty}"
+                app:validationType="@{ValidationType.NotEmpty}" />
+        </dk.mustache.corelib.validation.views.ValidationControlLayout>
+
+        <dk.mustache.corelib.validation.views.ValidationControlLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:failure_view="@layout/view_validation_failuretextview">
+
+            <dk.mustache.corelib.validation.views.ValidationEditText
+                style="@style/Validation.EditText"
+                android:id="@+id/txtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Validates True if danish phone number"
+                android:text="@={viewModel.phone}"
+                app:validationType="@{ValidationType.Phone}" />
+        </dk.mustache.corelib.validation.views.ValidationControlLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white"
+            android:textAllCaps="true"
+            android:text="Menu" />
 
 
+        <dk.mustache.corelib.validation.views.ValidationControlLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textColor="@color/colorPrimary"
-        android:background="@color/white"
-        android:textAllCaps="true"
-        android:text="Menu"/>
-    <dk.mustache.corelib.validation.views.ValidationMenu
-        style="@style/Validation.EditText"
-        android:id="@+id/menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Validates true if a value has been picked"
-        android:adapter="@{viewModel.menuAdapter}"
-        app:validationType="@{ValidationType.NotEmpty}"/>
+            <dk.mustache.corelib.validation.views.ValidationMenu
+                style="@style/Validation.EditText"
+                android:id="@+id/menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Validates true if a value has been picked"
+                android:adapter="@{viewModel.menuAdapter}"
+                app:validationType="@{ValidationType.NotEmpty}" />
+        </dk.mustache.corelib.validation.views.ValidationControlLayout>
 
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textColor="@color/colorPrimary"
-        android:background="@color/white"
-        android:textAllCaps="true"
-        android:text="DatePicker"/>
-    <dk.mustache.corelib.validation.views.ValidationDatePicker
-        style="@style/Validation.EditText"
-        android:id="@+id/datepicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:date="@={viewModel.birthdate}"
-        app:validationType="@{ValidationType.Min18}"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Validation set to minimum 18 years of age"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white"
+            android:textAllCaps="true"
+            android:text="DatePicker" />
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textColor="@color/colorPrimary"
-        android:background="@color/white"
-        android:textAllCaps="true"
-        android:text="Do Validation"/>
-    <dk.mustache.corelib.validation.views.ValidationButton
-        android:id="@+id/btn_confirm_validation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@drawable/rounded_corners_background"
-        android:padding="8dp"
-        android:layout_margin="8dp"
-        android:text="This button does not become\nactive until all controls are valid"/>
+        <dk.mustache.corelib.validation.views.ValidationControlLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <dk.mustache.corelib.validation.views.ValidationDatePicker
+                style="@style/Validation.EditText"
+                android:id="@+id/datepicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:date="@={viewModel.birthdate}"
+                app:validationType="@{ValidationType.Min18}" />
+        </dk.mustache.corelib.validation.views.ValidationControlLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Validation set to minimum 18 years of age" />
 
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white"
+            android:textAllCaps="true"
+            android:text="Do Validation" />
+
+        <dk.mustache.corelib.validation.views.ValidationButton
+            android:id="@+id/btn_confirm_validation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/rounded_corners_background"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:text="This button does not become\nactive until all controls are valid" />
+
+
+    </LinearLayout>
 </layout>
