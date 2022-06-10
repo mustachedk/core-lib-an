@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="dk.mustache.corelib.validation.failureview.FailureViewModel" />
+    </data>
+    <androidx.appcompat.widget.AppCompatImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/img_validation_failure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:imageResource="@{viewModel.imageResource}"
+        android:tint="@{viewModel.imageTint}"
+        tools:src="@android:drawable/ic_dialog_alert"
+        tools:tint="@color/red"/>
+</layout>

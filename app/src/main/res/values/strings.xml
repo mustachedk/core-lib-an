@@ -6,4 +6,7 @@
     <string name="unfinished_courses">Uløste kurser</string>
     <string name="finished_courses">Gennemførte kurser</string>
     <string name="courses_subtitle">kurser</string>
+
+
+    <string name="validation_custom_message">A custom message.</string>
 </resources>
