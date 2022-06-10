@@ -94,6 +94,7 @@
                 app:failure_view_valid_visibility="invisible"
                 app:failure_view_image="@android:drawable/ic_dialog_info"
                 app:failure_view_image_tint="@color/test_blue"
+                app:failure_view_onclick_listener="@{viewModel.iconClickListener}"
                 app:failure_view_side="start">
 
                 <dk.mustache.corelib.validation.views.ValidationEditText
@@ -101,7 +102,7 @@
                     android:id="@+id/txtNotEmpty3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:hint="Shows an icon in front of view"
+                    android:hint="Shows a clickable icon in front of view"
                     android:text="@={viewModel.notEmpty}"
                     app:validationType="@{ValidationType.NotEmpty}" />
             </dk.mustache.corelib.validation.failureview.ValidationControlLayout>
