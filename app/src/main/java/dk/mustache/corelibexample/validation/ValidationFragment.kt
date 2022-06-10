@@ -20,6 +20,10 @@ class ValidationFragment: Fragment() {
     ): View {
         binding = FragmentValidationBinding.inflate(inflater)
 
+        viewModel.iconClickListener = { _, _, message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+
         binding.btnConfirmValidation.setOnClickListener {
             val reply = viewModel.doTheThing()
             Toast.makeText(requireContext(), "Values are: $reply", Toast.LENGTH_SHORT).show()
