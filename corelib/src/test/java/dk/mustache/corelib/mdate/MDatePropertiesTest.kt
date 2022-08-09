@@ -4,6 +4,7 @@ import dk.mustache.corelib.utils.MDate
 import dk.mustache.corelib.utils.MDateBuilder
 import org.junit.Assert
 import org.junit.Test
+import java.util.*
 
 class MDatePropertiesTest {
 
@@ -96,6 +97,19 @@ class MDatePropertiesTest {
 
         // Assert
         Assert.assertEquals(testSecond, actualSecond)
+    }
+
+    @Test
+    fun getWeekDay() {
+        // Arrange
+        val testSecond = 6
+        val date = MDate.BuilderDk().dateTime(2022, 8, 9).build()
+
+        // Act
+        val weekDay = date.dayOfWeek
+
+        // Assert
+        Assert.assertEquals(Calendar.TUESDAY, weekDay)
     }
 
     private fun getDateTimeBuilder(): MDateBuilder {

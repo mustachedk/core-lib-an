@@ -13,11 +13,19 @@ import org.junit.runners.Suite
 @Suite.SuiteClasses(
     MDateBuilderTest::class,
     MDateCalcTest::class,
+    MDateCloneTest::class,
+    MDateComparisonBasicTest::class,
+    MDateComparisonEqualsComponentTest::class,
+    MDateComparisonIsNowTest::class,
+    MDateComparisonUntilTest::class,
+    MDateFormatCustomTest::class,
     MDateFormatIsoWeekTest::class,
+    MDateFormatNoPeriodTest::class,
     MDateFormatPrettyTest::class,
     MDateFormatSimpleTest::class,
-    MDateOtherTest::class,
+    MDateFormatWeekDayTest::class,
     MDatePropertiesTest::class,
+    MDateRoundingTest::class,
 )
 class MDateTest {
 }
