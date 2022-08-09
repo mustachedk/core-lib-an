@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dk.mustache.corelib.utils.CaseType
+import dk.mustache.corelib.utils.DateComponent
 import dk.mustache.corelib.utils.MDate
 import dk.mustache.corelib.utils.MDateFormat.*
 import dk.mustache.corelibexample.databinding.FragmentMdateBinding
@@ -158,16 +159,16 @@ class MdateFragment : Fragment() {
         val dateEqual = createRandomMdate()
         val dateEqual2 = dateEqual.clone(hour = 12, minute = 36, second = 12)
         binding.txtEqualDayTrue.text = dateEqual.show(TIMESTAMP) + " is on same day as " +
-                dateEqual2.show(TIMESTAMP) + ": " + dateEqual.equals(dateEqual2, Calendar.DAY_OF_MONTH)
+                dateEqual2.show(TIMESTAMP) + ": " + dateEqual.equals(dateEqual2, DateComponent.DAY)
 
         val dateEqual3 = dateEqual.plusDays(1)
         binding.txtEqualDayFalse.text = dateEqual.show(TIMESTAMP) + " is on same day as " +
-                dateEqual3.show(TIMESTAMP) + ": " + dateEqual.equals(dateEqual3, Calendar.DAY_OF_MONTH)
+                dateEqual3.show(TIMESTAMP) + ": " + dateEqual.equals(dateEqual3, DateComponent.DAY)
 
         val dateFrom = createRandomMdate()
         val dateto = createRandomMdate()
         binding.txtTimeUntil.text = dateFrom.show(DATE_YEAR) + " months until " + dateto.show(DATE_YEAR) +
-                ": " + dateFrom.timeUntil(dateto, Calendar.MONTH)
+                ": " + dateFrom.timeUntil(dateto, DateComponent.MONTH)
 
         val dateToRound = createRandomMdate()
         val roundedDate = dateToRound.roundToDate()
