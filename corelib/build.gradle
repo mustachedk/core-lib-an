@@ -80,6 +80,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'androidx.compose.ui:ui-unit:1.0.0-rc01'
 
+    // JODA TIME
+    implementation "net.danlew:android.joda:2.10.1.1"
+
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
