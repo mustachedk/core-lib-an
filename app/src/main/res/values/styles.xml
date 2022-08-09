@@ -8,4 +8,26 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ErrorDialogDemoTheme">
+        <item name="android:windowTitleStyle">@style/AlertDialogTitle</item>
+        <item name="android:textAppearanceMedium">@style/AlertTextAppearance</item>
+        <item name="android:buttonBarButtonStyle">@style/AlertDialogButtonStyle</item>
+
+    </style>
+
+    <style name="AlertDialogTitle">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AlertTextAppearance">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AlertDialogButtonStyle">
+        <item name="android:background">@drawable/rounded_corners_background</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
