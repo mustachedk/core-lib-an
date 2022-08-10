@@ -12,6 +12,7 @@ import org.junit.runners.Suite
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
     MDateBuilderTest::class,
+    MDateBuilderParsingTest::class,
     MDateCalcTest::class,
     MDateCloneTest::class,
     MDateComparisonBasicTest::class,
