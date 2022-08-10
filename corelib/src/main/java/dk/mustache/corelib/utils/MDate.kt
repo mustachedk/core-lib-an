@@ -679,6 +679,12 @@ class MDateBuilder(private val locale: Locale = Locale.getDefault()) {
         return this
     }
 
+    fun parse(string: String, pattern: String, patternLocale: Locale = Locale.ENGLISH): MDate {
+        val dateFormat = SimpleDateFormat(pattern, patternLocale)
+        val jDate = dateFormat.parse(string) ?: throw IllegalArgumentException("date parser returned null")
+        return MDate.BuilderDk().fromJavaDate(jDate)
+    }
+
     fun fromJavaDate(date: Date): MDate {
         val calendar = Calendar.getInstance(locale)
         calendar.timeInMillis = date.time
