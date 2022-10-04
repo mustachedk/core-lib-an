@@ -3,8 +3,8 @@
     <data>
 
         <variable
-            name="validationMessage"
-            type="String" />
+            name="viewModel"
+            type="dk.mustache.corelib.validation.failureview.FailureViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/red"
-            android:text="@{validationMessage}"
+            android:text="@{viewModel.message}"
             tools:text="This is an error"
 
             />
