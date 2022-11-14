@@ -12,6 +12,7 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import dk.mustache.corelibexample.R
 import dk.mustache.corelibexample.headerlistviewpager.HeaderListViewPagerDemoFragment
+import dk.mustache.corelibexample.interscroll.InterscrollFragment
 import dk.mustache.corelibexample.mdate.MdateFragment
 import dk.mustache.corelibexample.sandbox.SandboxFragment
 import dk.mustache.corelibexample.selectablelist.SelectableListFragment
@@ -24,6 +25,7 @@ class FrontFragment : Fragment() {
     val demos = listOf<Pair<String, Fragment>>(
         "HeaderListViewPager Demo" to HeaderListViewPagerDemoFragment(),
         "MDate Demo" to MdateFragment(),
+        "Interscroll Demo" to InterscrollFragment(),
         "SelectableList" to SelectableListFragment(),
         "Standard Dialog Demo" to StandardDialogDemoFragment(),
         "Validation" to ValidationFragment(),
