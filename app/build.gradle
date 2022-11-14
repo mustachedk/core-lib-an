@@ -62,6 +62,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.google.android.material:material:1.7.0-alpha01'
     implementation 'androidx.viewpager2:viewpager2:1.1.0-beta01'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
 
     //Library Module
     implementation project(":corelib")
