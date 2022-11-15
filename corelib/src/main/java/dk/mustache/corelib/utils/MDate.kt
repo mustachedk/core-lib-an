@@ -548,6 +548,16 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
 
     companion object {
 
+        private var defaultLocale: Locale = Locale.getDefault()
+
+        fun getDefaultLocale(): Locale {
+            return defaultLocale
+        }
+
+        fun setDefaultLocale(locale: Locale) {
+            defaultLocale = locale
+        }
+
         /**
          * @return An MDateBuilder using danish localization by default
          */
@@ -583,7 +593,7 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
          *     device
          */
         fun Builder(): MDateBuilder {
-            return MDateBuilder(Locale.getDefault())
+            return MDateBuilder(defaultLocale)
         }
     }
 
@@ -682,7 +692,7 @@ class MDateBuilder(private val locale: Locale = Locale.getDefault()) {
     fun parse(string: String, pattern: String, patternLocale: Locale = Locale.ENGLISH): MDate {
         val dateFormat = SimpleDateFormat(pattern, patternLocale)
         val jDate = dateFormat.parse(string) ?: throw IllegalArgumentException("date parser returned null")
-        return MDate.BuilderDk().fromJavaDate(jDate)
+        return fromJavaDate(jDate)
     }
 
     fun fromJavaDate(date: Date): MDate {
