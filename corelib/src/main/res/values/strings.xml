@@ -15,4 +15,8 @@
     <string name="quantity_discount_label">%1$s FOR %2$s KR</string>
     <string name="max_quantity_label">MAX %s PR. KUNDE</string>
     <string name="avoid_waste_label">Undgå maspild</string>
+
+    <string name="error_dialog_default_title">Error</string>
+    <string name="error_dialog_default_body">An unidentified error occurred.</string>
+    <string name="error_dialog_default_button">Close</string>
 </resources>

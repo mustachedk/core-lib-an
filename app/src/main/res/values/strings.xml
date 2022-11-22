@@ -2,6 +2,11 @@
     <string name="app_name">CoreLibExample</string>
     <string name="percentage">%</string>
 
+    <string name="error_dialog_title_local_default">Default Fejl</string>
+    <string name="error_dialog_body_local_default">Denne fejl besked er defineret lokalt.</string>
+    <string name="error_dialog_button_local_default">Luk</string>
+    <string name="error_dialog_title">String Res</string>
+    <string name="error_dialog_body">Currently displaying stringres text.</string>
 
     <string name="unfinished_courses">Uløste kurser</string>
     <string name="finished_courses">Gennemførte kurser</string>
