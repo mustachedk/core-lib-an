@@ -27,4 +27,6 @@
     <color name="gray">#979797</color>
     <color name="app_price_background_color">#F2AC00</color>
     <color name="charleston_g">#292929</color>
+    <color name="pincode_background">#EBEBEB</color>
+    <color name="pincode_stroke">#BFBFBF</color>
 </resources>
