@@ -24,6 +24,7 @@ import org.junit.runners.Suite
     MDateFormatNoPeriodTest::class,
     MDateFormatPrettyTest::class,
     MDateFormatSimpleTest::class,
+    MDateFormatTimeZoneTest::class,
     MDateFormatWeekDayTest::class,
     MDatePropertiesTest::class,
     MDateRoundingTest::class,
