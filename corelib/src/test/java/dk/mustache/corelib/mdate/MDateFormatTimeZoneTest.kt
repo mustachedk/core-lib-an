@@ -22,10 +22,7 @@ class MDateFormatTimeZoneTest {
         val expectedOutput = "20:55"
 
         // Act
-        val newDate = date.show(
-            MDateFormat.TIME,
-            localTimeZone = true
-        ) // From DefaultTimeZone, our local timezone is "CET"
+        val newDate = date.show(MDateFormat.TIME, localTimeZone = true) // From DefaultTimeZone, our local timezone is "PRC"
 
         // Assert
         Assert.assertEquals(expectedOutput, newDate)
@@ -40,7 +37,7 @@ class MDateFormatTimeZoneTest {
         val expectedOutput = "20:55"
 
         // Act
-        val newDate = date.show(MDateFormat.TIME, localTimeZone = true) // From DefaultTimeZone, our local timezone is "CET"
+        val newDate = date.show(MDateFormat.TIME, localTimeZone = true) // From DefaultTimeZone, our local timezone is "PRC"
 
         // Assert
         Assert.assertEquals(expectedOutput, newDate)
@@ -57,7 +54,7 @@ class MDateFormatTimeZoneTest {
         val expectedOutput = "20:55"
 
         // Act
-        val newDate = date.show(pattern, localTimeZone = true) // From DefaultTimeZone, our local timezone is "CET"
+        val newDate = date.show(pattern, localTimeZone = true) // From DefaultTimeZone, our local timezone is "PRC"
 
         // Assert
         Assert.assertEquals(expectedOutput, newDate)
