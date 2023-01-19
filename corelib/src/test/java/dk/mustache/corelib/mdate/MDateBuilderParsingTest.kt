@@ -3,6 +3,7 @@ package dk.mustache.corelib.mdate
 import dk.mustache.corelib.utils.MDate
 import org.junit.Assert
 import org.junit.Test
+import org.junitpioneer.jupiter.DefaultTimeZone
 import java.util.*
 
 class MDateBuilderParsingTest {
@@ -14,12 +15,12 @@ class MDateBuilderParsingTest {
         val expectedYear = 2018
         val expectedMonth = 7
         val expectedDay = 25
-        val expectedHour = 12
+        val expectedHour = 10
         val expectedMinute = 59
         val expectedSecond = 59
 
         // Act
-        val date = MDate.BuilderDk().fromJavaDate(javaDate)
+        val date = MDate.BuilderDk(timeZone = TimeZone.getTimeZone("UTC")).fromJavaDate(javaDate)
 
         // Assert
         Assert.assertEquals(expectedYear, date.year)

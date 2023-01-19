@@ -87,6 +87,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation group: 'org.junit-pioneer', name: 'junit-pioneer', version: '2.0.0-RC1'
 
     implementation "com.google.zxing:core:3.3.0"
     implementation 'com.google.zxing:javase:3.3.0'

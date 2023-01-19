@@ -170,9 +170,13 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
     fun show(
         format: MDateFormat,
         caseType: CaseType = CaseType.LowerCase,
-        showAbbreviatedPeriod: Boolean = true
+        showAbbreviatedPeriod: Boolean = true,
+        localTimeZone: Boolean = false
     ): String {
         val dateFormat = SimpleDateFormat(format.pattern, locale)
+        if(localTimeZone) {
+            dateFormat.timeZone = MDate.getDefaultTimeZone()
+        }
         val casedDate = when (format) {
             PRETTYDATE_LONG, PRETTYDATE_SHORT, PRETTYDATE_YEAR_LONG, PRETTYDATE_YEAR_SHORT,
             WEEKDAY_SHORT_DATE_LONG, WEEKDAY_SHORT_DATE_D_LONG_YEAR,
@@ -226,9 +230,16 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
     fun show(
         pattern: String,
         caseType: CaseType = CaseType.LowerCase,
+        localTimeZone: Boolean = false,
         mapper: ((String) -> String)? = null
     ): String {
-        val formattedDate = SimpleDateFormat(pattern, locale).format(calendar.time)
+        val formatter = SimpleDateFormat(pattern, locale)
+        if (localTimeZone) {
+            formatter.timeZone = MDate.getDefaultTimeZone()
+        }
+
+        val formattedDate = formatter.format(calendar.time)
+
         val casedDate = formattedDate.case(caseType, locale = locale)
         return mapper?.invoke(casedDate) ?: casedDate
     }
@@ -549,6 +560,7 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
     companion object {
 
         private var defaultLocale: Locale = Locale.getDefault()
+        private var defaultTimeZone: TimeZone = TimeZone.getDefault()
 
         fun getDefaultLocale(): Locale {
             return defaultLocale
@@ -558,34 +570,42 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
             defaultLocale = locale
         }
 
+        fun getDefaultTimeZone(): TimeZone {
+            return defaultTimeZone
+        }
+
+        fun setDefaultTimeZone(timeZone: TimeZone) {
+            defaultTimeZone = timeZone
+        }
+
         /**
          * @return An MDateBuilder using danish localization by default
          */
-        fun BuilderDe(): MDateBuilder {
+        fun BuilderDe(timeZone: TimeZone = defaultTimeZone): MDateBuilder {
             val locales = Calendar.getAvailableLocales()
             val locale = locales.firstOrNull { it.country == "DE" && it.language == "de" }
                 ?: Locale.getDefault()
-            return MDateBuilder(locale)
+            return MDateBuilder(locale, timeZone)
         }
 
         /**
          * @return An MDateBuilder using danish localization by default
          */
-        fun BuilderGb(): MDateBuilder {
+        fun BuilderGb(timeZone: TimeZone = defaultTimeZone): MDateBuilder {
             val locales = Calendar.getAvailableLocales()
             val locale = locales.firstOrNull { it.country == "GB" && it.language == "en" }
                 ?: Locale.getDefault()
-            return MDateBuilder(locale)
+            return MDateBuilder(locale, timeZone)
         }
 
         /**
          * @return An MDateBuilder using danish localization by default
          */
-        fun BuilderDk(): MDateBuilder {
+        fun BuilderDk(timeZone: TimeZone = defaultTimeZone): MDateBuilder {
             val locales = Calendar.getAvailableLocales()
             val locale = locales.firstOrNull { it.country == "DK" && it.language == "da" }
                 ?: Locale.getDefault()
-            return MDateBuilder(locale)
+            return MDateBuilder(locale, timeZone)
         }
 
         /**
@@ -593,7 +613,7 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
          *     device
          */
         fun Builder(): MDateBuilder {
-            return MDateBuilder(defaultLocale)
+            return MDateBuilder(defaultLocale, defaultTimeZone)
         }
     }
 
@@ -620,7 +640,10 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
  * @property locale The localization that should be used by the MDate
  *     instance. Defaults to the device's default locale.
  */
-class MDateBuilder(private val locale: Locale = Locale.getDefault()) {
+class MDateBuilder(
+    private val locale: Locale = Locale.getDefault(),
+    private val timeZone: TimeZone = TimeZone.getDefault()
+) {
     private var year: Int = 2000
     private var month: Int = 1
     private var day: Int = 1
@@ -689,27 +712,34 @@ class MDateBuilder(private val locale: Locale = Locale.getDefault()) {
         return this
     }
 
-    fun parse(string: String, pattern: String, patternLocale: Locale = Locale.ENGLISH): MDate {
+    fun parse(
+        string: String,
+        pattern: String,
+        patternLocale: Locale = Locale.ENGLISH,
+        timeZone: TimeZone = TimeZone.getDefault()
+    ): MDate {
         val dateFormat = SimpleDateFormat(pattern, patternLocale)
-        val jDate = dateFormat.parse(string) ?: throw IllegalArgumentException("date parser returned null")
+        dateFormat.timeZone = timeZone
+        val jDate =
+            dateFormat.parse(string) ?: throw IllegalArgumentException("date parser returned null")
         return fromJavaDate(jDate)
     }
 
     fun fromJavaDate(date: Date): MDate {
-        val calendar = Calendar.getInstance(locale)
+        val calendar = Calendar.getInstance(timeZone, locale)
         calendar.timeInMillis = date.time
         return MDate(calendar, locale)
     }
 
     fun now(): MDate {
         val currentDateTime = System.currentTimeMillis()
-        val calendar = Calendar.getInstance(locale)
+        val calendar = Calendar.getInstance(timeZone, locale)
         calendar.timeInMillis = currentDateTime
         return MDate(calendar, locale)
     }
 
     fun build(): MDate {
-        val calendar = Calendar.getInstance(locale)
+        val calendar = Calendar.getInstance(timeZone, locale)
         calendar.set(year, month - 1, day, hour, minute, second)
         calendar.set(Calendar.MILLISECOND, 0)
         return MDate(calendar, locale)
