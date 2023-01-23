@@ -12,11 +12,11 @@ android {
         enabled = true
     }
 
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "dk.mustache.corelibexample"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 18
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -52,7 +52,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
 
-    implementation 'androidx.activity:activity-ktx:1.4.0'
+    implementation 'androidx.activity:activity-ktx:1.6.1'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
