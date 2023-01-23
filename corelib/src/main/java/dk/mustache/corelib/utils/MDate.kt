@@ -1,5 +1,6 @@
 package dk.mustache.corelib.utils
 
+import dk.mustache.corelib.util.unlessNullThen
 import dk.mustache.corelib.utils.MDateFormat.*
 import org.joda.time.Days
 import org.joda.time.LocalDate
@@ -174,7 +175,7 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
         localTimeZone: Boolean = false
     ): String {
         val dateFormat = SimpleDateFormat(format.pattern, locale)
-        if(localTimeZone) {
+        if (localTimeZone) {
             dateFormat.timeZone = MDate.getDefaultTimeZone()
         }
         val casedDate = when (format) {
@@ -641,8 +642,8 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
  *     instance. Defaults to the device's default locale.
  */
 class MDateBuilder(
-    private val locale: Locale = Locale.getDefault(),
-    private val timeZone: TimeZone = TimeZone.getDefault()
+    private val defaultBuilderLocale: Locale = Locale.getDefault(),
+    private val defaultBuilderTimeZone: TimeZone = TimeZone.getDefault()
 ) {
     private var year: Int = 2000
     private var month: Int = 1
@@ -715,23 +716,36 @@ class MDateBuilder(
     fun parse(
         string: String,
         pattern: String,
-        patternLocale: Locale = Locale.ENGLISH,
-        timeZone: TimeZone = TimeZone.getDefault()
+        parseLocale: Locale? = null,
+        parsetimeZone: TimeZone? = null
     ): MDate {
-        val dateFormat = SimpleDateFormat(pattern, patternLocale)
+        val locale = parseLocale.unlessNullThen { defaultBuilderLocale }
+        val timeZone = parsetimeZone.unlessNullThen { defaultBuilderTimeZone }
+        val dateFormat = SimpleDateFormat(pattern, locale)
         dateFormat.timeZone = timeZone
         val jDate =
             dateFormat.parse(string) ?: throw IllegalArgumentException("date parser returned null")
         return fromJavaDate(jDate)
     }
 
-    fun fromJavaDate(date: Date): MDate {
+    fun fromJavaDate(
+        date: Date,
+        parseLocale: Locale? = null,
+        parsetimeZone: TimeZone? = null
+    ): MDate {
+        val locale = parseLocale.unlessNullThen { defaultBuilderLocale }
+        val timeZone = parsetimeZone.unlessNullThen { defaultBuilderTimeZone }
         val calendar = Calendar.getInstance(timeZone, locale)
         calendar.timeInMillis = date.time
         return MDate(calendar, locale)
     }
 
-    fun now(): MDate {
+    fun now(
+        parseLocale: Locale? = null,
+        parsetimeZone: TimeZone? = null
+    ): MDate {
+        val locale = parseLocale.unlessNullThen { defaultBuilderLocale }
+        val timeZone = parsetimeZone.unlessNullThen { defaultBuilderTimeZone }
         val currentDateTime = System.currentTimeMillis()
         val calendar = Calendar.getInstance(timeZone, locale)
         calendar.timeInMillis = currentDateTime
@@ -739,9 +753,9 @@ class MDateBuilder(
     }
 
     fun build(): MDate {
-        val calendar = Calendar.getInstance(timeZone, locale)
+        val calendar = Calendar.getInstance(defaultBuilderTimeZone, defaultBuilderLocale)
         calendar.set(year, month - 1, day, hour, minute, second)
         calendar.set(Calendar.MILLISECOND, 0)
-        return MDate(calendar, locale)
+        return MDate(calendar, defaultBuilderLocale)
     }
 }
