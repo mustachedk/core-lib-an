@@ -3,6 +3,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="red">#CC092F</color>
+    <color name="drop">#CC092F</color>
     <color name="transBlack">#eeeeee</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="section_item_text">#292929</color>

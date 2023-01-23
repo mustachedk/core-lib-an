@@ -207,17 +207,17 @@ class AnimatedProgressLayout : ConstraintLayout {
             valueAnimator.duration = progressAnimationDuration.toLong()
             valueAnimator.interpolator = DecelerateInterpolator()
             valueAnimator.addListener(object: Animator.AnimatorListener {
-                override fun onAnimationStart(animation: Animator?) {
+                override fun onAnimationStart(animation: Animator) {
                 }
 
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     updateEndLabelIfProgressIsMax(updatedProgress)
                 }
 
-                override fun onAnimationCancel(animation: Animator?) {
+                override fun onAnimationCancel(animation: Animator) {
                 }
 
-                override fun onAnimationRepeat(animation: Animator?) {
+                override fun onAnimationRepeat(animation: Animator) {
                 }
             })
             valueAnimator.start()
