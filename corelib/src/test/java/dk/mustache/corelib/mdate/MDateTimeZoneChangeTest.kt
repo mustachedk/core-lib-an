@@ -6,10 +6,9 @@ import dk.mustache.corelib.utils.MDateFormat
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test
-import java.sql.Time
 import java.util.*
 
-class MDateFormatTimeZoneTest {
+class MDateTimeZoneChangeTest {
 
     @After
     fun doAfter() {
@@ -17,7 +16,7 @@ class MDateFormatTimeZoneTest {
     }
 
     @Test
-    fun specifyTimeZoneOnMDateFormat() {
+    fun timeZoneOnMDateFormat() {
         // Arrange
         MDate.setDefaultTimeZone(TimeZone.getTimeZone("PRC"))
 
@@ -27,14 +26,14 @@ class MDateFormatTimeZoneTest {
         val expectedOutput = "20:55"
 
         // Act
-        val newDate = date.show(MDateFormat.TIME, localTimeZone = true) // From DefaultTimeZone, our local timezone is "PRC"
+        val newDate = date.show(MDateFormat.TIME, useDefaultTimeZone = true) // From setDefaultTimeZone, our local timezone is "PRC"
 
         // Assert
         Assert.assertEquals(expectedOutput, newDate)
     }
 
     @Test
-    fun specifyTimeZoneOnCustomFormat() {
+    fun timeZoneOnCustomFormat() {
         // Arrange
         MDate.setDefaultTimeZone(TimeZone.getTimeZone("PRC")) // China Standard Time (+8)
 
@@ -44,7 +43,7 @@ class MDateFormatTimeZoneTest {
         val expectedOutput = "20:55"
 
         // Act
-        val newDate = date.show(pattern, localTimeZone = true) // From DefaultTimeZone, our local timezone is "PRC"
+        val newDate = date.show(pattern, useDefaultTimeZone = true) // From setDefaultTimeZone, our local timezone is "PRC"
 
         // Assert
         Assert.assertEquals(expectedOutput, newDate)

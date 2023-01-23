@@ -166,16 +166,19 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
      * @param showAbbreviatedPeriod For abbreviated month/day show a
      *     period after the name. This has only been
      *     tested in DK localization. Default: true
+     * @param useDefaultTimeZone Use the default time zone defined by MDate (use
+     * MDate.setDefaultTimeZone to change it). If false, the system timezone will be used.
+     * Default: false
      * @return
      */
     fun show(
         format: MDateFormat,
         caseType: CaseType = CaseType.LowerCase,
         showAbbreviatedPeriod: Boolean = true,
-        localTimeZone: Boolean = false
+        useDefaultTimeZone: Boolean = false
     ): String {
         val dateFormat = SimpleDateFormat(format.pattern, locale)
-        if (localTimeZone) {
+        if (useDefaultTimeZone) {
             dateFormat.timeZone = MDate.getDefaultTimeZone()
         }
         val casedDate = when (format) {
@@ -225,17 +228,20 @@ open class MDate(val calendar: Calendar = Calendar.getInstance(), private val lo
      *     https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html.
      * @param caseType Casing/capitalization of month/day for patterns
      *     where they are written out. Default: LowerCase
+     * @param useDefaultTimeZone Use the default time zone defined by MDate (use
+     * MDate.setDefaultTimeZone to change it). If false, the system timezone will be used.
+     * Default: false
      * @param mapper Optional mapper to further manipulate the output.
      * @return
      */
     fun show(
         pattern: String,
         caseType: CaseType = CaseType.LowerCase,
-        localTimeZone: Boolean = false,
+        useDefaultTimeZone: Boolean = false,
         mapper: ((String) -> String)? = null
     ): String {
         val formatter = SimpleDateFormat(pattern, locale)
-        if (localTimeZone) {
+        if (useDefaultTimeZone) {
             formatter.timeZone = MDate.getDefaultTimeZone()
         }
 
@@ -713,6 +719,15 @@ class MDateBuilder(
         return this
     }
 
+    /**
+     * Return an MDate matching the current moment
+     *
+     * @param string String to convert to MDate
+     * @param pattern The pattern to use in the conversion
+     * @param parseLocale Change the locale from the MDate default
+     * @param parsetimeZone The timezone of the provided string. Otherwise will use the default MDate timezone
+     * @return
+     */
     fun parse(
         string: String,
         pattern: String,
@@ -728,6 +743,14 @@ class MDateBuilder(
         return fromJavaDate(jDate)
     }
 
+    /**
+     * Return an MDate matching the current moment
+     *
+     * @param date Java date to convert to MDate
+     * @param parseLocale Change the locale from the MDate default
+     * @param parsetimeZone The timezone of the acquired MDate. Otherwise will use the default MDate timezone
+     * @return
+     */
     fun fromJavaDate(
         date: Date,
         parseLocale: Locale? = null,
@@ -740,6 +763,13 @@ class MDateBuilder(
         return MDate(calendar, locale)
     }
 
+    /**
+     * Return an MDate matching the current moment
+     *
+     * @param parseLocale Change the locale from the MDate default
+     * @param parsetimeZone The timezone of the acquired MDate. Otherwise will use the default MDate timezone
+     * @return
+     */
     fun now(
         parseLocale: Locale? = null,
         parsetimeZone: TimeZone? = null
