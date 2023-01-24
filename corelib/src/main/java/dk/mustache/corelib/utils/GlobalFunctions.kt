@@ -7,6 +7,13 @@ fun <T> ifElseNull(comparable: Boolean, result: () -> T): T? {
     return null
 }
 
+fun <T> T?.unlessNullThen(thenDo: () -> T): T {
+    if (this == null) {
+        return thenDo()
+    }
+    return this
+}
+
 fun <T> T?.whenNotNull(thenDo: (T) -> Unit) {
     if (this != null) {
         thenDo(this)

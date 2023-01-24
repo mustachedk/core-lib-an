@@ -3,7 +3,6 @@ package dk.mustache.corelib.mdate
 import dk.mustache.corelib.utils.MDate
 import org.junit.Assert
 import org.junit.Test
-import org.junitpioneer.jupiter.DefaultTimeZone
 import java.util.*
 
 class MDateBuilderParsingTest {
