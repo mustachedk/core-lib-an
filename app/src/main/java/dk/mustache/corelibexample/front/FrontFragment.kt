@@ -15,6 +15,7 @@ import dk.mustache.corelibexample.errordialog.ErrorDialogDemoFragment
 import dk.mustache.corelibexample.headerlistviewpager.HeaderListViewPagerDemoFragment
 import dk.mustache.corelibexample.interscroll.InterscrollFragment
 import dk.mustache.corelibexample.mdate.MdateFragment
+import dk.mustache.corelibexample.ratings.RatingsDemoFragment
 import dk.mustache.corelibexample.sandbox.SandboxFragment
 import dk.mustache.corelibexample.selectablelist.SelectableListFragment
 import dk.mustache.corelibexample.standard_dialog.StandardDialogDemoFragment
@@ -28,6 +29,7 @@ class FrontFragment : Fragment() {
         "HeaderListViewPager Demo" to HeaderListViewPagerDemoFragment(),
         "MDate Demo" to MdateFragment(),
         "Interscroll Demo" to InterscrollFragment(),
+        "Rating Dialog Demo" to RatingsDemoFragment(),
         "SelectableList" to SelectableListFragment(),
         "Standard Dialog Demo" to StandardDialogDemoFragment(),
         "Validation" to ValidationFragment(),
