@@ -10,7 +10,8 @@ data class PriceConfigurationItem(
     val price: Double,
     val discountAmount: Double,
     val discountMaxQuantity: Double,
-    val type: Int?
+    val type: Int?,
+    var hideOldPrice: Boolean = true
 ):Parcelable, Serializable {
 
     fun displayYellowOfferPrice(): Boolean {
