@@ -3,6 +3,7 @@ package dk.mustache.corelib.validation.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.PopupMenu
+import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
@@ -11,7 +12,8 @@ import androidx.lifecycle.ViewModelStoreOwner
 import dk.mustache.corelib.R
 
 class ValidationMenu : ValidationTextView {
-    private val onValidationChangedListeners: MutableList<(Boolean) -> Unit> = mutableListOf()
+    private val onValidationChangedListeners: MutableList<(Boolean, Int?) -> Unit> =
+        mutableListOf()
 
     private var viewModel: ValidationMenuViewModel? = null
     private lateinit var viewId: String
@@ -45,7 +47,7 @@ class ValidationMenu : ValidationTextView {
     @Suppress("UNUSED_PARAMETER")
     override fun init(context: Context, attrs: AttributeSet?) {
         super.init(context, attrs)
-        if(id != NO_ID) {
+        if (id != NO_ID) {
             viewId = id.toString()
         }
 
@@ -77,13 +79,13 @@ class ValidationMenu : ValidationTextView {
                 text = selected
                 val result = requireNotNull(viewModel).validateValue()
                 if (result.triggerCallbacks) {
-                    triggerOnValidationChangedListener(result.value)
+                    triggerOnValidationChangedListener(result.isValid, result.message)
                 }
             }
 
             // Initialize the data by triggering the listeners
             adapter.onMenuChanged()
-            if(text.toString() != adapter.getSelectedTitle()) {
+            if (text.toString() != adapter.getSelectedTitle()) {
                 adapter.onSelectedTitleChanged()
             }
         }
@@ -106,11 +108,11 @@ class ValidationMenu : ValidationTextView {
         }
     }
 
-    private fun triggerOnValidationChangedListener(newValue: Boolean) {
-        onValidationChangedListeners.forEach { it.invoke(newValue) }
+    private fun triggerOnValidationChangedListener(newValue: Boolean, @StringRes message: Int?) {
+        onValidationChangedListeners.forEach { it.invoke(newValue, message) }
     }
 
-    override fun addOnValidationChangedListener(listener: (Boolean) -> Unit) {
+    override fun addOnValidationChangedListener(listener: (Boolean, Int?) -> Unit) {
         onValidationChangedListeners.add(listener)
     }
 
@@ -138,7 +140,7 @@ class ValidationMenu : ValidationTextView {
         @BindingAdapter("app:isValidAttrChanged")
         @JvmStatic
         fun setListeners(view: ValidationMenu, attrChange: InverseBindingListener) {
-            view.addOnValidationChangedListener { attrChange.onChange() }
+            view.addOnValidationChangedListener { _, _ -> attrChange.onChange() }
         }
     }
 }

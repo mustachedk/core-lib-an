@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="validation_required_field">This field is required.</string>
+    <string name="validation_require_valid_email">Please enter a valid email address.</string>
+    <string name="validation_require_valid_phone_dk_numbers">The phone number must consist of only numbers.</string>
+    <string name="validation_require_valid_phone_dk_size">The phone number must be 8 numbers long.</string>
+    <string name="validation_require_min_18">You must be at least 18 years of age.</string>
+</resources>

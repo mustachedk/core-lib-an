@@ -2,10 +2,7 @@ package dk.mustache.corelib.validation.views
 
 import androidx.lifecycle.ViewModel
 import dk.mustache.corelib.utils.MDate
-import dk.mustache.corelib.validation.validators.AlwaysDateValidator
-import dk.mustache.corelib.validation.validators.Min18Validator
-import dk.mustache.corelib.validation.validators.ValidationType
-import dk.mustache.corelib.validation.validators.Validator
+import dk.mustache.corelib.validation.validators.*
 
 
 class ValidationDateViewModel: ViewModel() {
@@ -31,15 +28,13 @@ class ValidationDateViewModel: ViewModel() {
 
     fun validate(): ValidationResult {
         if(this::validator.isInitialized) {
-            val newIsValid = validator.validate(date)
-            val reply = ValidationResult(newIsValid, isValid != newIsValid)
-            isValid = newIsValid
+            val newResult = validator.validate(date)
+            val reply = newResult.triggerCallbacksIfResultDiffers(isValid)
+            isValid = newResult.isValid
             return reply
         }
         else {
-            return ValidationResult(false, false)
+            return ValidationResult(false, null, false)
         }
     }
-
-    data class ValidationResult(val value: Boolean, val triggerCallbacks: Boolean)
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="validation_required_field">Dette felt er påkrævet.</string>
+    <string name="validation_require_valid_email">En email addresse er påkrævet.</string>
+    <string name="validation_require_valid_phone_dk_numbers">Nummeret kan kun bestå af tal.</string>
+    <string name="validation_require_valid_phone_dk_size">Et otte-cifret nummer er påkrævet.</string>
+    <string name="validation_require_min_18">Du skal være mindst 18.</string>
+</resources>

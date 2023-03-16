@@ -2,6 +2,7 @@ package dk.mustache.corelib.validation.views
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.BindingAdapter
@@ -14,7 +15,7 @@ import dk.mustache.corelib.utils.StyleUiHelper
 import dk.mustache.corelib.validation.validators.ValidationType
 
 class ValidationEditText : AppCompatEditText, ValidationView {
-    private val onValidationChangedListeners: MutableList<(Boolean) -> Unit> = mutableListOf()
+    private val onValidationChangedListeners: MutableList<(Boolean, Int?) -> Unit> = mutableListOf()
 
     private var viewModel: ValidationStringViewModel? = null
     private lateinit var viewId: String
@@ -68,7 +69,7 @@ class ValidationEditText : AppCompatEditText, ValidationView {
             }
         }
 
-        addOnValidationChangedListener {
+        addOnValidationChangedListener { _ , _ ->
             // Update ViewState when isValid changes
             refreshDrawableState()
             postInvalidate()
@@ -86,15 +87,15 @@ class ValidationEditText : AppCompatEditText, ValidationView {
     private fun validate() {
         val result = requireNotNull(viewModel).validate(text.toString())
         if (result.triggerCallbacks) {
-            triggerOnValidationChangedListener(result.value)
+            triggerOnValidationChangedListener(result.isValid, result.message)
         }
     }
 
-    private fun triggerOnValidationChangedListener(newValue: Boolean) {
-        onValidationChangedListeners.forEach { it.invoke(newValue) }
+    private fun triggerOnValidationChangedListener(newValue: Boolean, @StringRes message: Int?) {
+        onValidationChangedListeners.forEach { it.invoke(newValue, message) }
     }
 
-    override fun addOnValidationChangedListener(listener: (Boolean) -> Unit) {
+    override fun addOnValidationChangedListener(listener: (Boolean, Int?) -> Unit) {
         onValidationChangedListeners.add(listener)
     }
 
@@ -136,7 +137,7 @@ class ValidationEditText : AppCompatEditText, ValidationView {
         @BindingAdapter("app:isValidAttrChanged")
         @JvmStatic
         fun setListeners(view: ValidationEditText, attrChange: InverseBindingListener) {
-            view.addOnValidationChangedListener { attrChange.onChange() }
+            view.addOnValidationChangedListener { _, _ -> attrChange.onChange() }
         }
     }
 }

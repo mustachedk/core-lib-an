@@ -32,8 +32,8 @@ abstract class ValidationTextView : AppCompatTextView, ValidationView {
             R.drawable.validation_edittext_standard_background
         )
 
-        addOnValidationChangedListener {
-            isInvalid = !it
+        addOnValidationChangedListener { isValid, _ ->
+            isInvalid = !isValid
 
             // Update ViewState when isValid changes
             refreshDrawableState()

@@ -10,8 +10,10 @@ interface ValidatorView {
         updateValidState: (Boolean) -> Unit
     ) {
         validationViews.forEach {
-            it.addOnValidationChangedListener {
-                val newValidState = validationViews.all { it.getViewIsValid() ?: false }
+            it.addOnValidationChangedListener { _, _ ->
+                val newValidState = validationViews.all { validationView ->
+                    validationView.getViewIsValid() ?: false
+                }
                 updateValidState(newValidState)
             }
         }
@@ -40,7 +42,7 @@ interface ValidatorView {
                 getAllChildrenControls(it)
             } else {
                 controlViews.add(it)
-                emptyList<View>()
+                emptyList()
             }
         }
         controlViews.addAll(grandChildren)
