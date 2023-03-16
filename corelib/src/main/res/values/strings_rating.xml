@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rating_dialog_main_dialog_title">Hvad synes du om app\'en?</string>
+    <string name="rating_dialog_main_dialog_message">Giv os stjerner fra 1–5, hvor 5 er bedst.</string>
+    <string name="rating_dialog_main_dialog_delay">Ikke nu</string>
+    <string name="rating_dialog_main_dialog_never">Nej, aldrig</string>
+    <string name="rating_dialog_email_action_dialog_title">Vil du hjælpe os med at blive bedre?</string>
+    <string name="rating_dialog_email_action_dialog_message">Fortæl os, hvordan vi kan blive bedre.</string>
+    <string name="rating_dialog_email_action_dialog_confirm">Ja</string>
+    <string name="rating_dialog_email_action_dialog_cancel">Nej</string>
+    <string name="rating_dialog_email_action_chooser_message">Email via…</string>
+    <string name="rating_dialog_email_action_email_recipient"></string>
+    <string name="rating_dialog_email_action_email_subject">App Feedback</string>
+    <plurals name="rating_dialog_email_action_email_message">
+        <item quantity="one">Du gav os %d stjerne, fortæl os hvorfor:\n\n\nTak for hjælpen! Din feedback er med til at gøre appen endnu bedre.</item>
+        <item quantity="other">Du gav os %d stjerner, fortæl os hvorfor:\n\n\nTak for hjælpen! Din feedback er med til at gøre appen endnu bedre.</item>
+    </plurals>
+</resources>
