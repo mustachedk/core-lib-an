@@ -9,12 +9,13 @@ import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import dk.mustache.corelib.R
 
 class StickyHeaderItemDecoration(recyclerView: RecyclerView, val emptyLayout: Int, @param:NonNull private val mListener: StickyHeaderInterface) :
     RecyclerView.ItemDecoration() {
     private var mStickyHeaderHeight: Int = 0
     var invisibleHeaderPosition = -1
+
+    private var lastOverlappedView: View? = null
 
     init {
 
@@ -53,7 +54,8 @@ class StickyHeaderItemDecoration(recyclerView: RecyclerView, val emptyLayout: In
         val currentHeader = getHeaderViewForItem(topChildPosition, parent)
         fixLayoutSize(parent, currentHeader)
         val contactPoint = currentHeader.getBottom()
-        val childInContact = getChildInContact(parent, contactPoint) ?: return
+        val childInContact = (getChildInContact(parent, contactPoint) ?: lastOverlappedView) ?: return
+        lastOverlappedView = childInContact
 
         if (mListener.isHeader(parent.getChildAdapterPosition(childInContact))) {
             moveHeader(c, currentHeader, childInContact)
