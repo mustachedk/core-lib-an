@@ -8,6 +8,11 @@
     <string name="error_dialog_title">String Res</string>
     <string name="error_dialog_body">Currently displaying stringres text.</string>
 
+    <string name="rating_dialog_header">Hvad synes du om app\'en?</string>
+    <string name="rating_dialog_message">Giv os stjerner fra 1–5, hvor 5 er bedst.</string>
+    <string name="rating_dialog_delay">Ikke nu</string>
+    <string name="rating_dialog_never">Nej, aldrig</string>
+
     <string name="unfinished_courses">Uløste kurser</string>
     <string name="finished_courses">Gennemførte kurser</string>
     <string name="courses_subtitle">kurser</string>
