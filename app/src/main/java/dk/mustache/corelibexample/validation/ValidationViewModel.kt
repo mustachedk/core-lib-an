@@ -1,5 +1,6 @@
 package dk.mustache.corelibexample.validation
 
+import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import dk.mustache.corelib.utils.MDate
@@ -19,6 +20,8 @@ class ValidationViewModel : ViewModel() {
             MenuItem("Option 3", 3)
         ), MenuItem("", null)
     )
+
+    lateinit var iconClickListener: ((layoutView: View, failureView: View, message: String) -> Unit)
 
     fun doTheThing(): String {
         val alwaysTrueVal = alwaysTrue.get()

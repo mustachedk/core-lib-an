@@ -164,4 +164,23 @@
         <attr name="state_invalid" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="ValidationControlLayout">
+        <attr name="failure_view" format="reference" />
+        <attr name="failure_view_image" format="reference"/>
+        <attr name="failure_view_image_tint" format="color"/>
+        <attr name="failure_view_side" format="enum">
+            <enum name="bottom" value="0"/>
+            <enum name="end" value="1"/>
+            <enum name="start" value="2"/>
+            <enum name="top" value="3"/>
+        </attr>
+        <attr name="failure_view_valid_visibility" format="enum" >
+            <enum name="gone" value="8" />
+            <enum name="invisible" value="4" />
+            <enum name="visible" value="0" />
+        </attr>
+        <attr name="text_default" format="integer" />
+        <attr name="always_use_text_default" format="boolean" />
+    </declare-styleable>
+
 </resources>
